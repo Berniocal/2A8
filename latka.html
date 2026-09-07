@@ -1,0 +1,508 @@
+<!doctype html>
+<html lang="cs">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Těleso a látka – procvičování pro 6. ročník</title>
+<style>
+  :root{
+    --bg:#f5f7fb; --card:#fff; --ink:#172033; --muted:#64748b; --line:#dbe3ef;
+    --accent:#2563eb; --accent2:#0ea5e9; --good:#15803d; --bad:#b91c1c; --warn:#a16207;
+    --shadow:0 10px 30px rgba(15,23,42,.08); --radius:18px;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:linear-gradient(180deg,#eef6ff 0,#f8fafc 260px);color:var(--ink)}
+  button,input{font:inherit}
+  button{cursor:pointer}
+  .shell{max-width:1080px;margin:auto;padding:18px}
+  header{background:rgba(255,255,255,.9);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.8);box-shadow:var(--shadow);border-radius:24px;padding:22px 24px;margin-bottom:16px}
+  .eyebrow{font-size:.78rem;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);font-weight:800}
+  h1{margin:.25rem 0 .35rem;font-size:clamp(1.8rem,4vw,3rem);line-height:1.05}
+  .lead{margin:0;color:var(--muted);font-size:1.03rem}
+  .toprow{display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-top:18px}
+  .progress-wrap{flex:1;min-width:220px}
+  .progress{height:10px;background:#e8eef7;border-radius:999px;overflow:hidden}
+  .progress>div{height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:.25s}
+  .score{font-weight:750;font-size:.93rem;color:#334155}
+  .toolbar{display:flex;gap:8px;flex-wrap:wrap}
+  .btn{border:0;border-radius:12px;padding:10px 14px;font-weight:750;background:#e8eef8;color:#1e293b}
+  .btn:hover{filter:brightness(.98)}
+  .btn.primary{background:var(--accent);color:white}
+  .btn.ghost{background:white;border:1px solid var(--line)}
+  .btn.danger{background:#fff1f2;color:#be123c}
+
+  .tabs{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin:14px 0}
+  .tab{border:1px solid var(--line);background:white;border-radius:14px;padding:11px 8px;font-weight:800;color:#475569}
+  .tab.active{background:#eff6ff;color:#1d4ed8;border-color:#93c5fd}
+
+  .panel{display:none;background:var(--card);border:1px solid var(--line);box-shadow:var(--shadow);border-radius:var(--radius);padding:22px}
+  .panel.active{display:block}
+  .panel h2{margin:0 0 8px;font-size:1.55rem}
+  .panel .intro{color:var(--muted);margin:0 0 18px;line-height:1.55}
+
+  .concepts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+  .concept{border:1px solid var(--line);border-radius:16px;padding:16px;background:#fbfdff}
+  .concept h3{margin:0 0 6px;font-size:1.08rem}
+  .concept p{margin:0;line-height:1.5;color:#475569}
+  .chip{display:inline-block;padding:4px 9px;border-radius:999px;background:#eff6ff;color:#1d4ed8;font-weight:800;font-size:.8rem;margin-bottom:8px}
+  .note{margin-top:14px;padding:13px 15px;border-left:4px solid #f59e0b;background:#fffbeb;border-radius:10px;line-height:1.45;color:#713f12}
+
+  .game-card{border:1px solid var(--line);border-radius:18px;padding:20px;text-align:center;background:linear-gradient(180deg,#fff,#fbfdff)}
+  .emoji{font-size:3.2rem;line-height:1;margin-bottom:8px}
+  .prompt{font-size:clamp(1.25rem,3vw,1.8rem);font-weight:850;margin:4px 0 6px}
+  .subprompt{color:var(--muted);min-height:1.5em}
+  .answers{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:18px}
+  .answer{min-width:150px;border:1px solid #cbd5e1;background:white;border-radius:14px;padding:13px 16px;font-weight:850}
+  .answer:hover{border-color:#93c5fd;background:#eff6ff}
+  .answer.correct{background:#ecfdf5;border-color:#86efac;color:#166534}
+  .answer.wrong{background:#fef2f2;border-color:#fca5a5;color:#991b1b}
+  .feedback{margin-top:15px;min-height:50px;border-radius:12px;padding:11px 13px;display:none;text-align:left;line-height:1.45}
+  .feedback.show{display:block}
+  .feedback.good{background:#ecfdf5;color:#166534}
+  .feedback.bad{background:#fff7ed;color:#9a3412}
+  .nextrow{margin-top:12px;display:flex;justify-content:center}
+
+  .match-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+  .mini{border:1px solid var(--line);border-radius:14px;padding:14px;background:#fbfdff}
+  .mini h4{margin:0 0 8px;font-size:1rem}
+  .mini select{width:100%;padding:10px;border:1px solid #cbd5e1;border-radius:10px;background:white}
+  .checkline{display:flex;gap:10px;align-items:center;justify-content:flex-end;margin-top:14px;flex-wrap:wrap}
+
+  .state-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  .state{border-radius:16px;padding:16px;border:1px solid var(--line);background:#fbfdff}
+  .state h3{margin:0 0 8px}
+  .state ul{margin:8px 0 0;padding-left:20px;line-height:1.55}
+
+  .demo{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:16px}
+  .demo-card{border:1px solid var(--line);border-radius:16px;padding:16px;background:#fff}
+  .demo-card h3{margin-top:0}
+  .syringe{height:90px;display:flex;align-items:center;justify-content:center;margin:8px 0}
+  .barrel{width:190px;height:46px;border:4px solid #475569;border-radius:10px;position:relative;background:#e0f2fe;overflow:hidden}
+  .barrel.air:after{content:"vzduch";position:absolute;inset:0;display:grid;place-items:center;color:#075985;font-weight:850}
+  .barrel.water{background:#bae6fd}
+  .barrel.water:after{content:"voda";position:absolute;inset:0;display:grid;place-items:center;color:#075985;font-weight:850}
+  .plunger{width:56px;height:18px;background:#64748b;border-radius:6px;margin-left:-3px;transform-origin:left center;transition:.25s}
+  .compressed .plunger{transform:translateX(-36px)}
+  .compressed .barrel.air{width:154px}
+
+  .quizbox{max-width:760px;margin:auto}
+  .qmeta{display:flex;justify-content:space-between;color:var(--muted);font-weight:750;margin-bottom:10px}
+  .quiz-options{display:grid;gap:10px;margin-top:14px}
+  .quiz-option{text-align:left;border:1px solid var(--line);background:white;border-radius:12px;padding:12px 14px;font-weight:700}
+  .quiz-option:hover{background:#f8fafc}
+  .quiz-option.correct{background:#ecfdf5;border-color:#86efac;color:#166534}
+  .quiz-option.wrong{background:#fef2f2;border-color:#fca5a5;color:#991b1b}
+  .result{display:none;text-align:center;padding:22px}
+  .result.show{display:block}
+  .bigscore{font-size:3rem;font-weight:900;color:#1d4ed8}
+
+  .teacher-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .teacher-card{border:1px solid var(--line);border-radius:16px;padding:16px;background:#fbfdff}
+  .teacher-card h3{margin:0 0 8px}
+  .teacher-card ul,.teacher-card ol{margin:8px 0;padding-left:20px;line-height:1.5}
+  .time{font-weight:900;color:#1d4ed8}
+  details{border:1px solid var(--line);border-radius:12px;padding:10px 12px;background:white;margin-top:10px}
+  summary{cursor:pointer;font-weight:800}
+
+  footer{color:#64748b;text-align:center;padding:18px 4px 8px;font-size:.85rem}
+
+  @media(max-width:800px){
+    .tabs{grid-template-columns:repeat(3,1fr)}
+    .concepts,.teacher-grid,.demo{grid-template-columns:1fr}
+    .match-grid{grid-template-columns:1fr 1fr}
+    .state-cards{grid-template-columns:1fr}
+  }
+  @media(max-width:520px){
+    .shell{padding:10px}
+    header,.panel{padding:16px;border-radius:16px}
+    .tabs{grid-template-columns:repeat(2,1fr)}
+    .match-grid{grid-template-columns:1fr}
+    .answer{width:100%}
+  }
+  @media print{
+    body{background:white}
+    .tabs,.toolbar,.progress-wrap,.score,footer{display:none!important}
+    .panel{display:none!important;box-shadow:none;border:0;padding:0}
+    #teacher{display:block!important}
+    header{box-shadow:none;border:0;padding:0;margin-bottom:8px}
+    .teacher-card{break-inside:avoid}
+  }
+</style>
+</head>
+<body>
+<div class="shell">
+  <header>
+    <div class="eyebrow">Fyzika • 6. ročník ZŠ</div>
+    <h1>Těleso a látka</h1>
+    <p class="lead">Co je těleso, z čeho se tělesa skládají a jak poznáme pevné, kapalné a plynné látky.</p>
+    <div class="toprow">
+      <div class="progress-wrap">
+        <div class="score" id="scoreText">Procvičeno: 0 správně z 0 odpovědí</div>
+        <div class="progress"><div id="progressBar"></div></div>
+      </div>
+      <div class="toolbar">
+        <button class="btn ghost" id="resetAll">↻ Vynulovat</button>
+        <button class="btn ghost" onclick="showTab('teacher')">👩‍🏫 Pro učitele</button>
+      </div>
+    </div>
+  </header>
+
+  <nav class="tabs" aria-label="Části aplikace">
+    <button class="tab active" data-tab="learn">1. Přehled</button>
+    <button class="tab" data-tab="body">2. Těleso × látka</button>
+    <button class="tab" data-tab="pairs">3. Z čeho je?</button>
+    <button class="tab" data-tab="states">4. Skupenství</button>
+    <button class="tab" data-tab="quiz">5. Kvíz</button>
+    <button class="tab" data-tab="teacher">Pro učitele</button>
+  </nav>
+
+  <section id="learn" class="panel active">
+    <h2>Nejdřív si ujasníme čtyři pojmy</h2>
+    <p class="intro">Neuč se definice nazpaměť. Zkus vždycky říct vlastní příklad.</p>
+    <div class="concepts">
+      <article class="concept">
+        <span class="chip">TĚLESO</span>
+        <h3>Konkrétní objekt nebo vymezená část látky</h3>
+        <p>Má <b>tvar, rozměry a polohu</b>. Může být jednoduché (míč) i složité (počítač, auto). Tělesem může být i voda v lahvi nebo vzduch v pneumatice.</p>
+      </article>
+      <article class="concept">
+        <span class="chip">LÁTKA</span>
+        <h3>Materiál, ze kterého může být těleso</h3>
+        <p>Například železo, sklo, dřevo, voda nebo vzduch. Látce samotné nepřisuzujeme konkrétní tvar ani rozměry.</p>
+      </article>
+      <article class="concept">
+        <span class="chip">SKUPENSTVÍ</span>
+        <h3>Pevné, kapalné a plynné</h3>
+        <p>Pevná látka si běžně drží tvar i objem. Kapalina drží objem, ale přebírá tvar nádoby. Plyn snadno mění tvar i objem.</p>
+      </article>
+      <article class="concept">
+        <span class="chip">TEKUTINY</span>
+        <h3>Kapaliny + plyny</h3>
+        <p>Obojí může <b>téct a proudit</b>, proto je společně označujeme jako tekutiny. Pozor: tekutina není totéž co kapalina.</p>
+      </article>
+    </div>
+    <div class="note"><b>Důležitá fintička:</b> stejné slovo může podle věty znamenat něco jiného. „Voda“ jako materiál je látka, ale „voda v této láhvi“ je konkrétní těleso tvořené vodou.</div>
+  </section>
+
+  <section id="body" class="panel">
+    <h2>Těleso, nebo látka?</h2>
+    <p class="intro">Rozhodni podle toho, zda mluvíme o konkrétním objektu / vymezeném množství, nebo o materiálu obecně.</p>
+    <div class="game-card">
+      <div class="emoji" id="bodyEmoji">⚽</div>
+      <div class="prompt" id="bodyPrompt">fotbalový míč</div>
+      <div class="subprompt" id="bodyHint">Co je to ve fyzice?</div>
+      <div class="answers">
+        <button class="answer" data-body-answer="Těleso">Těleso</button>
+        <button class="answer" data-body-answer="Látka">Látka</button>
+      </div>
+      <div class="feedback" id="bodyFeedback"></div>
+      <div class="nextrow"><button class="btn primary" id="bodyNext" style="display:none">Další →</button></div>
+    </div>
+  </section>
+
+  <section id="pairs" class="panel">
+    <h2>Z čeho je těleso vyrobené?</h2>
+    <p class="intro">U každého tělesa vyber nejvhodnější látku. Některá složitá tělesa jsou samozřejmě z více látek; tady vybíráme hlavní nebo zadanou část.</p>
+    <div class="match-grid" id="matchGrid"></div>
+    <div class="checkline">
+      <span id="matchMessage"></span>
+      <button class="btn primary" id="checkMatch">Zkontrolovat</button>
+      <button class="btn ghost" id="newMatch">Nová sada</button>
+    </div>
+  </section>
+
+  <section id="states" class="panel">
+    <h2>Skupenství látek</h2>
+    <p class="intro">Nejdřív vlastnosti, potom krátký pokus a nakonec procvičení.</p>
+    <div class="state-cards">
+      <article class="state"><h3>🧊 Pevné</h3><ul><li>tvar se běžně nemění snadno</li><li>objem se běžně nemění snadno</li><li>příklad: led, železo, sklo</li></ul></article>
+      <article class="state"><h3>💧 Kapalné</h3><ul><li>přebírá tvar nádoby</li><li>objem zůstává přibližně stejný</li><li>volný povrch v klidu tvoří vodorovnou hladinu</li></ul></article>
+      <article class="state"><h3>💨 Plynné</h3><ul><li>přebírá tvar nádoby</li><li>snadno mění i objem</li><li>plyn lze výrazně stlačit</li></ul></article>
+    </div>
+
+    <div class="demo">
+      <div class="demo-card">
+        <h3>Pokus se stříkačkou</h3>
+        <p>Ucpeme otvor stříkačky a zkusíme stlačit píst. Co půjde stlačit více?</p>
+        <div class="syringe" id="airSyringe"><div class="barrel air"></div><div class="plunger"></div></div>
+        <button class="btn primary" id="compressAir">Stlačit vzduch</button>
+        <p id="airText" class="subprompt">Plyn je stlačitelný – jeho objem se může výrazně zmenšit.</p>
+      </div>
+      <div class="demo-card">
+        <h3>A co voda?</h3>
+        <p>Stejnou stříkačku naplníme vodou. Bez vzduchové bubliny ji skoro nestlačíme.</p>
+        <div class="syringe"><div class="barrel water"></div><div class="plunger"></div></div>
+        <button class="btn ghost" id="tryWater">Zkusit stlačit vodu</button>
+        <p id="waterText" class="subprompt">Kapaliny mají za běžných podmínek téměř stálý objem.</p>
+      </div>
+    </div>
+
+    <div class="game-card" style="margin-top:16px">
+      <div class="emoji" id="stateEmoji">🧊</div>
+      <div class="prompt" id="statePrompt">led</div>
+      <div class="subprompt">V jakém je to skupenství za běžných podmínek?</div>
+      <div class="answers">
+        <button class="answer" data-state-answer="Pevné">Pevné</button>
+        <button class="answer" data-state-answer="Kapalné">Kapalné</button>
+        <button class="answer" data-state-answer="Plynné">Plynné</button>
+      </div>
+      <div class="feedback" id="stateFeedback"></div>
+      <div class="nextrow"><button class="btn primary" id="stateNext" style="display:none">Další →</button></div>
+    </div>
+  </section>
+
+  <section id="quiz" class="panel">
+    <h2>Závěrečný kvíz</h2>
+    <p class="intro">10 krátkých otázek. Po odpovědi vždy uvidíš vysvětlení.</p>
+    <div id="quizArea" class="quizbox">
+      <div class="qmeta"><span id="qNumber">Otázka 1 / 10</span><span id="qScore">0 bodů</span></div>
+      <div class="game-card" style="text-align:left">
+        <div class="prompt" id="qPrompt" style="font-size:1.3rem"></div>
+        <div class="quiz-options" id="qOptions"></div>
+        <div class="feedback" id="qFeedback"></div>
+        <div class="nextrow" style="justify-content:flex-end"><button class="btn primary" id="qNext" style="display:none">Další otázka →</button></div>
+      </div>
+    </div>
+    <div id="quizResult" class="result">
+      <div class="bigscore" id="finalScore">0 / 10</div>
+      <h3 id="finalTitle">Hotovo!</h3>
+      <p id="finalText"></p>
+      <button class="btn primary" id="restartQuiz">Zkusit znovu</button>
+    </div>
+  </section>
+
+  <section id="teacher" class="panel">
+    <h2>Příprava na hodinu – Těleso a látka</h2>
+    <p class="intro">Návrh pro 6. ročník ZŠ, přibližně na 45 minut. Je postavený tak, aby žáci pojmy nejdřív objevili na příkladech a až potom je pojmenovali.</p>
+    <div class="teacher-grid">
+      <article class="teacher-card">
+        <h3>Cíle hodiny</h3>
+        <ul>
+          <li>Žák rozliší <b>těleso</b> a <b>látku</b> na běžných příkladech.</li>
+          <li>Uvede, z jaké látky je těleso vytvořeno, a chápe, že složitá tělesa mohou být z více látek.</li>
+          <li>Rozliší pevné, kapalné a plynné skupenství podle jejich vlastností.</li>
+          <li>Vysvětlí, proč se kapaliny a plyny označují jako <b>tekutiny</b>.</li>
+          <li>Ví, že konkrétní vymezené množství kapaliny nebo plynu může být tělesem.</li>
+        </ul>
+      </article>
+      <article class="teacher-card">
+        <h3>Pomůcky</h3>
+        <ul>
+          <li>běžné předměty ve třídě: křída, pravítko, láhev, mince…</li>
+          <li>průhledná láhev nebo sklenice s vodou</li>
+          <li>2 plastové stříkačky bez jehly (ideálně jedna se vzduchem, jedna s vodou)</li>
+          <li>projektor / telefony / počítače pro tuto aplikaci</li>
+        </ul>
+      </article>
+      <article class="teacher-card">
+        <h3>Průběh 45 minut</h3>
+        <ol>
+          <li><span class="time">0–5 min:</span> Ukázat 5 věcí ve třídě. Otázka: „Co mají společného?“ Zavést pojem těleso.</li>
+          <li><span class="time">5–12 min:</span> Těleso = konkrétní objekt / vymezená část látky. Žáci navrhují příklady.</li>
+          <li><span class="time">12–20 min:</span> Z čeho jsou tělesa? Zavést pojem látka. Dvojice: těleso → látka (okno → sklo, lavice → dřevo/kov…).</li>
+          <li><span class="time">20–29 min:</span> Skupenství. Porovnat tvar a objem pevné látky, kapaliny a plynu.</li>
+          <li><span class="time">29–34 min:</span> Pokus se stříkačkou: vzduch vs. voda. Důraz na stlačitelnost plynu.</li>
+          <li><span class="time">34–41 min:</span> Procvičování v aplikaci – části 2 až 4.</li>
+          <li><span class="time">41–45 min:</span> Závěrečný kvíz nebo exit ticket.</li>
+        </ol>
+      </article>
+      <article class="teacher-card">
+        <h3>Co hlídat – typické chyby</h3>
+        <ul>
+          <li><b>„Voda je těleso.“</b> Samotné slovo voda obvykle označuje látku; konkrétní voda v láhvi je vymezené těleso.</li>
+          <li><b>„Vzduch není nic.“</b> Vzduch je látka; vzduch v míči nebo pneumatice je konkrétní těleso tvořené vzduchem.</li>
+          <li><b>„Tekutina = kapalina.“</b> Tekutiny jsou kapaliny i plyny, protože mohou proudit.</li>
+          <li><b>„Kapalina nemá tvar.“</b> Má tvar, ale přebírá ho podle nádoby.</li>
+        </ul>
+      </article>
+    </div>
+
+    <details>
+      <summary>Rychlé otázky na tabuli</summary>
+      <ol>
+        <li>Je železná kulička těleso, nebo látka? A co železo?</li>
+        <li>Je voda v láhvi těleso, nebo látka?</li>
+        <li>Co se snáze stlačí: voda, nebo vzduch?</li>
+        <li>Proč mají kapaliny a plyny společný název tekutiny?</li>
+        <li>Jak poznáš kapalinu od plynu podle objemu?</li>
+      </ol>
+    </details>
+
+    <details>
+      <summary>Exit ticket na poslední 2 minuty</summary>
+      <p>Na lístek / do sešitu: <b>1.</b> Napiš jeden příklad tělesa a látky, ze které je vytvořeno. <b>2.</b> Napiš jednu vlastnost kapaliny a jednu vlastnost plynu. <b>3.</b> Je vzduch v nafouknutém balónku těleso, nebo látka? Vysvětli jednou větou.</p>
+    </details>
+
+    <details>
+      <summary>Jednověté shrnutí do sešitu</summary>
+      <p><b>Těleso</b> je konkrétní objekt nebo vymezená část látky, které můžeme přisoudit tvar, rozměry a polohu. <b>Látka</b> je materiál, z něhož se tělesa skládají. Látky mohou být pevné, kapalné nebo plynné; kapaliny a plyny jsou tekutiny.</p>
+    </details>
+
+    <div class="checkline"><button class="btn primary" onclick="window.print()">🖨️ Vytisknout přípravu</button></div>
+  </section>
+
+  <footer>Aplikace funguje bez internetu. Výsledky procvičování se ukládají jen v tomto prohlížeči.</footer>
+</div>
+
+<script>
+const $ = s => document.querySelector(s);
+const $$ = s => [...document.querySelectorAll(s)];
+
+const stats = JSON.parse(localStorage.getItem('telesoLatkaStats') || '{"right":0,"total":0}');
+function saveStats(){ localStorage.setItem('telesoLatkaStats', JSON.stringify(stats)); updateStats(); }
+function updateStats(){
+  $('#scoreText').textContent = `Procvičeno: ${stats.right} správně z ${stats.total} odpovědí`;
+  const pct = stats.total ? Math.round(stats.right/stats.total*100) : 0;
+  $('#progressBar').style.width = pct+'%';
+}
+function record(ok){ stats.total++; if(ok) stats.right++; saveStats(); }
+updateStats();
+
+function showTab(id){
+  $$('.panel').forEach(p=>p.classList.toggle('active',p.id===id));
+  $$('.tab').forEach(t=>t.classList.toggle('active',t.dataset.tab===id));
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+$$('.tab').forEach(t=>t.addEventListener('click',()=>showTab(t.dataset.tab)));
+$('#resetAll').addEventListener('click',()=>{
+  if(confirm('Vynulovat průběžné skóre procvičování?')){stats.right=0;stats.total=0;saveStats();}
+});
+
+function shuffle(a){ return [...a].sort(()=>Math.random()-.5); }
+
+// Těleso x látka
+const bodyItems = [
+  {t:'fotbalový míč',e:'⚽',a:'Těleso',x:'Je to konkrétní předmět s tvarem, rozměry a polohou.'},
+  {t:'železo jako materiál',e:'🔩',a:'Látka',x:'Železo je materiál. Hřebík ze železa by byl těleso.'},
+  {t:'voda',e:'💧',a:'Látka',x:'Slovo „voda“ zde označuje látku obecně.'},
+  {t:'voda v této láhvi',e:'🧴',a:'Těleso',x:'Je to konkrétní vymezené množství vody v určitém místě.'},
+  {t:'vzduch',e:'💨',a:'Látka',x:'Vzduch je plynná látka.'},
+  {t:'vzduch v pneumatice',e:'🛞',a:'Těleso',x:'Je to konkrétní vymezené množství vzduchu.'},
+  {t:'sklo',e:'🪟',a:'Látka',x:'Sklo je materiál, z něhož mohou být různá tělesa.'},
+  {t:'skleněná kulička',e:'🔵',a:'Těleso',x:'Kulička je konkrétní předmět; sklo je látka, ze které je vyrobena.'},
+  {t:'dřevo',e:'🪵',a:'Látka',x:'Dřevo je látka. Konkrétní prkno nebo židle jsou tělesa.'},
+  {t:'učebnice na lavici',e:'📘',a:'Těleso',x:'Je to konkrétní předmět, který má rozměry a polohu.'},
+  {t:'benzín',e:'⛽',a:'Látka',x:'Benzín označuje materiál – kapalnou látku.'},
+  {t:'kapka vody',e:'💧',a:'Těleso',x:'Kapka je konkrétní vymezené množství vody s vlastní polohou a rozměry.'}
+];
+let bodyDeck=[], bodyCurrent=null, bodyLocked=false;
+function nextBody(){
+  if(!bodyDeck.length) bodyDeck=shuffle(bodyItems);
+  bodyCurrent=bodyDeck.pop(); bodyLocked=false;
+  $('#bodyEmoji').textContent=bodyCurrent.e; $('#bodyPrompt').textContent=bodyCurrent.t;
+  $('#bodyFeedback').className='feedback'; $('#bodyFeedback').textContent='';
+  $('#bodyNext').style.display='none';
+  $$('[data-body-answer]').forEach(b=>b.classList.remove('correct','wrong'));
+}
+$$('[data-body-answer]').forEach(b=>b.addEventListener('click',()=>{
+  if(bodyLocked) return; bodyLocked=true;
+  const ok=b.dataset.bodyAnswer===bodyCurrent.a; record(ok);
+  b.classList.add(ok?'correct':'wrong');
+  if(!ok) $$('[data-body-answer]').find(x=>x.dataset.bodyAnswer===bodyCurrent.a).classList.add('correct');
+  const f=$('#bodyFeedback'); f.className='feedback show '+(ok?'good':'bad');
+  f.innerHTML=(ok?'✅ <b>Správně.</b> ':'💡 <b>Ještě ne.</b> ')+bodyCurrent.x;
+  $('#bodyNext').style.display='inline-block';
+}));
+$('#bodyNext').addEventListener('click',nextBody); nextBody();
+
+// Z čeho je
+const materials=['dřevo','sklo','železo / ocel','plast','voda','vzduch','guma','porcelán'];
+const pairItems=[
+  {o:'🪑 židle',m:'dřevo'}, {o:'🥛 sklenice',m:'sklo'}, {o:'🔨 hlava kladiva',m:'železo / ocel'},
+  {o:'🧴 PET láhev',m:'plast'}, {o:'🛞 pneumatika',m:'guma'}, {o:'☕ porcelánový hrnek',m:'porcelán'},
+  {o:'💧 obsah láhve s vodou',m:'voda'}, {o:'🎈 vzduch v balónku',m:'vzduch'},
+  {o:'🪟 okenní tabule',m:'sklo'}, {o:'🥄 kovová lžíce',m:'železo / ocel'},
+  {o:'🧱 plastová stavebnice',m:'plast'}, {o:'🪵 dřevěné pravítko',m:'dřevo'}
+];
+let currentPairs=[];
+function renderPairs(){
+  currentPairs=shuffle(pairItems).slice(0,6);
+  $('#matchGrid').innerHTML=currentPairs.map((p,i)=>`<div class="mini"><h4>${p.o}</h4><select data-pair="${i}"><option value="">Vyber látku…</option>${materials.map(m=>`<option>${m}</option>`).join('')}</select></div>`).join('');
+  $('#matchMessage').textContent='';
+}
+$('#checkMatch').addEventListener('click',()=>{
+  let good=0, answered=0;
+  $$('[data-pair]').forEach((s,i)=>{
+    if(s.value){answered++; const ok=s.value===currentPairs[i].m; if(ok) good++; s.style.borderColor=ok?'#86efac':'#fca5a5'; s.style.background=ok?'#ecfdf5':'#fef2f2'; record(ok);}
+  });
+  $('#matchMessage').textContent=answered?`Správně ${good} z ${answered}.`:'Nejdřív něco vyber.';
+});
+$('#newMatch').addEventListener('click',renderPairs); renderPairs();
+
+// Skupenství
+const stateItems=[
+  {t:'led',e:'🧊',a:'Pevné',x:'Led si za běžných podmínek drží vlastní tvar i objem.'},
+  {t:'voda ve sklenici',e:'🥤',a:'Kapalné',x:'Voda přebírá tvar nádoby, ale její objem se běžně téměř nemění.'},
+  {t:'vzduch v místnosti',e:'💨',a:'Plynné',x:'Vzduch vyplňuje prostor a snadno mění objem.'},
+  {t:'rtuť v teploměru',e:'🌡️',a:'Kapalné',x:'Rtuť je za běžné pokojové teploty kapalina.'},
+  {t:'železný hřebík',e:'🔩',a:'Pevné',x:'Železo je za běžných teplot pevná látka.'},
+  {t:'vodní pára',e:'☁️',a:'Plynné',x:'Vodní pára je voda v plynném skupenství. (Viditelná bílá „pára“ bývá hlavně směs drobných kapiček.)'},
+  {t:'benzín',e:'⛽',a:'Kapalné',x:'Benzín je za běžných podmínek kapalina.'},
+  {t:'kyslík',e:'🫧',a:'Plynné',x:'Kyslík je za běžných podmínek plyn.'},
+  {t:'sklo',e:'🪟',a:'Pevné',x:'Sklo je za běžných podmínek pevná látka.'}
+];
+let stateDeck=[], stateCurrent=null, stateLocked=false;
+function nextState(){
+  if(!stateDeck.length) stateDeck=shuffle(stateItems);
+  stateCurrent=stateDeck.pop(); stateLocked=false;
+  $('#stateEmoji').textContent=stateCurrent.e; $('#statePrompt').textContent=stateCurrent.t;
+  $('#stateFeedback').className='feedback'; $('#stateFeedback').textContent=''; $('#stateNext').style.display='none';
+  $$('[data-state-answer]').forEach(b=>b.classList.remove('correct','wrong'));
+}
+$$('[data-state-answer]').forEach(b=>b.addEventListener('click',()=>{
+  if(stateLocked)return; stateLocked=true;
+  const ok=b.dataset.stateAnswer===stateCurrent.a; record(ok);
+  b.classList.add(ok?'correct':'wrong');
+  if(!ok) $$('[data-state-answer]').find(x=>x.dataset.stateAnswer===stateCurrent.a).classList.add('correct');
+  const f=$('#stateFeedback'); f.className='feedback show '+(ok?'good':'bad'); f.innerHTML=(ok?'✅ <b>Správně.</b> ':'💡 <b>Správná odpověď je '+stateCurrent.a+'.</b> ')+stateCurrent.x;
+  $('#stateNext').style.display='inline-block';
+}));
+$('#stateNext').addEventListener('click',nextState); nextState();
+
+let airCompressed=false;
+$('#compressAir').addEventListener('click',()=>{airCompressed=!airCompressed; $('#airSyringe').classList.toggle('compressed',airCompressed); $('#compressAir').textContent=airCompressed?'Povolit píst':'Stlačit vzduch';});
+$('#tryWater').addEventListener('click',()=>{ $('#waterText').innerHTML='✋ Píst se téměř nepohne. <b>Voda se za běžných podmínek prakticky nestlačuje.</b>'; });
+
+// Kvíz
+const quizBank=[
+  {q:'Která možnost je těleso?',o:['dřevo','železo','skleněná kulička','vzduch'],a:2,x:'Skleněná kulička je konkrétní objekt. Ostatní možnosti jsou názvy látek.'},
+  {q:'Která možnost je látka?',o:['pravítko','porcelán','míč','počítač'],a:1,x:'Porcelán je materiál, ze kterého mohou být vyrobena různá tělesa.'},
+  {q:'Co můžeme přisoudit tělesu?',o:['jen barvu','tvar, rozměry a polohu','jen hmotnost','jen skupenství'],a:1,x:'Pro těleso je důležité, že je konkrétně vymezené: má tvar, rozměry a polohu.'},
+  {q:'Co platí pro kapalinu?',o:['má vždy vlastní tvar','snadno mění objem','přebírá tvar nádoby a téměř drží objem','nemůže proudit'],a:2,x:'Kapalina přebírá tvar nádoby, ale její objem se běžně téměř nemění.'},
+  {q:'Co platí pro plyn?',o:['nelze ho stlačit','má vždy vodorovnou hladinu','snadno mění tvar i objem','má stálý tvar'],a:2,x:'Plyn vyplňuje dostupný prostor a je výrazně stlačitelný.'},
+  {q:'Jak společně nazýváme kapaliny a plyny?',o:['pevné látky','tekutiny','krystaly','tělesa'],a:1,x:'Kapaliny i plyny mohou téct a proudit, proto jsou to tekutiny.'},
+  {q:'Co se ve stříkačce snáze stlačí?',o:['voda','vzduch','obojí stejně','ani jedno'],a:1,x:'Plyn je výrazně stlačitelnější než kapalina.'},
+  {q:'Které tvrzení je správně?',o:['Jedno těleso může být z více látek.','Jedno těleso je vždy jen z jedné látky.','Látka má vždy vlastní tvar.','Plyn nemůže být součástí tělesa.'],a:0,x:'Například automobil nebo počítač se skládá z mnoha částí a látek.'},
+  {q:'„Vzduch v nafouknutém balónku“ je v tomto popisu…',o:['jen látka','konkrétní vymezené těleso tvořené vzduchem','pevná látka','kapalina'],a:1,x:'Vzduch je látka, ale jeho konkrétní vymezené množství v balónku můžeme považovat za těleso.'},
+  {q:'Když přelijeme vodu z úzké sklenice do široké misky, co se změní nejvíc?',o:['její látka','její hmotnost musí zmizet','její tvar','její skupenství'],a:2,x:'Kapalina převezme nový tvar nádoby, zatímco její objem zůstane přibližně stejný.'},
+  {q:'Která dvojice patří k sobě?',o:['hřebík – železo','vzduch – židle','voda – sklo','míč – dřevo vždy'],a:0,x:'Hřebík může být těleso vyrobené ze železa.'},
+  {q:'Co je vodorovné u kapaliny v klidu?',o:['dno nádoby','její volná hladina','vždy stěny nádoby','její barva'],a:1,x:'Volná hladina kapaliny v klidu je vodorovná.'}
+];
+let qDeck=[],qIndex=0,qPoints=0,qLocked=false;
+function startQuiz(){ qDeck=shuffle(quizBank).slice(0,10); qIndex=0;qPoints=0; $('#quizArea').style.display='block'; $('#quizResult').classList.remove('show'); renderQuiz(); }
+function renderQuiz(){
+  qLocked=false; const q=qDeck[qIndex];
+  $('#qNumber').textContent=`Otázka ${qIndex+1} / ${qDeck.length}`; $('#qScore').textContent=`${qPoints} bodů`; $('#qPrompt').textContent=q.q;
+  $('#qOptions').innerHTML=q.o.map((x,i)=>`<button class="quiz-option" data-qopt="${i}">${String.fromCharCode(65+i)}. ${x}</button>`).join('');
+  $('#qFeedback').className='feedback'; $('#qFeedback').textContent=''; $('#qNext').style.display='none';
+  $$('[data-qopt]').forEach(b=>b.addEventListener('click',()=>answerQuiz(+b.dataset.qopt)));
+}
+function answerQuiz(i){ if(qLocked)return; qLocked=true; const q=qDeck[qIndex]; const ok=i===q.a; if(ok)qPoints++; record(ok);
+  $$('[data-qopt]').forEach((b,idx)=>{ if(idx===q.a)b.classList.add('correct'); else if(idx===i)b.classList.add('wrong'); b.disabled=true; });
+  const f=$('#qFeedback'); f.className='feedback show '+(ok?'good':'bad'); f.innerHTML=(ok?'✅ <b>Správně.</b> ':'💡 <b>Správně je '+String.fromCharCode(65+q.a)+'.</b> ')+q.x;
+  $('#qScore').textContent=`${qPoints} bodů`; $('#qNext').style.display='inline-block'; $('#qNext').textContent=qIndex===qDeck.length-1?'Výsledek →':'Další otázka →';
+}
+$('#qNext').addEventListener('click',()=>{ if(qIndex<qDeck.length-1){qIndex++;renderQuiz();}else finishQuiz(); });
+function finishQuiz(){
+  $('#quizArea').style.display='none'; $('#quizResult').classList.add('show'); $('#finalScore').textContent=`${qPoints} / ${qDeck.length}`;
+  let title,text; const pct=qPoints/qDeck.length;
+  if(pct===1){title='Výborně!';text='Máš jasno v tělesech, látkách i skupenství.'}
+  else if(pct>=.8){title='Moc dobré!';text='Jen pár drobností. Zkus si projít vysvětlení u chyb.'}
+  else if(pct>=.6){title='Dobrý základ.';text='Vrať se ještě k přehledu a procvič hlavně otázky, kde sis nebyl jistý.'}
+  else {title='Ještě trochu procvičit.';text='Začni znovu částí Těleso × látka a potom Skupenství. Pak kvíz zkus znovu.'}
+  $('#finalTitle').textContent=title; $('#finalText').textContent=text;
+}
+$('#restartQuiz').addEventListener('click',startQuiz); startQuiz();
+</script>
+</body>
+</html>
