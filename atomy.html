@@ -15,11 +15,16 @@ h2{margin-top:0}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(
 .question{font-size:22px;font-weight:800;margin:8px 0 16px}.answers{display:grid;gap:10px}.answer{width:100%;text-align:left}.feedback{margin-top:14px;padding:12px;border-radius:12px;display:none}.feedback.ok{display:block;background:var(--ok);border:1px solid #b9dfbf}.feedback.bad{display:block;background:var(--bad);border:1px solid #efc3c3}.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}.score{font-weight:800;margin-left:auto}
 .particle-box{height:260px;background:#fbfdff;border:1px solid var(--line);border-radius:16px;position:relative;overflow:hidden}.particle{position:absolute;width:18px;height:18px;border-radius:50%;background:#679ab6;border:2px solid #426f88}.state-buttons{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}.state-note{font-weight:700;color:var(--muted);margin-top:10px}.small{font-size:14px;color:var(--muted)}
 table{width:100%;border-collapse:collapse}th,td{border:1px solid var(--line);padding:9px;text-align:center}th{background:#edf6fa}@media(max-width:600px){.score{width:100%;margin-left:0}button{flex:1}}
+
+.iframe-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px}
+.visual-frame{width:100%;height:330px;border:1px solid var(--line);border-radius:16px;background:#fff}
+.visual-caption{font-weight:800;margin:8px 2px 0}
+.visual-note{font-size:14px;color:var(--muted);margin:3px 2px 0}
 </style>
 </head>
 <body>
 <header><div class="wrap"><h1>Atomy a molekuly</h1><div class="subtitle">Procvičování pro 6. ročník ZŠ</div><nav>
-<button class="tab active" data-tab="prehled">Přehled</button><button class="tab" data-tab="castice">Částice a skupenství</button><button class="tab" data-tab="pojmy">Pojmy</button><button class="tab" data-tab="trideni">Třídění</button><button class="tab" data-tab="quiz">Kvíz</button>
+<button class="tab active" data-tab="prehled">Přehled</button><button class="tab" data-tab="castice">Částice a skupenství</button><button class="tab" data-tab="obrazky">Obrázky</button><button class="tab" data-tab="pojmy">Pojmy</button><button class="tab" data-tab="trideni">Třídění</button><button class="tab" data-tab="quiz">Kvíz</button>
 </nav></div></header>
 <main>
 <section id="prehled" class="panel active">
@@ -35,6 +40,107 @@ table{width:100%;border-collapse:collapse}th,td{border:1px solid var(--line);pad
 <div class="card"><h2>Částice v různých skupenstvích</h2><table><tr><th>Skupenství</th><th>Jak jsou částice?</th><th>Jak se pohybují?</th></tr><tr><td>Pevné</td><td>velmi blízko u sebe</td><td>kmitají kolem svých poloh</td></tr><tr><td>Kapalné</td><td>blízko u sebe</td><td>mohou se navzájem posouvat</td></tr><tr><td>Plynné</td><td>daleko od sebe</td><td>pohybují se volně</td></tr></table></div>
 </section>
 <section id="castice" class="panel"><div class="card"><h2>Model částic</h2><p>Vyber skupenství a sleduj jednoduchý model pohybu částic.</p><div class="state-buttons"><button onclick="setState('solid')">Pevné</button><button onclick="setState('liquid')">Kapalné</button><button onclick="setState('gas')">Plynné</button></div><div id="particleBox" class="particle-box"></div><div id="stateNote" class="state-note"></div></div></section>
+
+<section id="obrazky" class="panel">
+  <div class="card">
+    <h2>Obrázky a modely</h2>
+    <p>Každý obrázek je vložený do samostatného <b>iframe</b>. Jsou to vlastní schematické modely, takže aplikace nepotřebuje načítat obrázky z cizích webů.</p>
+    <div class="iframe-grid">
+      <div><iframe class="visual-frame" loading="lazy" title="Model atomu" sandbox="" srcdoc="&lt;!doctype html&gt;
+&lt;html lang=&quot;cs&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;utf-8&quot;&gt;
+&lt;style&gt;
+*{box-sizing:border-box} body{margin:0;font-family:Arial,sans-serif;background:#fbfdff;color:#183243}
+.wrap{height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:12px}
+h2{margin:0 0 8px;font-size:20px} p{margin:8px 0 0;text-align:center;font-size:14px;line-height:1.35;color:#536b79}
+svg{width:100%;max-width:420px;height:220px}
+.label{font:700 16px Arial;fill:#183243} .small{font:13px Arial;fill:#536b79}
+&lt;/style&gt;&lt;/head&gt;&lt;body&gt;&lt;div class=&quot;wrap&quot;&gt;&lt;h2&gt;Model atomu&lt;/h2&gt;
+&lt;svg viewBox=&quot;0 0 420 220&quot; role=&quot;img&quot; aria-label=&quot;Jednoduchý model atomu&quot;&gt;
+  &lt;ellipse cx=&quot;210&quot; cy=&quot;112&quot; rx=&quot;130&quot; ry=&quot;46&quot; fill=&quot;none&quot; stroke=&quot;#7aa6bd&quot; stroke-width=&quot;3&quot;/&gt;
+  &lt;ellipse cx=&quot;210&quot; cy=&quot;112&quot; rx=&quot;130&quot; ry=&quot;46&quot; fill=&quot;none&quot; stroke=&quot;#7aa6bd&quot; stroke-width=&quot;3&quot; transform=&quot;rotate(60 210 112)&quot;/&gt;
+  &lt;ellipse cx=&quot;210&quot; cy=&quot;112&quot; rx=&quot;130&quot; ry=&quot;46&quot; fill=&quot;none&quot; stroke=&quot;#7aa6bd&quot; stroke-width=&quot;3&quot; transform=&quot;rotate(-60 210 112)&quot;/&gt;
+  &lt;circle cx=&quot;210&quot; cy=&quot;112&quot; r=&quot;30&quot; fill=&quot;#e96f5d&quot;/&gt;
+  &lt;circle cx=&quot;200&quot; cy=&quot;104&quot; r=&quot;9&quot; fill=&quot;#f5c451&quot;/&gt;&lt;circle cx=&quot;220&quot; cy=&quot;102&quot; r=&quot;9&quot; fill=&quot;#f5c451&quot;/&gt;&lt;circle cx=&quot;210&quot; cy=&quot;122&quot; r=&quot;9&quot; fill=&quot;#f5c451&quot;/&gt;
+  &lt;circle cx=&quot;340&quot; cy=&quot;112&quot; r=&quot;9&quot; fill=&quot;#4b8fbd&quot;/&gt;
+  &lt;circle cx=&quot;145&quot; cy=&quot;0&quot; r=&quot;9&quot; fill=&quot;#4b8fbd&quot; transform=&quot;rotate(60 210 112)&quot;/&gt;
+  &lt;circle cx=&quot;145&quot; cy=&quot;0&quot; r=&quot;9&quot; fill=&quot;#4b8fbd&quot; transform=&quot;rotate(-60 210 112)&quot;/&gt;
+  &lt;text x=&quot;210&quot; y=&quot;170&quot; text-anchor=&quot;middle&quot; class=&quot;small&quot;&gt;schematický model atomu&lt;/text&gt;
+&lt;/svg&gt;
+&lt;p&gt;Atom je velmi malá částice látky. Obrázek je pouze zjednodušený model.&lt;/p&gt;&lt;/div&gt;&lt;/body&gt;&lt;/html&gt;"></iframe><div class="visual-caption">Model atomu</div><div class="visual-note">Atom je velmi malá částice látky. Obrázek je pouze zjednodušený model.</div></div><div><iframe class="visual-frame" loading="lazy" title="Molekula vody" sandbox="" srcdoc="&lt;!doctype html&gt;
+&lt;html lang=&quot;cs&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;utf-8&quot;&gt;
+&lt;style&gt;
+*{box-sizing:border-box} body{margin:0;font-family:Arial,sans-serif;background:#fbfdff;color:#183243}
+.wrap{height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:12px}
+h2{margin:0 0 8px;font-size:20px} p{margin:8px 0 0;text-align:center;font-size:14px;line-height:1.35;color:#536b79}
+svg{width:100%;max-width:420px;height:220px}
+.label{font:700 16px Arial;fill:#183243} .small{font:13px Arial;fill:#536b79}
+&lt;/style&gt;&lt;/head&gt;&lt;body&gt;&lt;div class=&quot;wrap&quot;&gt;&lt;h2&gt;Molekula vody&lt;/h2&gt;
+&lt;svg viewBox=&quot;0 0 420 220&quot; role=&quot;img&quot; aria-label=&quot;Model molekuly vody&quot;&gt;
+  &lt;line x1=&quot;210&quot; y1=&quot;115&quot; x2=&quot;125&quot; y2=&quot;65&quot; stroke=&quot;#7896a8&quot; stroke-width=&quot;14&quot; stroke-linecap=&quot;round&quot;/&gt;
+  &lt;line x1=&quot;210&quot; y1=&quot;115&quot; x2=&quot;295&quot; y2=&quot;65&quot; stroke=&quot;#7896a8&quot; stroke-width=&quot;14&quot; stroke-linecap=&quot;round&quot;/&gt;
+  &lt;circle cx=&quot;210&quot; cy=&quot;120&quot; r=&quot;48&quot; fill=&quot;#e85f53&quot;/&gt;
+  &lt;circle cx=&quot;118&quot; cy=&quot;60&quot; r=&quot;32&quot; fill=&quot;#f2f4f5&quot; stroke=&quot;#b8c8d2&quot; stroke-width=&quot;3&quot;/&gt;
+  &lt;circle cx=&quot;302&quot; cy=&quot;60&quot; r=&quot;32&quot; fill=&quot;#f2f4f5&quot; stroke=&quot;#b8c8d2&quot; stroke-width=&quot;3&quot;/&gt;
+  &lt;text x=&quot;210&quot; y=&quot;127&quot; text-anchor=&quot;middle&quot; class=&quot;label&quot; fill=&quot;white&quot;&gt;O&lt;/text&gt;
+  &lt;text x=&quot;118&quot; y=&quot;67&quot; text-anchor=&quot;middle&quot; class=&quot;label&quot;&gt;H&lt;/text&gt;
+  &lt;text x=&quot;302&quot; y=&quot;67&quot; text-anchor=&quot;middle&quot; class=&quot;label&quot;&gt;H&lt;/text&gt;
+  &lt;text x=&quot;210&quot; y=&quot;200&quot; text-anchor=&quot;middle&quot; class=&quot;label&quot;&gt;H₂O = 2× vodík + 1× kyslík&lt;/text&gt;
+&lt;/svg&gt;
+&lt;p&gt;Jedna molekula vody obsahuje dva atomy vodíku a jeden atom kyslíku.&lt;/p&gt;&lt;/div&gt;&lt;/body&gt;&lt;/html&gt;"></iframe><div class="visual-caption">Molekula vody</div><div class="visual-note">Jedna molekula vody obsahuje dva atomy vodíku a jeden atom kyslíku.</div></div><div><iframe class="visual-frame" loading="lazy" title="Částice a skupenství" sandbox="" srcdoc="&lt;!doctype html&gt;
+&lt;html lang=&quot;cs&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;utf-8&quot;&gt;
+&lt;style&gt;
+*{box-sizing:border-box} body{margin:0;font-family:Arial,sans-serif;background:#fbfdff;color:#183243}
+.wrap{height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:12px}
+h2{margin:0 0 8px;font-size:20px} p{margin:8px 0 0;text-align:center;font-size:14px;line-height:1.35;color:#536b79}
+svg{width:100%;max-width:420px;height:220px}
+.label{font:700 16px Arial;fill:#183243} .small{font:13px Arial;fill:#536b79}
+&lt;/style&gt;&lt;/head&gt;&lt;body&gt;&lt;div class=&quot;wrap&quot;&gt;&lt;h2&gt;Částice a skupenství&lt;/h2&gt;
+&lt;svg viewBox=&quot;0 0 420 220&quot; role=&quot;img&quot; aria-label=&quot;Částice v pevném, kapalném a plynném skupenství&quot;&gt;
+  &lt;rect x=&quot;8&quot; y=&quot;28&quot; width=&quot;125&quot; height=&quot;150&quot; rx=&quot;10&quot; fill=&quot;#f4f9fc&quot; stroke=&quot;#b8ccd8&quot;/&gt;
+  &lt;rect x=&quot;147&quot; y=&quot;28&quot; width=&quot;125&quot; height=&quot;150&quot; rx=&quot;10&quot; fill=&quot;#f4f9fc&quot; stroke=&quot;#b8ccd8&quot;/&gt;
+  &lt;rect x=&quot;286&quot; y=&quot;28&quot; width=&quot;125&quot; height=&quot;150&quot; rx=&quot;10&quot; fill=&quot;#f4f9fc&quot; stroke=&quot;#b8ccd8&quot;/&gt;
+  &lt;text x=&quot;70&quot; y=&quot;20&quot; text-anchor=&quot;middle&quot; class=&quot;label&quot;&gt;pevné&lt;/text&gt;
+  &lt;text x=&quot;209&quot; y=&quot;20&quot; text-anchor=&quot;middle&quot; class=&quot;label&quot;&gt;kapalné&lt;/text&gt;
+  &lt;text x=&quot;348&quot; y=&quot;20&quot; text-anchor=&quot;middle&quot; class=&quot;label&quot;&gt;plynné&lt;/text&gt;
+  &lt;g fill=&quot;#679ab6&quot; stroke=&quot;#426f88&quot;&gt;
+    &lt;circle cx=&quot;38&quot; cy=&quot;72&quot; r=&quot;11&quot;/&gt;&lt;circle cx=&quot;70&quot; cy=&quot;72&quot; r=&quot;11&quot;/&gt;&lt;circle cx=&quot;102&quot; cy=&quot;72&quot; r=&quot;11&quot;/&gt;
+    &lt;circle cx=&quot;38&quot; cy=&quot;104&quot; r=&quot;11&quot;/&gt;&lt;circle cx=&quot;70&quot; cy=&quot;104&quot; r=&quot;11&quot;/&gt;&lt;circle cx=&quot;102&quot; cy=&quot;104&quot; r=&quot;11&quot;/&gt;
+    &lt;circle cx=&quot;38&quot; cy=&quot;136&quot; r=&quot;11&quot;/&gt;&lt;circle cx=&quot;70&quot; cy=&quot;136&quot; r=&quot;11&quot;/&gt;&lt;circle cx=&quot;102&quot; cy=&quot;136&quot; r=&quot;11&quot;/&gt;
+    &lt;circle cx=&quot;170&quot; cy=&quot;126&quot; r=&quot;11&quot;/&gt;&lt;circle cx=&quot;202&quot; cy=&quot;131&quot; r=&quot;11&quot;/&gt;&lt;circle cx=&quot;235&quot; cy=&quot;123&quot; r=&quot;11&quot;/&gt;
+    &lt;circle cx=&quot;183&quot; cy=&quot;97&quot; r=&quot;11&quot;/&gt;&lt;circle cx=&quot;218&quot; cy=&quot;99&quot; r=&quot;11&quot;/&gt;&lt;circle cx=&quot;248&quot; cy=&quot;106&quot; r=&quot;11&quot;/&gt;
+    &lt;circle cx=&quot;166&quot; cy=&quot;153&quot; r=&quot;11&quot;/&gt;&lt;circle cx=&quot;199&quot; cy=&quot;157&quot; r=&quot;11&quot;/&gt;&lt;circle cx=&quot;233&quot; cy=&quot;151&quot; r=&quot;11&quot;/&gt;
+    &lt;circle cx=&quot;310&quot; cy=&quot;55&quot; r=&quot;11&quot;/&gt;&lt;circle cx=&quot;382&quot; cy=&quot;69&quot; r=&quot;11&quot;/&gt;&lt;circle cx=&quot;342&quot; cy=&quot;106&quot; r=&quot;11&quot;/&gt;
+    &lt;circle cx=&quot;302&quot; cy=&quot;146&quot; r=&quot;11&quot;/&gt;&lt;circle cx=&quot;389&quot; cy=&quot;151&quot; r=&quot;11&quot;/&gt;&lt;circle cx=&quot;365&quot; cy=&quot;42&quot; r=&quot;11&quot;/&gt;
+  &lt;/g&gt;
+&lt;/svg&gt;
+&lt;p&gt;Pevná látka: částice těsně u sebe. Kapalina: blízko u sebe a posouvají se. Plyn: částice daleko od sebe.&lt;/p&gt;&lt;/div&gt;&lt;/body&gt;&lt;/html&gt;"></iframe><div class="visual-caption">Částice a skupenství</div><div class="visual-note">Pevná látka: částice těsně u sebe. Kapalina: blízko u sebe a posouvají se. Plyn: částice daleko od sebe.</div></div><div><iframe class="visual-frame" loading="lazy" title="Prvek × sloučenina × směs" sandbox="" srcdoc="&lt;!doctype html&gt;
+&lt;html lang=&quot;cs&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;utf-8&quot;&gt;
+&lt;style&gt;
+*{box-sizing:border-box} body{margin:0;font-family:Arial,sans-serif;background:#fbfdff;color:#183243}
+.wrap{height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:12px}
+h2{margin:0 0 8px;font-size:20px} p{margin:8px 0 0;text-align:center;font-size:14px;line-height:1.35;color:#536b79}
+svg{width:100%;max-width:420px;height:220px}
+.label{font:700 16px Arial;fill:#183243} .small{font:13px Arial;fill:#536b79}
+&lt;/style&gt;&lt;/head&gt;&lt;body&gt;&lt;div class=&quot;wrap&quot;&gt;&lt;h2&gt;Prvek × sloučenina × směs&lt;/h2&gt;
+&lt;svg viewBox=&quot;0 0 420 220&quot; role=&quot;img&quot; aria-label=&quot;Rozdíl mezi prvkem, sloučeninou a směsí&quot;&gt;
+  &lt;text x=&quot;70&quot; y=&quot;25&quot; text-anchor=&quot;middle&quot; class=&quot;label&quot;&gt;prvek&lt;/text&gt;
+  &lt;text x=&quot;210&quot; y=&quot;25&quot; text-anchor=&quot;middle&quot; class=&quot;label&quot;&gt;sloučenina&lt;/text&gt;
+  &lt;text x=&quot;350&quot; y=&quot;25&quot; text-anchor=&quot;middle&quot; class=&quot;label&quot;&gt;směs&lt;/text&gt;
+  &lt;rect x=&quot;10&quot; y=&quot;35&quot; width=&quot;120&quot; height=&quot;150&quot; rx=&quot;10&quot; fill=&quot;#f7fbfd&quot; stroke=&quot;#b8ccd8&quot;/&gt;
+  &lt;g fill=&quot;#679ab6&quot;&gt;&lt;circle cx=&quot;45&quot; cy=&quot;75&quot; r=&quot;14&quot;/&gt;&lt;circle cx=&quot;90&quot; cy=&quot;75&quot; r=&quot;14&quot;/&gt;&lt;circle cx=&quot;45&quot; cy=&quot;125&quot; r=&quot;14&quot;/&gt;&lt;circle cx=&quot;90&quot; cy=&quot;125&quot; r=&quot;14&quot;/&gt;&lt;/g&gt;
+  &lt;rect x=&quot;150&quot; y=&quot;35&quot; width=&quot;120&quot; height=&quot;150&quot; rx=&quot;10&quot; fill=&quot;#f7fbfd&quot; stroke=&quot;#b8ccd8&quot;/&gt;
+  &lt;g stroke=&quot;#7896a8&quot; stroke-width=&quot;6&quot;&gt;&lt;line x1=&quot;184&quot; y1=&quot;77&quot; x2=&quot;220&quot; y2=&quot;77&quot;/&gt;&lt;line x1=&quot;184&quot; y1=&quot;130&quot; x2=&quot;220&quot; y2=&quot;130&quot;/&gt;&lt;/g&gt;
+  &lt;circle cx=&quot;180&quot; cy=&quot;77&quot; r=&quot;14&quot; fill=&quot;#679ab6&quot;/&gt;&lt;circle cx=&quot;224&quot; cy=&quot;77&quot; r=&quot;14&quot; fill=&quot;#e85f53&quot;/&gt;
+  &lt;circle cx=&quot;180&quot; cy=&quot;130&quot; r=&quot;14&quot; fill=&quot;#679ab6&quot;/&gt;&lt;circle cx=&quot;224&quot; cy=&quot;130&quot; r=&quot;14&quot; fill=&quot;#e85f53&quot;/&gt;
+  &lt;rect x=&quot;290&quot; y=&quot;35&quot; width=&quot;120&quot; height=&quot;150&quot; rx=&quot;10&quot; fill=&quot;#f7fbfd&quot; stroke=&quot;#b8ccd8&quot;/&gt;
+  &lt;circle cx=&quot;320&quot; cy=&quot;72&quot; r=&quot;14&quot; fill=&quot;#679ab6&quot;/&gt;&lt;circle cx=&quot;372&quot; cy=&quot;62&quot; r=&quot;14&quot; fill=&quot;#e85f53&quot;/&gt;
+  &lt;circle cx=&quot;345&quot; cy=&quot;110&quot; r=&quot;14&quot; fill=&quot;#f5c451&quot;/&gt;&lt;circle cx=&quot;390&quot; cy=&quot;138&quot; r=&quot;14&quot; fill=&quot;#679ab6&quot;/&gt;
+  &lt;circle cx=&quot;315&quot; cy=&quot;150&quot; r=&quot;14&quot; fill=&quot;#e85f53&quot;/&gt;
+&lt;/svg&gt;
+&lt;p&gt;Stejná barva znamená stejný druh atomu. Sloučenina obsahuje spojené různé atomy, směs obsahuje různé částice vedle sebe.&lt;/p&gt;&lt;/div&gt;&lt;/body&gt;&lt;/html&gt;"></iframe><div class="visual-caption">Prvek × sloučenina × směs</div><div class="visual-note">Stejná barva znamená stejný druh atomu. Sloučenina obsahuje spojené různé atomy, směs obsahuje různé částice vedle sebe.</div></div>
+    </div>
+  </div>
+</section>
 <section id="pojmy" class="panel"><div class="card"><div class="row"><h2 style="margin:0">Co znamená pojem?</h2><div id="termScore" class="score">0 / 0</div></div><div id="termQuestion" class="question"></div><div id="termAnswers" class="answers"></div><div id="termFeedback" class="feedback"></div><div class="row" style="margin-top:14px"><button onclick="nextTerm()">Další otázka</button></div></div></section>
 <section id="trideni" class="panel"><div class="card"><h2>Zařaď správně</h2><p>Rozhodni, zda jde o prvek, sloučeninu, nebo směs.</p><div id="sortItem" class="question"></div><div class="grid"><button onclick="sortAnswer('prvek')">Prvek</button><button onclick="sortAnswer('sloucenina')">Sloučenina</button><button onclick="sortAnswer('smes')">Směs</button></div><div id="sortFeedback" class="feedback"></div><div class="row" style="margin-top:14px"><button onclick="nextSort()">Další</button><div id="sortScore" class="score">0 / 0</div></div></div></section>
 <section id="quiz" class="panel"><div class="card"><div class="row"><h2 style="margin:0">Závěrečný kvíz</h2><div id="quizScore" class="score">0 / 0</div></div><div id="quizQuestion" class="question"></div><div id="quizAnswers" class="answers"></div><div id="quizFeedback" class="feedback"></div><div class="row" style="margin-top:14px"><button onclick="nextQuiz()">Další otázka</button><button onclick="resetQuiz()">Začít znovu</button></div></div></section>
