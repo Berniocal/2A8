@@ -5,310 +5,66 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Atomy a molekuly – procvičování 6. ročník</title>
 <style>
-:root{--bg:#f4f8fb;--card:#fff;--ink:#183243;--muted:#5f7482;--accent:#2f6f91;--accent2:#dcecf5;--ok:#e8f5ea;--bad:#fdecec;--line:#d6e1e8}
-*{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:var(--bg);color:var(--ink)}
-header{background:linear-gradient(135deg,#dcecf5,#f8fbfd);border-bottom:1px solid var(--line);padding:22px 16px}header .wrap,main{max-width:980px;margin:auto}
-h1{margin:0 0 6px;font-size:clamp(28px,5vw,46px)}.subtitle{color:var(--muted)}nav{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}
-button{border:1px solid #b8ccd8;background:#fff;color:var(--ink);padding:10px 14px;border-radius:12px;font-weight:700;cursor:pointer;font-size:15px}button:hover{background:#eef6fa}button.active{background:var(--accent);color:#fff;border-color:var(--accent)}
-main{padding:18px 14px 40px}.panel{display:none}.panel.active{display:block}.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px;margin:14px 0;box-shadow:0 3px 14px rgba(30,70,90,.05)}
-h2{margin-top:0}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px}.big{font-size:20px;line-height:1.55}.example{padding:12px;border-left:5px solid var(--accent);background:#f7fbfd;border-radius:8px;margin:10px 0}
-.question{font-size:22px;font-weight:800;margin:8px 0 16px}.answers{display:grid;gap:10px}.answer{width:100%;text-align:left}.feedback{margin-top:14px;padding:12px;border-radius:12px;display:none}.feedback.ok{display:block;background:var(--ok);border:1px solid #b9dfbf}.feedback.bad{display:block;background:var(--bad);border:1px solid #efc3c3}.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}.score{font-weight:800;margin-left:auto}
-.particle-box{height:260px;background:#fbfdff;border:1px solid var(--line);border-radius:16px;position:relative;overflow:hidden}.particle{position:absolute;width:18px;height:18px;border-radius:50%;background:#679ab6;border:2px solid #426f88}.state-buttons{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}.state-note{font-weight:700;color:var(--muted);margin-top:10px}.small{font-size:14px;color:var(--muted)}
-table{width:100%;border-collapse:collapse}th,td{border:1px solid var(--line);padding:9px;text-align:center}th{background:#edf6fa}@media(max-width:600px){.score{width:100%;margin-left:0}button{flex:1}}
-
-.iframe-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px}
-.visual-frame{width:100%;height:330px;border:1px solid var(--line);border-radius:16px;background:#fff}
-.visual-caption{font-weight:800;margin:8px 2px 0}
-.visual-note{font-size:14px;color:var(--muted);margin:3px 2px 0}
-
-.webphoto-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:16px;margin-top:14px}
-.webphoto-frame{width:100%;height:390px;border:1px solid var(--line);border-radius:16px;background:white}
-.source-note{font-size:13px;color:var(--muted);margin-top:12px;line-height:1.5}
+:root{--bg:#f4f8fb;--card:#fff;--ink:#183243;--muted:#607684;--line:#d6e1e8;--accent:#2f6f91;--soft:#e8f3f8;--ok:#e8f6ea;--bad:#fdecec;--h:#5aa7d6;--o:#e96f5d;--x:#f2c14e;--metal:#8c9aa6;--bond:#6d8392}
+*{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Arial,sans-serif;background:var(--bg);color:var(--ink)}header{padding:22px 16px;background:linear-gradient(135deg,#dcecf5,#fff);border-bottom:1px solid var(--line)}header .wrap,main{max-width:1050px;margin:auto}h1{margin:0 0 5px;font-size:clamp(29px,5vw,46px)}.subtitle,.muted{color:var(--muted)}nav{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}button{border:1px solid #b7ccd8;background:#fff;color:var(--ink);padding:10px 13px;border-radius:12px;font-weight:750;cursor:pointer;font-size:15px}button:hover{background:#eef6fa}button.active{background:var(--accent);color:#fff;border-color:var(--accent)}main{padding:16px 14px 42px}.panel{display:none}.panel.active{display:block}.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px;margin:14px 0;box-shadow:0 3px 14px rgba(30,70,90,.05)}h2{margin-top:0}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(225px,1fr));gap:12px}.mini{padding:15px;border:1px solid var(--line);border-radius:15px;background:#fbfdff}.mini h3{margin:0 0 7px}.example{padding:12px 14px;border-left:5px solid var(--accent);background:#f7fbfd;border-radius:9px;margin:10px 0;line-height:1.5}.road{text-align:center;font-weight:800;font-size:clamp(18px,3vw,25px);line-height:1.75}.pill{display:inline-block;padding:7px 12px;border-radius:12px;background:var(--soft)}.concept-buttons,.state-buttons{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}.concept-stage{min-height:330px;border:1px solid var(--line);border-radius:17px;background:#fbfdff;padding:14px;overflow:hidden}.scene{height:220px;position:relative}.atom{position:absolute;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;box-shadow:0 2px 8px rgba(0,0,0,.12);animation:bob 2.5s ease-in-out infinite}.atom.s{width:32px;height:32px;font-size:12px}.atom.m{width:42px;height:42px}.atom.l{width:50px;height:50px;font-size:17px}.h{background:var(--h)}.o{background:var(--o)}.x{background:var(--x);color:#554000}.metal{background:var(--metal)}.bond{position:absolute;height:8px;background:var(--bond);border-radius:99px;transform-origin:left center}.label{position:absolute;font-size:14px;color:var(--muted);font-weight:750}@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}.particle-box{height:260px;border:1px solid var(--line);border-radius:17px;background:#fbfdff;position:relative;overflow:hidden}.particle{position:absolute;width:18px;height:18px;border-radius:50%;background:#679ab6;border:2px solid #426f88}.feedback{display:none;margin-top:13px;padding:12px;border-radius:12px}.feedback.ok{display:block;background:var(--ok);border:1px solid #bddfc1}.feedback.bad{display:block;background:var(--bad);border:1px solid #efc5c5}.question{font-size:21px;font-weight:800;margin:10px 0 14px}.answers{display:grid;gap:9px}.answer{text-align:left;width:100%}.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.score{margin-left:auto;font-weight:800}table{width:100%;border-collapse:collapse}th,td{border:1px solid var(--line);padding:9px;text-align:center}th{background:#edf6fa}.photo-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:14px}.photo-frame{width:100%;height:370px;border:1px solid var(--line);border-radius:16px;background:#fff}.note{font-size:13px;color:var(--muted)}@media(max-width:650px){button{flex:1}.score{width:100%;margin-left:0}.concept-stage{min-height:390px}}
 </style>
 </head>
 <body>
-<header><div class="wrap"><h1>Atomy a molekuly</h1><div class="subtitle">Procvičování pro 6. ročník ZŠ</div><nav>
-<button class="tab active" data-tab="prehled">Přehled</button><button class="tab" data-tab="castice">Částice a skupenství</button><button class="tab" data-tab="obrazky">Obrázky</button><button class="tab" data-tab="pojmy">Pojmy</button><button class="tab" data-tab="trideni">Třídění</button><button class="tab" data-tab="quiz">Kvíz</button>
+<header><div class="wrap"><h1>Atomy a molekuly</h1><div class="subtitle">6. ročník ZŠ · atom → molekula → látka → prvek / sloučenina → směs</div><nav>
+<button class="tab active" data-tab="prehled">Přehled</button><button class="tab" data-tab="animace">Animace pojmů</button><button class="tab" data-tab="skupenstvi">Skupenství</button><button class="tab" data-tab="obrazky">Obrázky</button><button class="tab" data-tab="pojmy">Pojmy</button><button class="tab" data-tab="trideni">Třídění</button><button class="tab" data-tab="kviz">Kvíz</button>
 </nav></div></header>
 <main>
 <section id="prehled" class="panel active">
-<div class="card big"><h2>Co si zapamatovat</h2><div class="grid">
-<div class="card"><h3>Atom</h3><p>Velmi malá částice látky.</p></div>
-<div class="card"><h3>Prvek</h3><p>Látka tvořená jedním druhem atomů.</p><p class="small">Např. železo, měď, kyslík, uhlík.</p></div>
-<div class="card"><h3>Molekula</h3><p>Skupina dvou nebo více atomů, které jsou spolu spojeny.</p></div>
-<div class="card"><h3>Sloučenina</h3><p>Látka vytvořená atomy alespoň dvou různých prvků.</p></div>
-</div>
-<div class="example"><b>Voda:</b> jedna molekula vody obsahuje dva atomy vodíku a jeden atom kyslíku → H₂O.</div>
-<div class="example"><b>Oxid:</b> sloučenina kyslíku s jiným prvkem.</div>
-<div class="example"><b>Směs:</b> obsahuje více různých látek. Například suchý písek je směs drobných kamínků a vzduchu, mokrý písek navíc obsahuje vodu.</div></div>
-<div class="card"><h2>Částice v různých skupenstvích</h2><table><tr><th>Skupenství</th><th>Jak jsou částice?</th><th>Jak se pohybují?</th></tr><tr><td>Pevné</td><td>velmi blízko u sebe</td><td>kmitají kolem svých poloh</td></tr><tr><td>Kapalné</td><td>blízko u sebe</td><td>mohou se navzájem posouvat</td></tr><tr><td>Plynné</td><td>daleko od sebe</td><td>pohybují se volně</td></tr></table></div>
+<div class="card"><h2>Základní pojmy</h2><div class="grid">
+<div class="mini"><h3>Atom</h3><b>Velmi malá částice látky.</b><p class="muted">Např. atom vodíku H, kyslíku O nebo železa Fe.</p></div>
+<div class="mini"><h3>Molekula</h3><b>Skupina spojených atomů.</b><p class="muted">Atomy v molekule mohou být stejného nebo různého druhu.</p></div>
+<div class="mini"><h3>Molekula prvku</h3><b>Obsahuje atomy stejného druhu.</b><p class="muted">Např. H₂, O₂.</p></div>
+<div class="mini"><h3>Molekula sloučeniny</h3><b>Obsahuje atomy různých druhů.</b><p class="muted">Např. H₂O, CO₂.</p></div>
+<div class="mini"><h3>Látka</h3><b>Je tvořena obrovským množstvím atomů nebo molekul.</b><p class="muted">Např. železo, kyslík, voda.</p></div>
+</div></div>
+<div class="card"><h2>Čisté látky</h2><p><b>Čisté látky jsou buď prvky, nebo sloučeniny.</b></p><div class="grid">
+<div class="mini"><h3>Prvek</h3><p><b>Látka tvořená pouze jedním druhem atomů.</b></p><p>Atomy mohou být samostatné nebo spojené do molekul prvku.</p><p class="muted">Fe · O₂ · H₂</p></div>
+<div class="mini"><h3>Sloučenina</h3><p><b>Látka tvořená částicemi, ve kterých jsou spojeny různé druhy atomů.</b></p><p>V tomto úvodu ji znázorňujeme molekulami sloučeniny.</p><p class="muted">H₂O · CO₂</p></div>
+</div><div class="example"><b>Prvek</b> = jeden druh atomů. <b>Sloučenina</b> = různé druhy atomů spojené v jedné čisté látce.</div></div>
+<div class="card"><h2>Směs</h2><p><b>Směs je tvořena alespoň dvěma různými látkami.</b></p><p>Tyto látky jsou společně, ale <b>nevytvářejí jednu novou čistou látku</b>.</p><p>Příklady: <b>vzduch, žula, slaná voda, mokrý písek</b>.</p><div class="example"><b>Sloučenina:</b> jedna čistá látka.<br><b>Směs:</b> několik různých látek společně.</div></div>
+<div class="card"><h2>Přehledná cesta</h2><div class="road">ATOM<br>↓<br>MOLEKULA<br><span class="muted" style="font-size:14px">molekula prvku / molekula sloučeniny</span><br>↓<br>LÁTKA<br>↓<br><span class="pill">PRVEK</span> &nbsp; nebo &nbsp; <span class="pill">SLOUČENINA</span><br><br><span class="muted" style="font-size:14px">alespoň dvě různé látky společně</span><br>↓<br><span class="pill">SMĚS</span></div></div>
 </section>
-<section id="castice" class="panel"><div class="card"><h2>Model částic</h2><p>Vyber skupenství a sleduj jednoduchý model pohybu částic.</p><div class="state-buttons"><button onclick="setState('solid')">Pevné</button><button onclick="setState('liquid')">Kapalné</button><button onclick="setState('gas')">Plynné</button></div><div id="particleBox" class="particle-box"></div><div id="stateNote" class="state-note"></div></div></section>
 
-<section id="obrazky" class="panel">
-  <div class="card">
-    <h2>Obrázky a modely</h2>
-    <p>Každý obrázek je vložený do samostatného <b>iframe</b>. Jsou to vlastní schematické modely, takže aplikace nepotřebuje načítat obrázky z cizích webů.</p>
-    <div class="iframe-grid">
-      <div><iframe class="visual-frame" loading="lazy" title="Model atomu" sandbox="" srcdoc="&lt;!doctype html&gt;
-&lt;html lang=&quot;cs&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;utf-8&quot;&gt;
-&lt;style&gt;
-*{box-sizing:border-box} body{margin:0;font-family:Arial,sans-serif;background:#fbfdff;color:#183243}
-.wrap{height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:12px}
-h2{margin:0 0 8px;font-size:20px} p{margin:8px 0 0;text-align:center;font-size:14px;line-height:1.35;color:#536b79}
-svg{width:100%;max-width:420px;height:220px}
-.label{font:700 16px Arial;fill:#183243} .small{font:13px Arial;fill:#536b79}
-&lt;/style&gt;&lt;/head&gt;&lt;body&gt;&lt;div class=&quot;wrap&quot;&gt;&lt;h2&gt;Model atomu&lt;/h2&gt;
-&lt;svg viewBox=&quot;0 0 420 220&quot; role=&quot;img&quot; aria-label=&quot;Jednoduchý model atomu&quot;&gt;
-  &lt;ellipse cx=&quot;210&quot; cy=&quot;112&quot; rx=&quot;130&quot; ry=&quot;46&quot; fill=&quot;none&quot; stroke=&quot;#7aa6bd&quot; stroke-width=&quot;3&quot;/&gt;
-  &lt;ellipse cx=&quot;210&quot; cy=&quot;112&quot; rx=&quot;130&quot; ry=&quot;46&quot; fill=&quot;none&quot; stroke=&quot;#7aa6bd&quot; stroke-width=&quot;3&quot; transform=&quot;rotate(60 210 112)&quot;/&gt;
-  &lt;ellipse cx=&quot;210&quot; cy=&quot;112&quot; rx=&quot;130&quot; ry=&quot;46&quot; fill=&quot;none&quot; stroke=&quot;#7aa6bd&quot; stroke-width=&quot;3&quot; transform=&quot;rotate(-60 210 112)&quot;/&gt;
-  &lt;circle cx=&quot;210&quot; cy=&quot;112&quot; r=&quot;30&quot; fill=&quot;#e96f5d&quot;/&gt;
-  &lt;circle cx=&quot;200&quot; cy=&quot;104&quot; r=&quot;9&quot; fill=&quot;#f5c451&quot;/&gt;&lt;circle cx=&quot;220&quot; cy=&quot;102&quot; r=&quot;9&quot; fill=&quot;#f5c451&quot;/&gt;&lt;circle cx=&quot;210&quot; cy=&quot;122&quot; r=&quot;9&quot; fill=&quot;#f5c451&quot;/&gt;
-  &lt;circle cx=&quot;340&quot; cy=&quot;112&quot; r=&quot;9&quot; fill=&quot;#4b8fbd&quot;/&gt;
-  &lt;circle cx=&quot;145&quot; cy=&quot;0&quot; r=&quot;9&quot; fill=&quot;#4b8fbd&quot; transform=&quot;rotate(60 210 112)&quot;/&gt;
-  &lt;circle cx=&quot;145&quot; cy=&quot;0&quot; r=&quot;9&quot; fill=&quot;#4b8fbd&quot; transform=&quot;rotate(-60 210 112)&quot;/&gt;
-  &lt;text x=&quot;210&quot; y=&quot;170&quot; text-anchor=&quot;middle&quot; class=&quot;small&quot;&gt;schematický model atomu&lt;/text&gt;
-&lt;/svg&gt;
-&lt;p&gt;Atom je velmi malá částice látky. Obrázek je pouze zjednodušený model.&lt;/p&gt;&lt;/div&gt;&lt;/body&gt;&lt;/html&gt;"></iframe><div class="visual-caption">Model atomu</div><div class="visual-note">Atom je velmi malá částice látky. Obrázek je pouze zjednodušený model.</div></div><div><iframe class="visual-frame" loading="lazy" title="Molekula vody" sandbox="" srcdoc="&lt;!doctype html&gt;
-&lt;html lang=&quot;cs&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;utf-8&quot;&gt;
-&lt;style&gt;
-*{box-sizing:border-box} body{margin:0;font-family:Arial,sans-serif;background:#fbfdff;color:#183243}
-.wrap{height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:12px}
-h2{margin:0 0 8px;font-size:20px} p{margin:8px 0 0;text-align:center;font-size:14px;line-height:1.35;color:#536b79}
-svg{width:100%;max-width:420px;height:220px}
-.label{font:700 16px Arial;fill:#183243} .small{font:13px Arial;fill:#536b79}
-&lt;/style&gt;&lt;/head&gt;&lt;body&gt;&lt;div class=&quot;wrap&quot;&gt;&lt;h2&gt;Molekula vody&lt;/h2&gt;
-&lt;svg viewBox=&quot;0 0 420 220&quot; role=&quot;img&quot; aria-label=&quot;Model molekuly vody&quot;&gt;
-  &lt;line x1=&quot;210&quot; y1=&quot;115&quot; x2=&quot;125&quot; y2=&quot;65&quot; stroke=&quot;#7896a8&quot; stroke-width=&quot;14&quot; stroke-linecap=&quot;round&quot;/&gt;
-  &lt;line x1=&quot;210&quot; y1=&quot;115&quot; x2=&quot;295&quot; y2=&quot;65&quot; stroke=&quot;#7896a8&quot; stroke-width=&quot;14&quot; stroke-linecap=&quot;round&quot;/&gt;
-  &lt;circle cx=&quot;210&quot; cy=&quot;120&quot; r=&quot;48&quot; fill=&quot;#e85f53&quot;/&gt;
-  &lt;circle cx=&quot;118&quot; cy=&quot;60&quot; r=&quot;32&quot; fill=&quot;#f2f4f5&quot; stroke=&quot;#b8c8d2&quot; stroke-width=&quot;3&quot;/&gt;
-  &lt;circle cx=&quot;302&quot; cy=&quot;60&quot; r=&quot;32&quot; fill=&quot;#f2f4f5&quot; stroke=&quot;#b8c8d2&quot; stroke-width=&quot;3&quot;/&gt;
-  &lt;text x=&quot;210&quot; y=&quot;127&quot; text-anchor=&quot;middle&quot; class=&quot;label&quot; fill=&quot;white&quot;&gt;O&lt;/text&gt;
-  &lt;text x=&quot;118&quot; y=&quot;67&quot; text-anchor=&quot;middle&quot; class=&quot;label&quot;&gt;H&lt;/text&gt;
-  &lt;text x=&quot;302&quot; y=&quot;67&quot; text-anchor=&quot;middle&quot; class=&quot;label&quot;&gt;H&lt;/text&gt;
-  &lt;text x=&quot;210&quot; y=&quot;200&quot; text-anchor=&quot;middle&quot; class=&quot;label&quot;&gt;H₂O = 2× vodík + 1× kyslík&lt;/text&gt;
-&lt;/svg&gt;
-&lt;p&gt;Jedna molekula vody obsahuje dva atomy vodíku a jeden atom kyslíku.&lt;/p&gt;&lt;/div&gt;&lt;/body&gt;&lt;/html&gt;"></iframe><div class="visual-caption">Molekula vody</div><div class="visual-note">Jedna molekula vody obsahuje dva atomy vodíku a jeden atom kyslíku.</div></div><div><iframe class="visual-frame" loading="lazy" title="Částice a skupenství" sandbox="" srcdoc="&lt;!doctype html&gt;
-&lt;html lang=&quot;cs&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;utf-8&quot;&gt;
-&lt;style&gt;
-*{box-sizing:border-box} body{margin:0;font-family:Arial,sans-serif;background:#fbfdff;color:#183243}
-.wrap{height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:12px}
-h2{margin:0 0 8px;font-size:20px} p{margin:8px 0 0;text-align:center;font-size:14px;line-height:1.35;color:#536b79}
-svg{width:100%;max-width:420px;height:220px}
-.label{font:700 16px Arial;fill:#183243} .small{font:13px Arial;fill:#536b79}
-&lt;/style&gt;&lt;/head&gt;&lt;body&gt;&lt;div class=&quot;wrap&quot;&gt;&lt;h2&gt;Částice a skupenství&lt;/h2&gt;
-&lt;svg viewBox=&quot;0 0 420 220&quot; role=&quot;img&quot; aria-label=&quot;Částice v pevném, kapalném a plynném skupenství&quot;&gt;
-  &lt;rect x=&quot;8&quot; y=&quot;28&quot; width=&quot;125&quot; height=&quot;150&quot; rx=&quot;10&quot; fill=&quot;#f4f9fc&quot; stroke=&quot;#b8ccd8&quot;/&gt;
-  &lt;rect x=&quot;147&quot; y=&quot;28&quot; width=&quot;125&quot; height=&quot;150&quot; rx=&quot;10&quot; fill=&quot;#f4f9fc&quot; stroke=&quot;#b8ccd8&quot;/&gt;
-  &lt;rect x=&quot;286&quot; y=&quot;28&quot; width=&quot;125&quot; height=&quot;150&quot; rx=&quot;10&quot; fill=&quot;#f4f9fc&quot; stroke=&quot;#b8ccd8&quot;/&gt;
-  &lt;text x=&quot;70&quot; y=&quot;20&quot; text-anchor=&quot;middle&quot; class=&quot;label&quot;&gt;pevné&lt;/text&gt;
-  &lt;text x=&quot;209&quot; y=&quot;20&quot; text-anchor=&quot;middle&quot; class=&quot;label&quot;&gt;kapalné&lt;/text&gt;
-  &lt;text x=&quot;348&quot; y=&quot;20&quot; text-anchor=&quot;middle&quot; class=&quot;label&quot;&gt;plynné&lt;/text&gt;
-  &lt;g fill=&quot;#679ab6&quot; stroke=&quot;#426f88&quot;&gt;
-    &lt;circle cx=&quot;38&quot; cy=&quot;72&quot; r=&quot;11&quot;/&gt;&lt;circle cx=&quot;70&quot; cy=&quot;72&quot; r=&quot;11&quot;/&gt;&lt;circle cx=&quot;102&quot; cy=&quot;72&quot; r=&quot;11&quot;/&gt;
-    &lt;circle cx=&quot;38&quot; cy=&quot;104&quot; r=&quot;11&quot;/&gt;&lt;circle cx=&quot;70&quot; cy=&quot;104&quot; r=&quot;11&quot;/&gt;&lt;circle cx=&quot;102&quot; cy=&quot;104&quot; r=&quot;11&quot;/&gt;
-    &lt;circle cx=&quot;38&quot; cy=&quot;136&quot; r=&quot;11&quot;/&gt;&lt;circle cx=&quot;70&quot; cy=&quot;136&quot; r=&quot;11&quot;/&gt;&lt;circle cx=&quot;102&quot; cy=&quot;136&quot; r=&quot;11&quot;/&gt;
-    &lt;circle cx=&quot;170&quot; cy=&quot;126&quot; r=&quot;11&quot;/&gt;&lt;circle cx=&quot;202&quot; cy=&quot;131&quot; r=&quot;11&quot;/&gt;&lt;circle cx=&quot;235&quot; cy=&quot;123&quot; r=&quot;11&quot;/&gt;
-    &lt;circle cx=&quot;183&quot; cy=&quot;97&quot; r=&quot;11&quot;/&gt;&lt;circle cx=&quot;218&quot; cy=&quot;99&quot; r=&quot;11&quot;/&gt;&lt;circle cx=&quot;248&quot; cy=&quot;106&quot; r=&quot;11&quot;/&gt;
-    &lt;circle cx=&quot;166&quot; cy=&quot;153&quot; r=&quot;11&quot;/&gt;&lt;circle cx=&quot;199&quot; cy=&quot;157&quot; r=&quot;11&quot;/&gt;&lt;circle cx=&quot;233&quot; cy=&quot;151&quot; r=&quot;11&quot;/&gt;
-    &lt;circle cx=&quot;310&quot; cy=&quot;55&quot; r=&quot;11&quot;/&gt;&lt;circle cx=&quot;382&quot; cy=&quot;69&quot; r=&quot;11&quot;/&gt;&lt;circle cx=&quot;342&quot; cy=&quot;106&quot; r=&quot;11&quot;/&gt;
-    &lt;circle cx=&quot;302&quot; cy=&quot;146&quot; r=&quot;11&quot;/&gt;&lt;circle cx=&quot;389&quot; cy=&quot;151&quot; r=&quot;11&quot;/&gt;&lt;circle cx=&quot;365&quot; cy=&quot;42&quot; r=&quot;11&quot;/&gt;
-  &lt;/g&gt;
-&lt;/svg&gt;
-&lt;p&gt;Pevná látka: částice těsně u sebe. Kapalina: blízko u sebe a posouvají se. Plyn: částice daleko od sebe.&lt;/p&gt;&lt;/div&gt;&lt;/body&gt;&lt;/html&gt;"></iframe><div class="visual-caption">Částice a skupenství</div><div class="visual-note">Pevná látka: částice těsně u sebe. Kapalina: blízko u sebe a posouvají se. Plyn: částice daleko od sebe.</div></div><div><iframe class="visual-frame" loading="lazy" title="Prvek × sloučenina × směs" sandbox="" srcdoc="&lt;!doctype html&gt;
-&lt;html lang=&quot;cs&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;utf-8&quot;&gt;
-&lt;style&gt;
-*{box-sizing:border-box} body{margin:0;font-family:Arial,sans-serif;background:#fbfdff;color:#183243}
-.wrap{height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:12px}
-h2{margin:0 0 8px;font-size:20px} p{margin:8px 0 0;text-align:center;font-size:14px;line-height:1.35;color:#536b79}
-svg{width:100%;max-width:420px;height:220px}
-.label{font:700 16px Arial;fill:#183243} .small{font:13px Arial;fill:#536b79}
-&lt;/style&gt;&lt;/head&gt;&lt;body&gt;&lt;div class=&quot;wrap&quot;&gt;&lt;h2&gt;Prvek × sloučenina × směs&lt;/h2&gt;
-&lt;svg viewBox=&quot;0 0 420 220&quot; role=&quot;img&quot; aria-label=&quot;Rozdíl mezi prvkem, sloučeninou a směsí&quot;&gt;
-  &lt;text x=&quot;70&quot; y=&quot;25&quot; text-anchor=&quot;middle&quot; class=&quot;label&quot;&gt;prvek&lt;/text&gt;
-  &lt;text x=&quot;210&quot; y=&quot;25&quot; text-anchor=&quot;middle&quot; class=&quot;label&quot;&gt;sloučenina&lt;/text&gt;
-  &lt;text x=&quot;350&quot; y=&quot;25&quot; text-anchor=&quot;middle&quot; class=&quot;label&quot;&gt;směs&lt;/text&gt;
-  &lt;rect x=&quot;10&quot; y=&quot;35&quot; width=&quot;120&quot; height=&quot;150&quot; rx=&quot;10&quot; fill=&quot;#f7fbfd&quot; stroke=&quot;#b8ccd8&quot;/&gt;
-  &lt;g fill=&quot;#679ab6&quot;&gt;&lt;circle cx=&quot;45&quot; cy=&quot;75&quot; r=&quot;14&quot;/&gt;&lt;circle cx=&quot;90&quot; cy=&quot;75&quot; r=&quot;14&quot;/&gt;&lt;circle cx=&quot;45&quot; cy=&quot;125&quot; r=&quot;14&quot;/&gt;&lt;circle cx=&quot;90&quot; cy=&quot;125&quot; r=&quot;14&quot;/&gt;&lt;/g&gt;
-  &lt;rect x=&quot;150&quot; y=&quot;35&quot; width=&quot;120&quot; height=&quot;150&quot; rx=&quot;10&quot; fill=&quot;#f7fbfd&quot; stroke=&quot;#b8ccd8&quot;/&gt;
-  &lt;g stroke=&quot;#7896a8&quot; stroke-width=&quot;6&quot;&gt;&lt;line x1=&quot;184&quot; y1=&quot;77&quot; x2=&quot;220&quot; y2=&quot;77&quot;/&gt;&lt;line x1=&quot;184&quot; y1=&quot;130&quot; x2=&quot;220&quot; y2=&quot;130&quot;/&gt;&lt;/g&gt;
-  &lt;circle cx=&quot;180&quot; cy=&quot;77&quot; r=&quot;14&quot; fill=&quot;#679ab6&quot;/&gt;&lt;circle cx=&quot;224&quot; cy=&quot;77&quot; r=&quot;14&quot; fill=&quot;#e85f53&quot;/&gt;
-  &lt;circle cx=&quot;180&quot; cy=&quot;130&quot; r=&quot;14&quot; fill=&quot;#679ab6&quot;/&gt;&lt;circle cx=&quot;224&quot; cy=&quot;130&quot; r=&quot;14&quot; fill=&quot;#e85f53&quot;/&gt;
-  &lt;rect x=&quot;290&quot; y=&quot;35&quot; width=&quot;120&quot; height=&quot;150&quot; rx=&quot;10&quot; fill=&quot;#f7fbfd&quot; stroke=&quot;#b8ccd8&quot;/&gt;
-  &lt;circle cx=&quot;320&quot; cy=&quot;72&quot; r=&quot;14&quot; fill=&quot;#679ab6&quot;/&gt;&lt;circle cx=&quot;372&quot; cy=&quot;62&quot; r=&quot;14&quot; fill=&quot;#e85f53&quot;/&gt;
-  &lt;circle cx=&quot;345&quot; cy=&quot;110&quot; r=&quot;14&quot; fill=&quot;#f5c451&quot;/&gt;&lt;circle cx=&quot;390&quot; cy=&quot;138&quot; r=&quot;14&quot; fill=&quot;#679ab6&quot;/&gt;
-  &lt;circle cx=&quot;315&quot; cy=&quot;150&quot; r=&quot;14&quot; fill=&quot;#e85f53&quot;/&gt;
-&lt;/svg&gt;
-&lt;p&gt;Stejná barva znamená stejný druh atomu. Sloučenina obsahuje spojené různé atomy, směs obsahuje různé částice vedle sebe.&lt;/p&gt;&lt;/div&gt;&lt;/body&gt;&lt;/html&gt;"></iframe><div class="visual-caption">Prvek × sloučenina × směs</div><div class="visual-note">Stejná barva znamená stejný druh atomu. Sloučenina obsahuje spojené různé atomy, směs obsahuje různé částice vedle sebe.</div></div>
-    </div>
-  </div>
+<section id="animace" class="panel"><div class="card"><h2>Animace pojmů</h2><p>Klikni na pojem a sleduj jednoduchý model.</p><div class="concept-buttons">
+<button onclick="showConcept('atom')">Atom</button><button onclick="showConcept('molecule')">Molekula</button><button onclick="showConcept('molElement')">Molekula prvku</button><button onclick="showConcept('molCompound')">Molekula sloučeniny</button><button onclick="showConcept('substance')">Látka</button><button onclick="showConcept('element')">Prvek</button><button onclick="showConcept('compound')">Sloučenina</button><button onclick="showConcept('mixture')">Směs</button>
+</div><div class="concept-stage" id="conceptStage"></div></div></section>
 
-<div class="card">
-  <h2>Skutečné fotografie pod mikroskopem</h2>
-  <p>Teď už ne modely, ale skutečné mikrofotografie. Nejdřív se na obrázek podívej a zkus odhadnout, co je na něm. Potom v obrázku rozbal <b>„Co na obrázku vidíš?“</b>.</p>
-  <div class="webphoto-grid">
-    <iframe class="webphoto-frame" loading="lazy" title="Krystaly kuchyňského cukru" srcdoc="&lt;!doctype html&gt;
-&lt;html lang=&quot;cs&quot;&gt;
-&lt;head&gt;
-&lt;meta charset=&quot;utf-8&quot;&gt;
-&lt;style&gt;
-*{box-sizing:border-box}
-body{margin:0;font-family:Arial,sans-serif;background:#fff;color:#183243}
-figure{margin:0;padding:10px}
-.photo{height:275px;width:100%;object-fit:contain;background:#101416;border-radius:12px}
-details{margin-top:10px;border:1px solid #d6e1e8;border-radius:10px;padding:8px 10px;background:#f7fbfd}
-summary{cursor:pointer;font-weight:700}
-p{font-size:14px;line-height:1.4;margin:8px 0}
-.credit{font-size:11px;color:#617783}
-a{color:#2f6f91}
-&lt;/style&gt;
-&lt;/head&gt;
-&lt;body&gt;
-&lt;figure&gt;
-  &lt;img class=&quot;photo&quot; src=&quot;https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/Sugar_crystals_under_the_microscope.jpg/960px-Sugar_crystals_under_the_microscope.jpg&quot; alt=&quot;Krystaly kuchyňského cukru&quot;&gt;
-  &lt;details&gt;
-    &lt;summary&gt;Co na obrázku vidíš?&lt;/summary&gt;
-    &lt;p&gt;&lt;b&gt;Krystaly kuchyňského cukru&lt;/b&gt;&lt;/p&gt;
-    &lt;p&gt;Krystaly cukru pod mikroskopem. I látka, která vypadá jako jemný bílý prášek, je složena z jednotlivých krystalů.&lt;/p&gt;
-    &lt;p class=&quot;credit&quot;&gt;Zdroj: Wikimedia Commons • Давид Андронов, CC BY 4.0&lt;br&gt;
-    &lt;a href=&quot;https://commons.wikimedia.org/wiki/File:Sugar_crystals_under_the_microscope.jpg&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Otevřít původní obrázek a licenci&lt;/a&gt;&lt;/p&gt;
-  &lt;/details&gt;
-&lt;/figure&gt;
-&lt;/body&gt;
-&lt;/html&gt;"></iframe>
-<iframe class="webphoto-frame" loading="lazy" title="Krystaly kuchyňské soli" srcdoc="&lt;!doctype html&gt;
-&lt;html lang=&quot;cs&quot;&gt;
-&lt;head&gt;
-&lt;meta charset=&quot;utf-8&quot;&gt;
-&lt;style&gt;
-*{box-sizing:border-box}
-body{margin:0;font-family:Arial,sans-serif;background:#fff;color:#183243}
-figure{margin:0;padding:10px}
-.photo{height:275px;width:100%;object-fit:contain;background:#101416;border-radius:12px}
-details{margin-top:10px;border:1px solid #d6e1e8;border-radius:10px;padding:8px 10px;background:#f7fbfd}
-summary{cursor:pointer;font-weight:700}
-p{font-size:14px;line-height:1.4;margin:8px 0}
-.credit{font-size:11px;color:#617783}
-a{color:#2f6f91}
-&lt;/style&gt;
-&lt;/head&gt;
-&lt;body&gt;
-&lt;figure&gt;
-  &lt;img class=&quot;photo&quot; src=&quot;https://thumb.wikimedia.org/wikipedia/commons/thumb/4/46/Salt_crystals_under_the_microscope.jpg/960px-Salt_crystals_under_the_microscope.jpg&quot; alt=&quot;Krystaly kuchyňské soli&quot;&gt;
-  &lt;details&gt;
-    &lt;summary&gt;Co na obrázku vidíš?&lt;/summary&gt;
-    &lt;p&gt;&lt;b&gt;Krystaly kuchyňské soli&lt;/b&gt;&lt;/p&gt;
-    &lt;p&gt;Krystaly soli pod mikroskopem. Porovnej jejich tvar s krystaly cukru.&lt;/p&gt;
-    &lt;p class=&quot;credit&quot;&gt;Zdroj: Wikimedia Commons • Давид Андронов, CC BY 4.0&lt;br&gt;
-    &lt;a href=&quot;https://commons.wikimedia.org/wiki/File:Salt_crystals_under_the_microscope.jpg&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Otevřít původní obrázek a licenci&lt;/a&gt;&lt;/p&gt;
-  &lt;/details&gt;
-&lt;/figure&gt;
-&lt;/body&gt;
-&lt;/html&gt;"></iframe>
-<iframe class="webphoto-frame" loading="lazy" title="Papír pod mikroskopem" srcdoc="&lt;!doctype html&gt;
-&lt;html lang=&quot;cs&quot;&gt;
-&lt;head&gt;
-&lt;meta charset=&quot;utf-8&quot;&gt;
-&lt;style&gt;
-*{box-sizing:border-box}
-body{margin:0;font-family:Arial,sans-serif;background:#fff;color:#183243}
-figure{margin:0;padding:10px}
-.photo{height:275px;width:100%;object-fit:contain;background:#101416;border-radius:12px}
-details{margin-top:10px;border:1px solid #d6e1e8;border-radius:10px;padding:8px 10px;background:#f7fbfd}
-summary{cursor:pointer;font-weight:700}
-p{font-size:14px;line-height:1.4;margin:8px 0}
-.credit{font-size:11px;color:#617783}
-a{color:#2f6f91}
-&lt;/style&gt;
-&lt;/head&gt;
-&lt;body&gt;
-&lt;figure&gt;
-  &lt;img class=&quot;photo&quot; src=&quot;https://upload.wikimedia.org/wikipedia/commons/9/9d/Tissue_paper_under_a_microscope.jpg&quot; alt=&quot;Papír pod mikroskopem&quot;&gt;
-  &lt;details&gt;
-    &lt;summary&gt;Co na obrázku vidíš?&lt;/summary&gt;
-    &lt;p&gt;&lt;b&gt;Papír pod mikroskopem&lt;/b&gt;&lt;/p&gt;
-    &lt;p&gt;Papír při zvětšení přestává vypadat jako souvislá hladká látka – jsou vidět propletená vlákna.&lt;/p&gt;
-    &lt;p class=&quot;credit&quot;&gt;Zdroj: Wikimedia Commons • Gustamons, CC0&lt;br&gt;
-    &lt;a href=&quot;https://commons.wikimedia.org/wiki/File:Tissue_paper_under_a_microscope.jpg&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Otevřít původní obrázek a licenci&lt;/a&gt;&lt;/p&gt;
-  &lt;/details&gt;
-&lt;/figure&gt;
-&lt;/body&gt;
-&lt;/html&gt;"></iframe>
-<iframe class="webphoto-frame" loading="lazy" title="Zrnka písku" srcdoc="&lt;!doctype html&gt;
-&lt;html lang=&quot;cs&quot;&gt;
-&lt;head&gt;
-&lt;meta charset=&quot;utf-8&quot;&gt;
-&lt;style&gt;
-*{box-sizing:border-box}
-body{margin:0;font-family:Arial,sans-serif;background:#fff;color:#183243}
-figure{margin:0;padding:10px}
-.photo{height:275px;width:100%;object-fit:contain;background:#101416;border-radius:12px}
-details{margin-top:10px;border:1px solid #d6e1e8;border-radius:10px;padding:8px 10px;background:#f7fbfd}
-summary{cursor:pointer;font-weight:700}
-p{font-size:14px;line-height:1.4;margin:8px 0}
-.credit{font-size:11px;color:#617783}
-a{color:#2f6f91}
-&lt;/style&gt;
-&lt;/head&gt;
-&lt;body&gt;
-&lt;figure&gt;
-  &lt;img class=&quot;photo&quot; src=&quot;https://thumb.wikimedia.org/wikipedia/commons/thumb/9/99/Observation_microscopique_de_grains_de_sable.jpg/500px-Observation_microscopique_de_grains_de_sable.jpg&quot; alt=&quot;Zrnka písku&quot;&gt;
-  &lt;details&gt;
-    &lt;summary&gt;Co na obrázku vidíš?&lt;/summary&gt;
-    &lt;p&gt;&lt;b&gt;Zrnka písku&lt;/b&gt;&lt;/p&gt;
-    &lt;p&gt;Písek není jedna souvislá látka. Při zvětšení jsou krásně vidět jednotlivá zrnka.&lt;/p&gt;
-    &lt;p class=&quot;credit&quot;&gt;Zdroj: Wikimedia Commons • Thelasthedgehog, CC BY 4.0&lt;br&gt;
-    &lt;a href=&quot;https://commons.wikimedia.org/wiki/File:Observation_microscopique_de_grains_de_sable.jpg&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Otevřít původní obrázek a licenci&lt;/a&gt;&lt;/p&gt;
-  &lt;/details&gt;
-&lt;/figure&gt;
-&lt;/body&gt;
-&lt;/html&gt;"></iframe>
-<iframe class="webphoto-frame" loading="lazy" title="Žula v polarizačním mikroskopu" srcdoc="&lt;!doctype html&gt;
-&lt;html lang=&quot;cs&quot;&gt;
-&lt;head&gt;
-&lt;meta charset=&quot;utf-8&quot;&gt;
-&lt;style&gt;
-*{box-sizing:border-box}
-body{margin:0;font-family:Arial,sans-serif;background:#fff;color:#183243}
-figure{margin:0;padding:10px}
-.photo{height:275px;width:100%;object-fit:contain;background:#101416;border-radius:12px}
-details{margin-top:10px;border:1px solid #d6e1e8;border-radius:10px;padding:8px 10px;background:#f7fbfd}
-summary{cursor:pointer;font-weight:700}
-p{font-size:14px;line-height:1.4;margin:8px 0}
-.credit{font-size:11px;color:#617783}
-a{color:#2f6f91}
-&lt;/style&gt;
-&lt;/head&gt;
-&lt;body&gt;
-&lt;figure&gt;
-  &lt;img class=&quot;photo&quot; src=&quot;https://thumb.wikimedia.org/wikipedia/commons/thumb/3/35/%D0%93%D1%80%D0%B0%D0%BD%D0%B8%D1%82_%D0%BF%D0%BE%D0%B4_%D0%BC%D0%B8%D0%BA%D1%80%D0%BE%D1%81%D0%BA%D0%BE%D0%BF%D0%BE%D0%BC.jpg/960px-%D0%93%D1%80%D0%B0%D0%BD%D0%B8%D1%82_%D0%BF%D0%BE%D0%B4_%D0%BC%D0%B8%D0%BA%D1%80%D0%BE%D1%81%D0%BA%D0%BE%D0%BF%D0%BE%D0%BC.jpg&quot; alt=&quot;Žula v polarizačním mikroskopu&quot;&gt;
-  &lt;details&gt;
-    &lt;summary&gt;Co na obrázku vidíš?&lt;/summary&gt;
-    &lt;p&gt;&lt;b&gt;Žula v polarizačním mikroskopu&lt;/b&gt;&lt;/p&gt;
-    &lt;p&gt;Žula je směs několika minerálů. V tenkém výbrusu pod polarizačním mikroskopem lze jednotlivé složky dobře rozlišit.&lt;/p&gt;
-    &lt;p class=&quot;credit&quot;&gt;Zdroj: Wikimedia Commons • Alexander Klepnev, CC BY 4.0&lt;br&gt;
-    &lt;a href=&quot;https://commons.wikimedia.org/wiki/File:%D0%93%D1%80%D0%B0%D0%BD%D0%B8%D1%82_%D0%BF%D0%BE%D0%B4_%D0%BC%D0%B8%D0%BA%D1%80%D0%BE%D1%81%D0%BA%D0%BE%D0%BF%D0%BE%D0%BC.jpg&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Otevřít původní obrázek a licenci&lt;/a&gt;&lt;/p&gt;
-  &lt;/details&gt;
-&lt;/figure&gt;
-&lt;/body&gt;
-&lt;/html&gt;"></iframe>
-  </div>
-  <p class="source-note"><b>Poznámka:</b> fotografie se načítají z Wikimedia Commons, takže pro tuto část je potřeba připojení k internetu. Vybral jsem obrázky s otevřenou licencí a u každého je uveden autor i odkaz na licenci.</p>
-</div>
+<section id="skupenstvi" class="panel"><div class="card"><h2>Částice v různých skupenstvích</h2><div class="state-buttons"><button onclick="setState('solid')">Pevné</button><button onclick="setState('liquid')">Kapalné</button><button onclick="setState('gas')">Plynné</button></div><div class="particle-box" id="particleBox"></div><p id="stateNote" class="muted" style="font-weight:750"></p></div><div class="card"><table><tr><th>Skupenství</th><th>Částice</th><th>Pohyb</th></tr><tr><td>Pevné</td><td>těsně u sebe</td><td>kmitají kolem svých poloh</td></tr><tr><td>Kapalné</td><td>blízko u sebe</td><td>mohou se navzájem posouvat</td></tr><tr><td>Plynné</td><td>daleko od sebe</td><td>pohybují se volně</td></tr></table></div></section>
 
-</section>
-<section id="pojmy" class="panel"><div class="card"><div class="row"><h2 style="margin:0">Co znamená pojem?</h2><div id="termScore" class="score">0 / 0</div></div><div id="termQuestion" class="question"></div><div id="termAnswers" class="answers"></div><div id="termFeedback" class="feedback"></div><div class="row" style="margin-top:14px"><button onclick="nextTerm()">Další otázka</button></div></div></section>
-<section id="trideni" class="panel"><div class="card"><h2>Zařaď správně</h2><p>Rozhodni, zda jde o prvek, sloučeninu, nebo směs.</p><div id="sortItem" class="question"></div><div class="grid"><button onclick="sortAnswer('prvek')">Prvek</button><button onclick="sortAnswer('sloucenina')">Sloučenina</button><button onclick="sortAnswer('smes')">Směs</button></div><div id="sortFeedback" class="feedback"></div><div class="row" style="margin-top:14px"><button onclick="nextSort()">Další</button><div id="sortScore" class="score">0 / 0</div></div></div></section>
-<section id="quiz" class="panel"><div class="card"><div class="row"><h2 style="margin:0">Závěrečný kvíz</h2><div id="quizScore" class="score">0 / 0</div></div><div id="quizQuestion" class="question"></div><div id="quizAnswers" class="answers"></div><div id="quizFeedback" class="feedback"></div><div class="row" style="margin-top:14px"><button onclick="nextQuiz()">Další otázka</button><button onclick="resetQuiz()">Začít znovu</button></div></div></section>
+<section id="obrazky" class="panel"><div class="card"><h2>Skutečné fotografie pod mikroskopem</h2><p>Nejdřív hádej, co je na obrázku. Potom v rámečku rozbal vysvětlení.</p><div class="photo-grid" id="photoGrid"></div><p class="note">Fotografie se načítají z Wikimedia Commons a vyžadují připojení k internetu.</p></div></section>
+
+<section id="pojmy" class="panel"><div class="card"><div class="row"><h2 style="margin:0">Co znamená pojem?</h2><div id="termScore" class="score">0 / 0</div></div><div id="termQ" class="question"></div><div id="termA" class="answers"></div><div id="termF" class="feedback"></div><div style="margin-top:13px"><button onclick="nextTerm()">Další otázka</button></div></div></section>
+
+<section id="trideni" class="panel"><div class="card"><h2>Zařaď správně</h2><div id="sortItem" class="question"></div><div class="grid"><button onclick="sortAnswer('atom')">Atom</button><button onclick="sortAnswer('molPrvek')">Molekula prvku</button><button onclick="sortAnswer('molSlouc')">Molekula sloučeniny</button><button onclick="sortAnswer('latka')">Látka</button><button onclick="sortAnswer('prvek')">Prvek</button><button onclick="sortAnswer('slouc')">Sloučenina</button><button onclick="sortAnswer('smes')">Směs</button></div><div id="sortF" class="feedback"></div><div class="row" style="margin-top:13px"><button onclick="nextSort()">Další</button><div id="sortScore" class="score">0 / 0</div></div></div></section>
+
+<section id="kviz" class="panel"><div class="card"><div class="row"><h2 style="margin:0">Závěrečný kvíz</h2><div id="quizScore" class="score">0 / 0</div></div><div id="quizQ" class="question"></div><div id="quizA" class="answers"></div><div id="quizF" class="feedback"></div><div class="row" style="margin-top:13px"><button onclick="nextQuiz()">Další otázka</button><button onclick="resetQuiz()">Začít znovu</button></div></div></section>
 </main>
 <script>
-const tabs=[...document.querySelectorAll('.tab')];tabs.forEach(b=>b.addEventListener('click',()=>{tabs.forEach(x=>x.classList.remove('active'));document.querySelectorAll('.panel').forEach(x=>x.classList.remove('active'));b.classList.add('active');document.getElementById(b.dataset.tab).classList.add('active')}));
-let particleTimer=null;function setState(state){clearInterval(particleTimer);const box=document.getElementById('particleBox');box.innerHTML='';const w=box.clientWidth,h=box.clientHeight,parts=[],n=state==='gas'?20:35;for(let i=0;i<n;i++){const p=document.createElement('div');p.className='particle';let x,y,vx,vy;if(state==='solid'){const cols=7;x=25+(i%cols)*45;y=25+Math.floor(i/cols)*42;vx=(Math.random()-.5)*.7;vy=(Math.random()-.5)*.7}else if(state==='liquid'){x=15+Math.random()*(w-45);y=h*.42+Math.random()*(h*.52-30);vx=(Math.random()-.5)*1.4;vy=(Math.random()-.5)*1.1}else{x=10+Math.random()*(w-40);y=10+Math.random()*(h-40);vx=(Math.random()-.5)*3;vy=(Math.random()-.5)*3}p.style.left=x+'px';p.style.top=y+'px';box.appendChild(p);parts.push({el:p,x,y,vx,vy,x0:x,y0:y})}document.getElementById('stateNote').textContent={solid:'Částice jsou těsně u sebe a jen kmitají kolem svých poloh.',liquid:'Částice jsou blízko u sebe, ale mohou se navzájem posouvat.',gas:'Částice jsou daleko od sebe a volně se pohybují po celém prostoru.'}[state];particleTimer=setInterval(()=>{const W=box.clientWidth,H=box.clientHeight;parts.forEach(a=>{if(state==='solid'){a.x=a.x0+Math.sin(Date.now()/120+a.x0)*2.8;a.y=a.y0+Math.cos(Date.now()/130+a.y0)*2.8}else{a.x+=a.vx;a.y+=a.vy;if(a.x<2||a.x>W-22)a.vx*=-1;if(a.y<2||a.y>H-22)a.vy*=-1;if(state==='liquid'&&a.y<H*.38){a.y=H*.38;a.vy=Math.abs(a.vy)}}a.el.style.left=a.x+'px';a.el.style.top=a.y+'px'})},30)}setTimeout(()=>setState('solid'),50);
-const termQs=[{q:'Co je atom?',a:['Velmi malá částice látky','Jiný název pro těleso','Druh skupenství'],c:0,e:'Atom je velmi malá stavební částice látky.'},{q:'Co je prvek?',a:['Směs několika látek','Látka tvořená jedním druhem atomů','Skupina různých těles'],c:1,e:'Prvek je látka tvořená jedním druhem atomů.'},{q:'Co je molekula?',a:['Skupina spojených atomů','Jeden jediný neutron','Pevné těleso'],c:0,e:'Molekula je skupina dvou nebo více spojených atomů.'},{q:'Co je sloučenina?',a:['Látka z atomů alespoň dvou různých prvků','Každá směs','Jen plyn'],c:0,e:'Sloučenina je čistá látka vytvořená z více druhů atomů.'},{q:'Co je oxid?',a:['Sloučenina kyslíku s jiným prvkem','Molekula vody','Každý plyn'],c:0,e:'Oxid je sloučenina kyslíku s jiným prvkem.'}];
-let ti=-1,tRight=0,tTotal=0,tLocked=false;function nextTerm(){ti=(ti+1)%termQs.length;tLocked=false;const x=termQs[ti];document.getElementById('termQuestion').textContent=x.q;const a=document.getElementById('termAnswers');a.innerHTML='';x.a.forEach((txt,i)=>{const b=document.createElement('button');b.className='answer';b.textContent=txt;b.onclick=()=>answerTerm(i);a.appendChild(b)});document.getElementById('termFeedback').className='feedback'}function answerTerm(i){if(tLocked)return;tLocked=true;tTotal++;const x=termQs[ti],f=document.getElementById('termFeedback');if(i===x.c){tRight++;f.className='feedback ok';f.textContent='Správně. '+x.e}else{f.className='feedback bad';f.textContent='Ještě ne. '+x.e}document.getElementById('termScore').textContent=tRight+' / '+tTotal}nextTerm();
-const sortQs=[['železo','prvek'],['měď','prvek'],['kyslík','prvek'],['uhlík','prvek'],['voda','sloucenina'],['oxid uhličitý','sloucenina'],['vzduch','smes'],['žula','smes'],['suchý písek','smes'],['mokré bláto','smes']];let si=-1,sRight=0,sTotal=0,sLocked=false;function nextSort(){si=(si+1)%sortQs.length;sLocked=false;document.getElementById('sortItem').textContent=sortQs[si][0];document.getElementById('sortFeedback').className='feedback'}function sortAnswer(a){if(sLocked)return;sLocked=true;sTotal++;const ok=a===sortQs[si][1],f=document.getElementById('sortFeedback');if(ok){sRight++;f.className='feedback ok';f.textContent='Správně.'}else{f.className='feedback bad';f.textContent='Nesprávně. Správně je: '+({prvek:'prvek',sloucenina:'sloučenina',smes:'směs'}[sortQs[si][1]])+'.'}document.getElementById('sortScore').textContent=sRight+' / '+sTotal}nextSort();
-const quizQs=[{q:'Které tvrzení o částicích pevné látky je správné?',a:['Jsou daleko od sebe','Jsou těsně u sebe a kmitají kolem svých poloh','Volně létají po celé nádobě'],c:1,e:'V pevné látce jsou částice velmi blízko u sebe a kmitají.'},{q:'Jak se chovají částice kapaliny?',a:['Mohou se navzájem posouvat','Jsou pevně uzamčené na místě','Jsou velmi daleko od sebe'],c:0,e:'Částice kapaliny jsou blízko u sebe, ale mohou se navzájem posouvat.'},{q:'Proč může plyn snadno měnit objem?',a:['Protože jeho částice jsou daleko od sebe','Protože nemá žádné částice','Protože je vždy teplý'],c:0,e:'Mezi částicemi plynu jsou velké mezery.'},{q:'Co tvoří molekulu vody H₂O?',a:['2 atomy kyslíku a 1 atom vodíku','2 atomy vodíku a 1 atom kyslíku','3 atomy vodíku'],c:1,e:'H₂O znamená dva atomy vodíku a jeden atom kyslíku.'},{q:'Která možnost je prvek?',a:['voda','žula','měď'],c:2,e:'Měď je chemický prvek.'},{q:'Která možnost je směs?',a:['vzduch','kyslík','železo'],c:0,e:'Vzduch je směs několika plynů.'},{q:'Která možnost je sloučenina?',a:['uhlík','voda','měď'],c:1,e:'Voda je sloučenina vodíku a kyslíku.'},{q:'Co je molekula?',a:['Jedna libovolná částice bez vazby','Skupina spojených atomů','Velmi malé těleso viditelné okem'],c:1,e:'Molekula je skupina atomů, které jsou spolu spojeny.'},{q:'Jaký je rozdíl mezi prvkem a sloučeninou?',a:['Prvek má jeden druh atomů, sloučenina více druhů','Žádný','Prvek je vždy pevný'],c:0,e:'Prvek tvoří jeden druh atomů, sloučeninu atomy více prvků.'},{q:'Co je oxid?',a:['Každá směs plynů','Sloučenina kyslíku s jiným prvkem','Jiný název pro atom'],c:1,e:'Oxid je sloučenina kyslíku s jiným prvkem.'}];let qi=-1,qRight=0,qTotal=0,qLocked=false;function nextQuiz(){qi=(qi+1)%quizQs.length;qLocked=false;const x=quizQs[qi];document.getElementById('quizQuestion').textContent=(qi+1)+'. '+x.q;const a=document.getElementById('quizAnswers');a.innerHTML='';x.a.forEach((txt,i)=>{const b=document.createElement('button');b.className='answer';b.textContent=txt;b.onclick=()=>answerQuiz(i);a.appendChild(b)});document.getElementById('quizFeedback').className='feedback'}function answerQuiz(i){if(qLocked)return;qLocked=true;qTotal++;const x=quizQs[qi],f=document.getElementById('quizFeedback');if(i===x.c){qRight++;f.className='feedback ok';f.textContent='Správně. '+x.e}else{f.className='feedback bad';f.textContent='Nesprávně. '+x.e}document.getElementById('quizScore').textContent=qRight+' / '+qTotal}function resetQuiz(){qi=-1;qRight=0;qTotal=0;document.getElementById('quizScore').textContent='0 / 0';nextQuiz()}nextQuiz();
+const tabs=[...document.querySelectorAll('.tab')];tabs.forEach(b=>b.onclick=()=>{tabs.forEach(x=>x.classList.remove('active'));document.querySelectorAll('.panel').forEach(x=>x.classList.remove('active'));b.classList.add('active');document.getElementById(b.dataset.tab).classList.add('active')});
+const A=(cls,x,y,size='m',txt='')=>`<div class="atom ${cls} ${size}" style="left:${x}px;top:${y}px">${txt}</div>`;const B=(x,y,w,a=0)=>`<div class="bond" style="left:${x}px;top:${y}px;width:${w}px;transform:rotate(${a}deg)"></div>`;const L=(txt,x,y)=>`<div class="label" style="left:${x}px;top:${y}px">${txt}</div>`;
+function water(x,y){return B(x+18,y+25,40,-30)+B(x+22,y+29,45,0)+A('o',x,y,'m','O')+A('h',x+45,y-22,'s','H')+A('h',x+70,y,'s','H')}
+const concepts={
+atom:['Atom','<b>Atom</b> je jedna velmi malá částice látky.',()=>`<div class="scene">${A('h',210,78,'l','H')}${L('jeden atom',192,145)}</div>`],
+molecule:['Molekula','<b>Molekula</b> je skupina spojených atomů.',()=>`<div class="scene">${B(180,104,65)}${A('h',152,82,'l','H')}${A('h',225,82,'l','H')}${L('spojené atomy = molekula',142,150)}</div>`],
+molElement:['Molekula prvku','Je tvořena atomy <b>stejného druhu</b>.',()=>`<div class="scene">${B(180,104,65)}${A('o',152,82,'l','O')}${A('o',225,82,'l','O')}${L('O₂ = stejné atomy',166,150)}</div>`],
+molCompound:['Molekula sloučeniny','Je tvořena atomy <b>různých druhů</b>.',()=>`<div class="scene">${water(160,82)}${L('H₂O = různé atomy',165,155)}</div>`],
+substance:['Látka','<b>Látku</b> tvoří obrovské množství atomů nebo molekul.',()=>`<div class="scene">${B(75,82,40)}${A('o',52,64,'m','O')}${A('o',100,64,'m','O')}${B(205,82,40)}${A('o',182,64,'m','O')}${A('o',230,64,'m','O')}${B(335,82,40)}${A('o',312,64,'m','O')}${A('o',360,64,'m','O')}${B(140,152,40)}${A('o',117,134,'m','O')}${A('o',165,134,'m','O')}${B(270,152,40)}${A('o',247,134,'m','O')}${A('o',295,134,'m','O')}${L('velké množství stejných částic',120,195)}</div>`],
+element:['Prvek','<b>Prvek</b> je látka tvořená pouze jedním druhem atomů.',()=>`<div class="scene">${L('samostatné stejné atomy',25,12)}${A('metal',40,60,'m','Fe')}${A('metal',95,92,'m','Fe')}${A('metal',55,132,'m','Fe')}${L('nebo molekuly prvku',280,12)}${B(310,82,45)}${A('h',285,64,'m','H')}${A('h',337,64,'m','H')}${B(310,145,45)}${A('h',285,127,'m','H')}${A('h',337,127,'m','H')}</div>`],
+compound:['Sloučenina','<b>Sloučeninu</b> v tomto úvodu znázorňujeme velkým množstvím stejných molekul sloučeniny.',()=>`<div class="scene">${water(35,95)}${water(165,95)}${water(295,95)}${L('stejné molekuly H₂O',135,177)}</div>`],
+mixture:['Směs','<b>Směs</b> obsahuje alespoň dvě různé látky. Nevytvářejí jednu novou čistou látku.',()=>`<div class="scene">${L('látka A',35,15)}${B(65,88,42)}${A('h',40,70,'m','H')}${A('h',90,70,'m','H')}${B(65,150,42)}${A('h',40,132,'m','H')}${A('h',90,132,'m','H')}${L('+',203,92)}${L('látka B',305,15)}${water(300,82)}${L('různé látky společně = směs',120,190)}</div>`]
+};
+function showConcept(k){const d=concepts[k];document.getElementById('conceptStage').innerHTML=`<h3>${d[0]}</h3><p style="font-size:18px;line-height:1.5">${d[1]}</p>${d[2]()}`}showConcept('atom');
+let particleTimer;function setState(s){clearInterval(particleTimer);const box=document.getElementById('particleBox');box.innerHTML='';const W=box.clientWidth,H=box.clientHeight,arr=[],n=s==='gas'?20:35;for(let i=0;i<n;i++){const p=document.createElement('div');p.className='particle';let x,y,vx,vy;if(s==='solid'){x=25+(i%7)*45;y=25+Math.floor(i/7)*42;vx=(Math.random()-.5)*.6;vy=(Math.random()-.5)*.6}else if(s==='liquid'){x=15+Math.random()*(W-45);y=H*.42+Math.random()*(H*.5-25);vx=(Math.random()-.5)*1.5;vy=(Math.random()-.5)*1.1}else{x=10+Math.random()*(W-35);y=10+Math.random()*(H-35);vx=(Math.random()-.5)*3;vy=(Math.random()-.5)*3}p.style.left=x+'px';p.style.top=y+'px';box.appendChild(p);arr.push({p,x,y,vx,vy,x0:x,y0:y})}document.getElementById('stateNote').textContent={solid:'Částice jsou těsně u sebe a kmitají kolem svých poloh.',liquid:'Částice jsou blízko u sebe, ale mohou se navzájem posouvat.',gas:'Částice jsou daleko od sebe a pohybují se volně.'}[s];particleTimer=setInterval(()=>{const w=box.clientWidth,h=box.clientHeight;arr.forEach(a=>{if(s==='solid'){a.x=a.x0+Math.sin(Date.now()/120+a.x0)*2.5;a.y=a.y0+Math.cos(Date.now()/130+a.y0)*2.5}else{a.x+=a.vx;a.y+=a.vy;if(a.x<2||a.x>w-21)a.vx*=-1;if(a.y<2||a.y>h-21)a.vy*=-1;if(s==='liquid'&&a.y<h*.38){a.y=h*.38;a.vy=Math.abs(a.vy)}}a.p.style.left=a.x+'px';a.p.style.top=a.y+'px'})},30)}setTimeout(()=>setState('solid'),50);
+const photos=[['Krystaly cukru','https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/Sugar_crystals_under_the_microscope.jpg/960px-Sugar_crystals_under_the_microscope.jpg','Pod mikroskopem jsou vidět jednotlivé krystaly cukru.'],['Krystaly soli','https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Salt_crystals_under_the_microscope.jpg/960px-Salt_crystals_under_the_microscope.jpg','Porovnej tvar krystalů soli s cukrem.'],['Papír pod mikroskopem','https://upload.wikimedia.org/wikipedia/commons/9/9d/Tissue_paper_under_a_microscope.jpg','Při zvětšení jsou vidět propletená vlákna papíru.'],['Žula pod mikroskopem','https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/%D0%93%D1%80%D0%B0%D0%BD%D0%B8%D1%82_%D0%BF%D0%BE%D0%B4_%D0%BC%D0%B8%D0%BA%D1%80%D0%BE%D1%81%D0%BA%D0%BE%D0%BF%D0%BE%D0%BC.jpg/960px-%D0%93%D1%80%D0%B0%D0%BD%D0%B8%D1%82_%D0%BF%D0%BE%D0%B4_%D0%BC%D0%B8%D0%BA%D1%80%D0%BE%D1%81%D0%BA%D0%BE%D0%BF%D0%BE%D0%BC.jpg','Žula je směs několika minerálů.']];
+function photoDoc(t,u,d){return `<!doctype html><html lang="cs"><meta charset="utf-8"><style>body{margin:0;font:14px Arial;color:#183243}figure{margin:0;padding:10px}img{width:100%;height:270px;object-fit:contain;background:#111;border-radius:12px}details{margin-top:10px;padding:8px;border:1px solid #d6e1e8;border-radius:10px;background:#f7fbfd}summary{font-weight:bold;cursor:pointer}</style><figure><img src="${u}" alt="${t}"><details><summary>Co na obrázku vidíš?</summary><p><b>${t}</b></p><p>${d}</p><p>Zdroj: Wikimedia Commons</p></details></figure></html>`}const grid=document.getElementById('photoGrid');photos.forEach(p=>{const f=document.createElement('iframe');f.className='photo-frame';f.loading='lazy';f.title=p[0];f.srcdoc=photoDoc(...p);grid.appendChild(f)});
+const terms=[['Co je atom?',['Velmi malá částice látky','Směs několika látek','Velká skupina těles'],0,'Atom je velmi malá částice látky.'],['Co je molekula?',['Skupina spojených atomů','Jedna celá látka','Jeden prvek bez atomů'],0,'Molekula je skupina spojených atomů.'],['Co je molekula prvku?',['Molekula ze stejných druhů atomů','Molekula z různých druhů atomů','Směs'],0,'Např. H₂ nebo O₂.'],['Co je látka?',['Obrovské množství atomů nebo molekul','Jeden jediný atom','Pouze směs'],0,'Látku tvoří obrovské množství částic.'],['Co je prvek?',['Látka tvořená jedním druhem atomů','Směs látek','Vždy dvě různé molekuly'],0,'Prvek obsahuje jeden druh atomů.'],['Co je sloučenina?',['Jedna čistá látka s různými druhy spojených atomů','Několik různých látek společně','Jeden druh atomů'],0,'Sloučenina je jedna čistá látka.'],['Co je směs?',['Alespoň dvě různé látky společně','Jeden atom','Samé stejné molekuly vody'],0,'Směs obsahuje alespoň dvě různé látky.']];let ti=-1,tr=0,tt=0,tl=false;function nextTerm(){ti=(ti+1)%terms.length;tl=false;const q=terms[ti];termQ.textContent=q[0];termA.innerHTML='';q[1].forEach((x,i)=>{const b=document.createElement('button');b.className='answer';b.textContent=x;b.onclick=()=>answerTerm(i);termA.appendChild(b)});termF.className='feedback'}function answerTerm(i){if(tl)return;tl=true;tt++;const q=terms[ti];if(i===q[2]){tr++;termF.className='feedback ok';termF.textContent='Správně. '+q[3]}else{termF.className='feedback bad';termF.textContent='Ještě ne. '+q[3]}termScore.textContent=tr+' / '+tt}nextTerm();
+const sorts=[['H','atom'],['O₂','molPrvek'],['H₂','molPrvek'],['H₂O','molSlouc'],['CO₂','molSlouc'],['velké množství molekul O₂','latka'],['měď','prvek'],['kyslík','prvek'],['voda','slouc'],['oxid uhličitý','slouc'],['vzduch','smes'],['žula','smes'],['slaná voda','smes']];const names={atom:'atom',molPrvek:'molekula prvku',molSlouc:'molekula sloučeniny',latka:'látka',prvek:'prvek',slouc:'sloučenina',smes:'směs'};let si=-1,sr=0,st=0,sl=false;function nextSort(){si=(si+1)%sorts.length;sl=false;sortItem.textContent=sorts[si][0];sortF.className='feedback'}function sortAnswer(x){if(sl)return;sl=true;st++;if(x===sorts[si][1]){sr++;sortF.className='feedback ok';sortF.textContent='Správně.'}else{sortF.className='feedback bad';sortF.textContent='Správně je: '+names[sorts[si][1]]+'.'}sortScore.textContent=sr+' / '+st}nextSort();
+const quizzes=[['Která možnost je atom?',['H','H₂','H₂O'],0,'H označuje jeden atom vodíku.'],['Která možnost je molekula prvku?',['O₂','CO₂','voda'],0,'O₂ tvoří stejné atomy kyslíku.'],['Která možnost je molekula sloučeniny?',['Fe','H₂O','O₂'],1,'H₂O obsahuje různé druhy atomů.'],['Čistá látka je…',['prvek nebo sloučenina','vždy směs','jen prvek'],0,'Čisté látky dělíme na prvky a sloučeniny.'],['Co platí pro prvek?',['Obsahuje jeden druh atomů','Obsahuje vždy dvě různé látky','Je vždy směsí'],0,'Prvek obsahuje jeden druh atomů.'],['Co platí pro sloučeninu?',['Je jedna čistá látka s různými druhy spojených atomů','Je několik různých látek společně','Je pouze jeden atom'],0,'Sloučenina je jedna čistá látka.'],['Co platí pro směs?',['Obsahuje alespoň dvě různé látky','Je vždy jedna čistá látka','Obsahuje jen jeden druh atomů'],0,'Směs obsahuje více různých látek.'],['Co je H₂?',['atom','molekula prvku','směs'],1,'H₂ je molekula prvku vodíku.'],['Který příklad je směs?',['vzduch','kyslík','voda'],0,'Vzduch je směs několika plynů.']];let qi=-1,qr=0,qt=0,ql=false;function nextQuiz(){qi=(qi+1)%quizzes.length;ql=false;const q=quizzes[qi];quizQ.textContent=(qi+1)+'. '+q[0];quizA.innerHTML='';q[1].forEach((x,i)=>{const b=document.createElement('button');b.className='answer';b.textContent=x;b.onclick=()=>answerQuiz(i);quizA.appendChild(b)});quizF.className='feedback'}function answerQuiz(i){if(ql)return;ql=true;qt++;const q=quizzes[qi];if(i===q[2]){qr++;quizF.className='feedback ok';quizF.textContent='Správně. '+q[3]}else{quizF.className='feedback bad';quizF.textContent='Nesprávně. '+q[3]}quizScore.textContent=qr+' / '+qt}function resetQuiz(){qi=-1;qr=0;qt=0;quizScore.textContent='0 / 0';nextQuiz()}nextQuiz();
 </script>
-</body></html>
+</body>
+</html>
