@@ -3,68 +3,193 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Atomy a molekuly – procvičování 6. ročník</title>
-<style>
-:root{--bg:#f4f8fb;--card:#fff;--ink:#183243;--muted:#607684;--line:#d6e1e8;--accent:#2f6f91;--soft:#e8f3f8;--ok:#e8f6ea;--bad:#fdecec;--h:#5aa7d6;--o:#e96f5d;--x:#f2c14e;--metal:#8c9aa6;--bond:#6d8392}
-*{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Arial,sans-serif;background:var(--bg);color:var(--ink)}header{padding:22px 16px;background:linear-gradient(135deg,#dcecf5,#fff);border-bottom:1px solid var(--line)}header .wrap,main{max-width:1050px;margin:auto}h1{margin:0 0 5px;font-size:clamp(29px,5vw,46px)}.subtitle,.muted{color:var(--muted)}nav{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}button{border:1px solid #b7ccd8;background:#fff;color:var(--ink);padding:10px 13px;border-radius:12px;font-weight:750;cursor:pointer;font-size:15px}button:hover{background:#eef6fa}button.active{background:var(--accent);color:#fff;border-color:var(--accent)}main{padding:16px 14px 42px}.panel{display:none}.panel.active{display:block}.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px;margin:14px 0;box-shadow:0 3px 14px rgba(30,70,90,.05)}h2{margin-top:0}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(225px,1fr));gap:12px}.mini{padding:15px;border:1px solid var(--line);border-radius:15px;background:#fbfdff}.mini h3{margin:0 0 7px}.example{padding:12px 14px;border-left:5px solid var(--accent);background:#f7fbfd;border-radius:9px;margin:10px 0;line-height:1.5}.road{text-align:center;font-weight:800;font-size:clamp(18px,3vw,25px);line-height:1.75}.pill{display:inline-block;padding:7px 12px;border-radius:12px;background:var(--soft)}.concept-buttons,.state-buttons{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}.concept-stage{min-height:330px;border:1px solid var(--line);border-radius:17px;background:#fbfdff;padding:14px;overflow:hidden}.scene{height:220px;position:relative}.atom{position:absolute;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;box-shadow:0 2px 8px rgba(0,0,0,.12);animation:bob 2.5s ease-in-out infinite}.atom.s{width:32px;height:32px;font-size:12px}.atom.m{width:42px;height:42px}.atom.l{width:50px;height:50px;font-size:17px}.h{background:var(--h)}.o{background:var(--o)}.x{background:var(--x);color:#554000}.metal{background:var(--metal)}.bond{position:absolute;height:8px;background:var(--bond);border-radius:99px;transform-origin:left center}.label{position:absolute;font-size:14px;color:var(--muted);font-weight:750}@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}.particle-box{height:260px;border:1px solid var(--line);border-radius:17px;background:#fbfdff;position:relative;overflow:hidden}.particle{position:absolute;width:18px;height:18px;border-radius:50%;background:#679ab6;border:2px solid #426f88}.feedback{display:none;margin-top:13px;padding:12px;border-radius:12px}.feedback.ok{display:block;background:var(--ok);border:1px solid #bddfc1}.feedback.bad{display:block;background:var(--bad);border:1px solid #efc5c5}.question{font-size:21px;font-weight:800;margin:10px 0 14px}.answers{display:grid;gap:9px}.answer{text-align:left;width:100%}.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.score{margin-left:auto;font-weight:800}table{width:100%;border-collapse:collapse}th,td{border:1px solid var(--line);padding:9px;text-align:center}th{background:#edf6fa}.photo-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:14px}.photo-frame{width:100%;height:370px;border:1px solid var(--line);border-radius:16px;background:#fff}.note{font-size:13px;color:var(--muted)}@media(max-width:650px){button{flex:1}.score{width:100%;margin-left:0}.concept-stage{min-height:390px}}
-</style>
+<title>Atomy a molekuly – 6. ročník</title>
+<link rel="stylesheet" href="atomy.css">
 </head>
 <body>
-<header><div class="wrap"><h1>Atomy a molekuly</h1><div class="subtitle">6. ročník ZŠ · atom → molekula → látka → prvek / sloučenina → směs</div><nav>
-<button class="tab active" data-tab="prehled">Přehled</button><button class="tab" data-tab="animace">Animace pojmů</button><button class="tab" data-tab="skupenstvi">Skupenství</button><button class="tab" data-tab="obrazky">Obrázky</button><button class="tab" data-tab="pojmy">Pojmy</button><button class="tab" data-tab="trideni">Třídění</button><button class="tab" data-tab="kviz">Kvíz</button>
-</nav></div></header>
+<header>
+  <div class="wrap">
+    <h1>Atomy a molekuly</h1>
+    <div class="subtitle">6. ročník ZŠ · atom → molekula → látka → prvek / sloučenina → směs</div>
+    <nav>
+      <button class="tab active" data-tab="prehled">Přehled</button>
+      <button class="tab" data-tab="animace">Animace pojmů</button>
+      <button class="tab" data-tab="castice">Částice a skupenství</button>
+      <button class="tab" data-tab="obrazky">Obrázky</button>
+      <button class="tab" data-tab="pojmy">Pojmy</button>
+      <button class="tab" data-tab="trideni">Třídění</button>
+      <button class="tab" data-tab="kviz">Kvíz</button>
+    </nav>
+  </div>
+</header>
+
 <main>
 <section id="prehled" class="panel active">
-<div class="card"><h2>Základní pojmy</h2><div class="grid">
-<div class="mini"><h3>Atom</h3><b>Velmi malá částice látky.</b><p class="muted">Např. atom vodíku H, kyslíku O nebo železa Fe.</p></div>
-<div class="mini"><h3>Molekula</h3><b>Skupina spojených atomů.</b><p class="muted">Atomy v molekule mohou být stejného nebo různého druhu.</p></div>
-<div class="mini"><h3>Molekula prvku</h3><b>Obsahuje atomy stejného druhu.</b><p class="muted">Např. H₂, O₂.</p></div>
-<div class="mini"><h3>Molekula sloučeniny</h3><b>Obsahuje atomy různých druhů.</b><p class="muted">Např. H₂O, CO₂.</p></div>
-<div class="mini"><h3>Látka</h3><b>Je tvořena obrovským množstvím atomů nebo molekul.</b><p class="muted">Např. železo, kyslík, voda.</p></div>
-</div></div>
-<div class="card"><h2>Čisté látky</h2><p><b>Čisté látky jsou buď prvky, nebo sloučeniny.</b></p><div class="grid">
-<div class="mini"><h3>Prvek</h3><p><b>Látka tvořená pouze jedním druhem atomů.</b></p><p>Atomy mohou být samostatné nebo spojené do molekul prvku.</p><p class="muted">Fe · O₂ · H₂</p></div>
-<div class="mini"><h3>Sloučenina</h3><p><b>Látka tvořená částicemi, ve kterých jsou spojeny různé druhy atomů.</b></p><p>V tomto úvodu ji znázorňujeme molekulami sloučeniny.</p><p class="muted">H₂O · CO₂</p></div>
-</div><div class="example"><b>Prvek</b> = jeden druh atomů. <b>Sloučenina</b> = různé druhy atomů spojené v jedné čisté látce.</div></div>
-<div class="card"><h2>Směs</h2><p><b>Směs je tvořena alespoň dvěma různými látkami.</b></p><p>Tyto látky jsou společně, ale <b>nevytvářejí jednu novou čistou látku</b>.</p><p>Příklady: <b>vzduch, žula, slaná voda, mokrý písek</b>.</p><div class="example"><b>Sloučenina:</b> jedna čistá látka.<br><b>Směs:</b> několik různých látek společně.</div></div>
-<div class="card"><h2>Přehledná cesta</h2><div class="road">ATOM<br>↓<br>MOLEKULA<br><span class="muted" style="font-size:14px">molekula prvku / molekula sloučeniny</span><br>↓<br>LÁTKA<br>↓<br><span class="pill">PRVEK</span> &nbsp; nebo &nbsp; <span class="pill">SLOUČENINA</span><br><br><span class="muted" style="font-size:14px">alespoň dvě různé látky společně</span><br>↓<br><span class="pill">SMĚS</span></div></div>
+  <div class="card big">
+    <h2>Atom</h2>
+    <div class="grid one">
+      <div class="mini">
+        <h3>Atom</h3>
+        <p><b>Atom je jedna velmi malá částice látky.</b></p>
+        <p>Existují různé druhy atomů, například atomy vodíku, kyslíku, uhlíku, železa nebo mědi.</p>
+        <p class="small">Příklady zápisu jednoho atomu: H, O, C, Fe, Cu.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card big">
+    <h2>Molekula</h2>
+    <p><b>Molekula je skupina dvou nebo více spojených atomů.</b></p>
+    <div class="grid">
+      <div class="mini">
+        <h3>Molekula prvku</h3>
+        <p>Je tvořena <b>atomy stejného druhu</b>.</p>
+        <p class="small">Např. H₂, O₂.</p>
+      </div>
+      <div class="mini">
+        <h3>Molekula sloučeniny</h3>
+        <p>Je tvořena <b>atomy různých druhů</b>.</p>
+        <p class="small">Např. H₂O, CO₂.</p>
+      </div>
+    </div>
+    <div class="example"><b>Jednoduše:</b> molekula prvku = stejné atomy • molekula sloučeniny = různé atomy.</div>
+  </div>
+
+  <div class="card big">
+    <h2>Látka a čisté látky</h2>
+    <div class="grid three">
+      <div class="mini">
+        <h3>Látka</h3>
+        <p><b>Látka je tvořena obrovským množstvím atomů nebo molekul.</b></p>
+        <p>Například železo tvoří mnoho atomů Fe, kyslík mnoho molekul O₂ a vodu mnoho molekul H₂O.</p>
+      </div>
+      <div class="mini">
+        <h3>Prvek</h3>
+        <p><b>Prvek je čistá látka tvořená pouze jedním druhem atomů.</b></p>
+        <p>Atomy mohou být samostatné nebo spojené do molekul prvku.</p>
+        <p class="small">Např. Fe, O₂, H₂.</p>
+      </div>
+      <div class="mini">
+        <h3>Sloučenina</h3>
+        <p><b>Sloučenina je čistá látka tvořená molekulami sloučeniny.</b></p>
+        <p>V molekulách jsou spojeny alespoň dva různé druhy atomů.</p>
+        <p class="small">Např. H₂O, CO₂.</p>
+      </div>
+    </div>
+    <div class="example"><b>Čistá látka</b> je buď <b>prvek</b>, nebo <b>sloučenina</b>.</div>
+  </div>
+
+  <div class="card big">
+    <h2>Směs</h2>
+    <p><b>Směs je tvořena alespoň dvěma různými látkami.</b></p>
+    <p>Tyto látky jsou společně, ale <b>nevytvářejí jednu novou čistou látku</b>.</p>
+    <p>Příklady: <b>vzduch, žula, slaná voda, mokrý písek</b>.</p>
+    <div class="example"><b>Sloučenina:</b> jedna čistá látka.<br><b>Směs:</b> několik různých látek společně.</div>
+  </div>
+
+  <div class="card">
+    <h2>Přehledná cesta</h2>
+    <div class="road">
+      ATOM<br>↓<br>
+      MOLEKULA<br><span>molekula prvku / molekula sloučeniny</span><br>↓<br>
+      LÁTKA<br><span>obrovské množství atomů nebo molekul</span><br>↓<br>
+      <b class="pill">PRVEK</b> &nbsp; nebo &nbsp; <b class="pill">SLOUČENINA</b><br><br>
+      <span>alespoň dvě různé látky společně</span><br>↓<br><b class="pill warm">SMĚS</b>
+    </div>
+  </div>
 </section>
 
-<section id="animace" class="panel"><div class="card"><h2>Animace pojmů</h2><p>Klikni na pojem a sleduj jednoduchý model.</p><div class="concept-buttons">
-<button onclick="showConcept('atom')">Atom</button><button onclick="showConcept('molecule')">Molekula</button><button onclick="showConcept('molElement')">Molekula prvku</button><button onclick="showConcept('molCompound')">Molekula sloučeniny</button><button onclick="showConcept('substance')">Látka</button><button onclick="showConcept('element')">Prvek</button><button onclick="showConcept('compound')">Sloučenina</button><button onclick="showConcept('mixture')">Směs</button>
-</div><div class="concept-stage" id="conceptStage"></div></div></section>
+<section id="animace" class="panel">
+  <div class="card">
+    <h2>Animace pojmů</h2>
+    <p>Klikni na pojem a podívej se na jednoduchý model.</p>
+    <div class="concept-buttons">
+      <button onclick="showConcept('atom')">Atom</button>
+      <button onclick="showConcept('molecule')">Molekula</button>
+      <button onclick="showConcept('moleculeElement')">Molekula prvku</button>
+      <button onclick="showConcept('moleculeCompound')">Molekula sloučeniny</button>
+      <button onclick="showConcept('substance')">Látka</button>
+      <button onclick="showConcept('element')">Prvek</button>
+      <button onclick="showConcept('compound')">Sloučenina</button>
+      <button onclick="showConcept('mixture')">Směs</button>
+    </div>
+    <div class="concept-stage" id="conceptStage"></div>
+    <div class="legend">
+      <span><i class="dot hdot"></i>vodík</span>
+      <span><i class="dot odot"></i>kyslík</span>
+      <span><i class="dot mdot"></i>kov / jiný atom</span>
+    </div>
+  </div>
+</section>
 
-<section id="skupenstvi" class="panel"><div class="card"><h2>Částice v různých skupenstvích</h2><div class="state-buttons"><button onclick="setState('solid')">Pevné</button><button onclick="setState('liquid')">Kapalné</button><button onclick="setState('gas')">Plynné</button></div><div class="particle-box" id="particleBox"></div><p id="stateNote" class="muted" style="font-weight:750"></p></div><div class="card"><table><tr><th>Skupenství</th><th>Částice</th><th>Pohyb</th></tr><tr><td>Pevné</td><td>těsně u sebe</td><td>kmitají kolem svých poloh</td></tr><tr><td>Kapalné</td><td>blízko u sebe</td><td>mohou se navzájem posouvat</td></tr><tr><td>Plynné</td><td>daleko od sebe</td><td>pohybují se volně</td></tr></table></div></section>
+<section id="castice" class="panel">
+  <div class="card">
+    <h2>Částice v různých skupenstvích</h2>
+    <div class="state-buttons">
+      <button onclick="setState('solid')">Pevné</button>
+      <button onclick="setState('liquid')">Kapalné</button>
+      <button onclick="setState('gas')">Plynné</button>
+    </div>
+    <div id="particleBox" class="particle-box"></div>
+    <p id="stateNote" class="state-note"></p>
+  </div>
+  <div class="card">
+    <table>
+      <tr><th>Skupenství</th><th>Částice</th><th>Pohyb</th></tr>
+      <tr><td>Pevné</td><td>těsně u sebe</td><td>kmitají kolem svých poloh</td></tr>
+      <tr><td>Kapalné</td><td>blízko u sebe</td><td>mohou se navzájem posouvat</td></tr>
+      <tr><td>Plynné</td><td>daleko od sebe</td><td>pohybují se volně</td></tr>
+    </table>
+  </div>
+</section>
 
-<section id="obrazky" class="panel"><div class="card"><h2>Skutečné fotografie pod mikroskopem</h2><p>Nejdřív hádej, co je na obrázku. Potom v rámečku rozbal vysvětlení.</p><div class="photo-grid" id="photoGrid"></div><p class="note">Fotografie se načítají z Wikimedia Commons a vyžadují připojení k internetu.</p></div></section>
+<section id="obrazky" class="panel">
+  <div class="card">
+    <h2>Fotografie pod mikroskopem</h2>
+    <p>Každá fotografie je vložena do samostatného iframe. Nejdřív zkus hádat, co vidíš, a potom rozbal vysvětlení.</p>
+    <div id="photoGrid" class="photo-grid"></div>
+    <p class="small">Fotografie se načítají z Wikimedia Commons, takže tato část potřebuje připojení k internetu.</p>
+  </div>
+</section>
 
-<section id="pojmy" class="panel"><div class="card"><div class="row"><h2 style="margin:0">Co znamená pojem?</h2><div id="termScore" class="score">0 / 0</div></div><div id="termQ" class="question"></div><div id="termA" class="answers"></div><div id="termF" class="feedback"></div><div style="margin-top:13px"><button onclick="nextTerm()">Další otázka</button></div></div></section>
+<section id="pojmy" class="panel">
+  <div class="card">
+    <div class="row"><h2>Co znamená pojem?</h2><div id="termScore" class="score">0 / 0</div></div>
+    <div id="termQuestion" class="question"></div>
+    <div id="termAnswers" class="answers"></div>
+    <div id="termFeedback" class="feedback"></div>
+    <button class="next" onclick="nextTerm()">Další otázka</button>
+  </div>
+</section>
 
-<section id="trideni" class="panel"><div class="card"><h2>Zařaď správně</h2><div id="sortItem" class="question"></div><div class="grid"><button onclick="sortAnswer('atom')">Atom</button><button onclick="sortAnswer('molPrvek')">Molekula prvku</button><button onclick="sortAnswer('molSlouc')">Molekula sloučeniny</button><button onclick="sortAnswer('latka')">Látka</button><button onclick="sortAnswer('prvek')">Prvek</button><button onclick="sortAnswer('slouc')">Sloučenina</button><button onclick="sortAnswer('smes')">Směs</button></div><div id="sortF" class="feedback"></div><div class="row" style="margin-top:13px"><button onclick="nextSort()">Další</button><div id="sortScore" class="score">0 / 0</div></div></div></section>
+<section id="trideni" class="panel">
+  <div class="card">
+    <h2>Zařaď správně</h2>
+    <p>Zařaď <b>přesně popsanou částici nebo látku</b> do nejpřesnější skupiny. Samotné názvy jako „měď“ nebo „voda“ tu nepoužíváme, protože mohou označovat různé úrovně popisu.</p>
+    <div id="sortItem" class="question"></div>
+    <div class="sort-buttons">
+      <button onclick="sortAnswer('atom')">Atom</button>
+      <button onclick="sortAnswer('molPrvek')">Molekula prvku</button>
+      <button onclick="sortAnswer('molSloucenina')">Molekula sloučeniny</button>
+      <button onclick="sortAnswer('prvek')">Prvek</button>
+      <button onclick="sortAnswer('sloucenina')">Sloučenina</button>
+      <button onclick="sortAnswer('smes')">Směs</button>
+    </div>
+    <div id="sortFeedback" class="feedback"></div>
+    <div class="row bottom"><button onclick="nextSort()">Další</button><div id="sortScore" class="score">0 / 0</div></div>
+  </div>
+</section>
 
-<section id="kviz" class="panel"><div class="card"><div class="row"><h2 style="margin:0">Závěrečný kvíz</h2><div id="quizScore" class="score">0 / 0</div></div><div id="quizQ" class="question"></div><div id="quizA" class="answers"></div><div id="quizF" class="feedback"></div><div class="row" style="margin-top:13px"><button onclick="nextQuiz()">Další otázka</button><button onclick="resetQuiz()">Začít znovu</button></div></div></section>
+<section id="kviz" class="panel">
+  <div class="card">
+    <div class="row"><h2>Závěrečný kvíz</h2><div id="quizScore" class="score">0 / 0</div></div>
+    <div id="quizQuestion" class="question"></div>
+    <div id="quizAnswers" class="answers"></div>
+    <div id="quizFeedback" class="feedback"></div>
+    <div class="row bottom"><button onclick="nextQuiz()">Další otázka</button><button onclick="resetQuiz()">Začít znovu</button></div>
+  </div>
+</section>
 </main>
-<script>
-const tabs=[...document.querySelectorAll('.tab')];tabs.forEach(b=>b.onclick=()=>{tabs.forEach(x=>x.classList.remove('active'));document.querySelectorAll('.panel').forEach(x=>x.classList.remove('active'));b.classList.add('active');document.getElementById(b.dataset.tab).classList.add('active')});
-const A=(cls,x,y,size='m',txt='')=>`<div class="atom ${cls} ${size}" style="left:${x}px;top:${y}px">${txt}</div>`;const B=(x,y,w,a=0)=>`<div class="bond" style="left:${x}px;top:${y}px;width:${w}px;transform:rotate(${a}deg)"></div>`;const L=(txt,x,y)=>`<div class="label" style="left:${x}px;top:${y}px">${txt}</div>`;
-function water(x,y){return B(x+18,y+25,40,-30)+B(x+22,y+29,45,0)+A('o',x,y,'m','O')+A('h',x+45,y-22,'s','H')+A('h',x+70,y,'s','H')}
-const concepts={
-atom:['Atom','<b>Atom</b> je jedna velmi malá částice látky.',()=>`<div class="scene">${A('h',210,78,'l','H')}${L('jeden atom',192,145)}</div>`],
-molecule:['Molekula','<b>Molekula</b> je skupina spojených atomů.',()=>`<div class="scene">${B(180,104,65)}${A('h',152,82,'l','H')}${A('h',225,82,'l','H')}${L('spojené atomy = molekula',142,150)}</div>`],
-molElement:['Molekula prvku','Je tvořena atomy <b>stejného druhu</b>.',()=>`<div class="scene">${B(180,104,65)}${A('o',152,82,'l','O')}${A('o',225,82,'l','O')}${L('O₂ = stejné atomy',166,150)}</div>`],
-molCompound:['Molekula sloučeniny','Je tvořena atomy <b>různých druhů</b>.',()=>`<div class="scene">${water(160,82)}${L('H₂O = různé atomy',165,155)}</div>`],
-substance:['Látka','<b>Látku</b> tvoří obrovské množství atomů nebo molekul.',()=>`<div class="scene">${B(75,82,40)}${A('o',52,64,'m','O')}${A('o',100,64,'m','O')}${B(205,82,40)}${A('o',182,64,'m','O')}${A('o',230,64,'m','O')}${B(335,82,40)}${A('o',312,64,'m','O')}${A('o',360,64,'m','O')}${B(140,152,40)}${A('o',117,134,'m','O')}${A('o',165,134,'m','O')}${B(270,152,40)}${A('o',247,134,'m','O')}${A('o',295,134,'m','O')}${L('velké množství stejných částic',120,195)}</div>`],
-element:['Prvek','<b>Prvek</b> je látka tvořená pouze jedním druhem atomů.',()=>`<div class="scene">${L('samostatné stejné atomy',25,12)}${A('metal',40,60,'m','Fe')}${A('metal',95,92,'m','Fe')}${A('metal',55,132,'m','Fe')}${L('nebo molekuly prvku',280,12)}${B(310,82,45)}${A('h',285,64,'m','H')}${A('h',337,64,'m','H')}${B(310,145,45)}${A('h',285,127,'m','H')}${A('h',337,127,'m','H')}</div>`],
-compound:['Sloučenina','<b>Sloučeninu</b> v tomto úvodu znázorňujeme velkým množstvím stejných molekul sloučeniny.',()=>`<div class="scene">${water(35,95)}${water(165,95)}${water(295,95)}${L('stejné molekuly H₂O',135,177)}</div>`],
-mixture:['Směs','<b>Směs</b> obsahuje alespoň dvě různé látky. Nevytvářejí jednu novou čistou látku.',()=>`<div class="scene">${L('látka A',35,15)}${B(65,88,42)}${A('h',40,70,'m','H')}${A('h',90,70,'m','H')}${B(65,150,42)}${A('h',40,132,'m','H')}${A('h',90,132,'m','H')}${L('+',203,92)}${L('látka B',305,15)}${water(300,82)}${L('různé látky společně = směs',120,190)}</div>`]
-};
-function showConcept(k){const d=concepts[k];document.getElementById('conceptStage').innerHTML=`<h3>${d[0]}</h3><p style="font-size:18px;line-height:1.5">${d[1]}</p>${d[2]()}`}showConcept('atom');
-let particleTimer;function setState(s){clearInterval(particleTimer);const box=document.getElementById('particleBox');box.innerHTML='';const W=box.clientWidth,H=box.clientHeight,arr=[],n=s==='gas'?20:35;for(let i=0;i<n;i++){const p=document.createElement('div');p.className='particle';let x,y,vx,vy;if(s==='solid'){x=25+(i%7)*45;y=25+Math.floor(i/7)*42;vx=(Math.random()-.5)*.6;vy=(Math.random()-.5)*.6}else if(s==='liquid'){x=15+Math.random()*(W-45);y=H*.42+Math.random()*(H*.5-25);vx=(Math.random()-.5)*1.5;vy=(Math.random()-.5)*1.1}else{x=10+Math.random()*(W-35);y=10+Math.random()*(H-35);vx=(Math.random()-.5)*3;vy=(Math.random()-.5)*3}p.style.left=x+'px';p.style.top=y+'px';box.appendChild(p);arr.push({p,x,y,vx,vy,x0:x,y0:y})}document.getElementById('stateNote').textContent={solid:'Částice jsou těsně u sebe a kmitají kolem svých poloh.',liquid:'Částice jsou blízko u sebe, ale mohou se navzájem posouvat.',gas:'Částice jsou daleko od sebe a pohybují se volně.'}[s];particleTimer=setInterval(()=>{const w=box.clientWidth,h=box.clientHeight;arr.forEach(a=>{if(s==='solid'){a.x=a.x0+Math.sin(Date.now()/120+a.x0)*2.5;a.y=a.y0+Math.cos(Date.now()/130+a.y0)*2.5}else{a.x+=a.vx;a.y+=a.vy;if(a.x<2||a.x>w-21)a.vx*=-1;if(a.y<2||a.y>h-21)a.vy*=-1;if(s==='liquid'&&a.y<h*.38){a.y=h*.38;a.vy=Math.abs(a.vy)}}a.p.style.left=a.x+'px';a.p.style.top=a.y+'px'})},30)}setTimeout(()=>setState('solid'),50);
-const photos=[['Krystaly cukru','https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/Sugar_crystals_under_the_microscope.jpg/960px-Sugar_crystals_under_the_microscope.jpg','Pod mikroskopem jsou vidět jednotlivé krystaly cukru.'],['Krystaly soli','https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Salt_crystals_under_the_microscope.jpg/960px-Salt_crystals_under_the_microscope.jpg','Porovnej tvar krystalů soli s cukrem.'],['Papír pod mikroskopem','https://upload.wikimedia.org/wikipedia/commons/9/9d/Tissue_paper_under_a_microscope.jpg','Při zvětšení jsou vidět propletená vlákna papíru.'],['Žula pod mikroskopem','https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/%D0%93%D1%80%D0%B0%D0%BD%D0%B8%D1%82_%D0%BF%D0%BE%D0%B4_%D0%BC%D0%B8%D0%BA%D1%80%D0%BE%D1%81%D0%BA%D0%BE%D0%BF%D0%BE%D0%BC.jpg/960px-%D0%93%D1%80%D0%B0%D0%BD%D0%B8%D1%82_%D0%BF%D0%BE%D0%B4_%D0%BC%D0%B8%D0%BA%D1%80%D0%BE%D1%81%D0%BA%D0%BE%D0%BF%D0%BE%D0%BC.jpg','Žula je směs několika minerálů.']];
-function photoDoc(t,u,d){return `<!doctype html><html lang="cs"><meta charset="utf-8"><style>body{margin:0;font:14px Arial;color:#183243}figure{margin:0;padding:10px}img{width:100%;height:270px;object-fit:contain;background:#111;border-radius:12px}details{margin-top:10px;padding:8px;border:1px solid #d6e1e8;border-radius:10px;background:#f7fbfd}summary{font-weight:bold;cursor:pointer}</style><figure><img src="${u}" alt="${t}"><details><summary>Co na obrázku vidíš?</summary><p><b>${t}</b></p><p>${d}</p><p>Zdroj: Wikimedia Commons</p></details></figure></html>`}const grid=document.getElementById('photoGrid');photos.forEach(p=>{const f=document.createElement('iframe');f.className='photo-frame';f.loading='lazy';f.title=p[0];f.srcdoc=photoDoc(...p);grid.appendChild(f)});
-const terms=[['Co je atom?',['Velmi malá částice látky','Směs několika látek','Velká skupina těles'],0,'Atom je velmi malá částice látky.'],['Co je molekula?',['Skupina spojených atomů','Jedna celá látka','Jeden prvek bez atomů'],0,'Molekula je skupina spojených atomů.'],['Co je molekula prvku?',['Molekula ze stejných druhů atomů','Molekula z různých druhů atomů','Směs'],0,'Např. H₂ nebo O₂.'],['Co je látka?',['Obrovské množství atomů nebo molekul','Jeden jediný atom','Pouze směs'],0,'Látku tvoří obrovské množství částic.'],['Co je prvek?',['Látka tvořená jedním druhem atomů','Směs látek','Vždy dvě různé molekuly'],0,'Prvek obsahuje jeden druh atomů.'],['Co je sloučenina?',['Jedna čistá látka s různými druhy spojených atomů','Několik různých látek společně','Jeden druh atomů'],0,'Sloučenina je jedna čistá látka.'],['Co je směs?',['Alespoň dvě různé látky společně','Jeden atom','Samé stejné molekuly vody'],0,'Směs obsahuje alespoň dvě různé látky.']];let ti=-1,tr=0,tt=0,tl=false;function nextTerm(){ti=(ti+1)%terms.length;tl=false;const q=terms[ti];termQ.textContent=q[0];termA.innerHTML='';q[1].forEach((x,i)=>{const b=document.createElement('button');b.className='answer';b.textContent=x;b.onclick=()=>answerTerm(i);termA.appendChild(b)});termF.className='feedback'}function answerTerm(i){if(tl)return;tl=true;tt++;const q=terms[ti];if(i===q[2]){tr++;termF.className='feedback ok';termF.textContent='Správně. '+q[3]}else{termF.className='feedback bad';termF.textContent='Ještě ne. '+q[3]}termScore.textContent=tr+' / '+tt}nextTerm();
-const sorts=[['H','atom'],['O₂','molPrvek'],['H₂','molPrvek'],['H₂O','molSlouc'],['CO₂','molSlouc'],['velké množství molekul O₂','latka'],['měď','prvek'],['kyslík','prvek'],['voda','slouc'],['oxid uhličitý','slouc'],['vzduch','smes'],['žula','smes'],['slaná voda','smes']];const names={atom:'atom',molPrvek:'molekula prvku',molSlouc:'molekula sloučeniny',latka:'látka',prvek:'prvek',slouc:'sloučenina',smes:'směs'};let si=-1,sr=0,st=0,sl=false;function nextSort(){si=(si+1)%sorts.length;sl=false;sortItem.textContent=sorts[si][0];sortF.className='feedback'}function sortAnswer(x){if(sl)return;sl=true;st++;if(x===sorts[si][1]){sr++;sortF.className='feedback ok';sortF.textContent='Správně.'}else{sortF.className='feedback bad';sortF.textContent='Správně je: '+names[sorts[si][1]]+'.'}sortScore.textContent=sr+' / '+st}nextSort();
-const quizzes=[['Která možnost je atom?',['H','H₂','H₂O'],0,'H označuje jeden atom vodíku.'],['Která možnost je molekula prvku?',['O₂','CO₂','voda'],0,'O₂ tvoří stejné atomy kyslíku.'],['Která možnost je molekula sloučeniny?',['Fe','H₂O','O₂'],1,'H₂O obsahuje různé druhy atomů.'],['Čistá látka je…',['prvek nebo sloučenina','vždy směs','jen prvek'],0,'Čisté látky dělíme na prvky a sloučeniny.'],['Co platí pro prvek?',['Obsahuje jeden druh atomů','Obsahuje vždy dvě různé látky','Je vždy směsí'],0,'Prvek obsahuje jeden druh atomů.'],['Co platí pro sloučeninu?',['Je jedna čistá látka s různými druhy spojených atomů','Je několik různých látek společně','Je pouze jeden atom'],0,'Sloučenina je jedna čistá látka.'],['Co platí pro směs?',['Obsahuje alespoň dvě různé látky','Je vždy jedna čistá látka','Obsahuje jen jeden druh atomů'],0,'Směs obsahuje více různých látek.'],['Co je H₂?',['atom','molekula prvku','směs'],1,'H₂ je molekula prvku vodíku.'],['Který příklad je směs?',['vzduch','kyslík','voda'],0,'Vzduch je směs několika plynů.']];let qi=-1,qr=0,qt=0,ql=false;function nextQuiz(){qi=(qi+1)%quizzes.length;ql=false;const q=quizzes[qi];quizQ.textContent=(qi+1)+'. '+q[0];quizA.innerHTML='';q[1].forEach((x,i)=>{const b=document.createElement('button');b.className='answer';b.textContent=x;b.onclick=()=>answerQuiz(i);quizA.appendChild(b)});quizF.className='feedback'}function answerQuiz(i){if(ql)return;ql=true;qt++;const q=quizzes[qi];if(i===q[2]){qr++;quizF.className='feedback ok';quizF.textContent='Správně. '+q[3]}else{quizF.className='feedback bad';quizF.textContent='Nesprávně. '+q[3]}quizScore.textContent=qr+' / '+qt}function resetQuiz(){qi=-1;qr=0;qt=0;quizScore.textContent='0 / 0';nextQuiz()}nextQuiz();
-</script>
+<script src="atomy.js"></script>
 </body>
 </html>
