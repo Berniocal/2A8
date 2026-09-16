@@ -1,0 +1,48 @@
+from pathlib import Path
+import re
+p=Path("vlastnosti.html")
+t=p.read_text(encoding="utf-8")
+
+css_pat=r'\.lattice3d-wrap\{.*?@media\(max-width:800px\)\{\.lattice3d-wrap\{grid-template-columns:1fr\}\.lattice3d-stage\{height:340px\}\}'
+new_css='''.lattice3d-wrap{display:grid;grid-template-columns:1.25fr .9fr;gap:16px;align-items:start;margin-top:14px}.lattice3d-stage{height:420px;border:1px solid var(--line);border-radius:18px;background:radial-gradient(circle at 50% 45%,#fff,#eaf3f8);overflow:hidden;touch-action:none;position:relative}.lattice3d-stage canvas{display:block;width:100%;height:100%}.lattice3d-info{border:1px solid var(--line);border-radius:16px;padding:14px;background:#fbfdff;min-height:130px}.lattice3d-info h3{margin:0 0 8px}.lattice3d-buttons,.lattice3d-zoom{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}.lattice3d-buttons button.sel{background:var(--accent);color:#fff;border-color:var(--accent)}.lattice3d-hint{font-size:13px;color:var(--muted);margin-top:8px}.lattice-key{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px;font-size:13px;color:var(--muted)}.lattice-key span{display:inline-flex;align-items:center;gap:5px}.key-dot{width:12px;height:12px;border-radius:50%;display:inline-block}@media(max-width:800px){.lattice3d-wrap{grid-template-columns:1fr}.lattice3d-stage{height:360px}}'''
+t,n=re.subn(css_pat,new_css,t,count=1,flags=re.S)
+print("css",n)
+
+html_pat=r'<div class="card"><h2>3D mřížky pevných látek</h2>.*?</div></div></div></section>'
+new_html='''<div class="card"><h2>3D mřížky pevných látek</h2><p>Vyber materiál. Model tvoří <b>3D kuličky a spojnice mezi částicemi</b>. Táhni prstem nebo myší pro otočení.</p><div class="lattice3d-buttons"><button id="l3-salt" onclick="showLattice3D('salt')">Sůl</button><button id="l3-sugar" onclick="showLattice3D('sugar')">Cukr</button><button id="l3-steel" onclick="showLattice3D('steel')">Železo / ocel</button><button id="l3-diamond" onclick="showLattice3D('diamond')">Diamant</button></div><div class="lattice3d-wrap"><div><div id="lattice3d-stage" class="lattice3d-stage"><canvas id="lattice3d-canvas"></canvas></div><div class="lattice3d-zoom"><button onclick="l3Zoom(.85)">−</button><button onclick="l3Reset()">Reset</button><button onclick="l3Zoom(1.18)">+</button></div><div class="lattice3d-hint">Táhni po modelu. Na počítači můžeš použít i kolečko myši.</div></div><div id="lattice3d-info" class="lattice3d-info"></div></div></div></section>'''
+t,n=re.subn(html_pat,new_html,t,count=1,flags=re.S)
+print("html",n)
+
+js_start=t.find("const lattice3dWorld=document.getElementById('lattice3d-world');")
+js_end=t.find("function growCrystal(){",js_start)
+if js_start==-1 or js_end==-1:
+    raise SystemExit(f"JS markers not found {js_start} {js_end}")
+
+new_js=r'''const l3canvas=document.getElementById('lattice3d-canvas');
+const l3ctx=l3canvas?.getContext('2d');
+const lattice3dInfo=document.getElementById('lattice3d-info');
+let l3model='salt',l3rx=-0.45,l3ry=0.55,l3scale=1,l3drag=false,l3px=0,l3py=0,l3atoms=[],l3bonds=[];
+const l3data={
+ salt:['Kuchyňská sůl (NaCl)','Pravidelně se střídají dva druhy částic. Čáry ukazují nejbližší sousedy v kubické mřížce.','<div class="lattice-key"><span><i class="key-dot" style="background:#7b5cd6"></i>1. druh částic</span><span><i class="key-dot" style="background:#58c46a"></i>2. druh částic</span></div>'],
+ sugar:['Cukr','Krystal cukru tvoří mnoho stejných molekul uspořádaných v prostoru. Každá barevná skupina je zjednodušená molekula; vazby jsou zobrazené uvnitř molekul.','<div class="lattice-key"><span><i class="key-dot" style="background:#4d5963"></i>uhlík</span><span><i class="key-dot" style="background:#e45a4f"></i>kyslík</span><span><i class="key-dot" style="background:#9ed0ff"></i>vodík</span></div>'],
+ steel:['Železo / ocel','Zjednodušený model kovové mřížky. Čáry jsou spojnice nejbližších atomů, ne klasické směrové chemické vazby. Malé tmavé kuličky znázorňují příměs uhlíku v oceli.','<div class="lattice-key"><span><i class="key-dot" style="background:#9aa6b2"></i>Fe</span><span><i class="key-dot" style="background:#303740"></i>C</span></div>'],
+ diamond:['Diamant','Atomy uhlíku jsou spojeny do pevné trojrozměrné sítě. Každý atom je navázán na své nejbližší sousedy.','<div class="lattice-key"><span><i class="key-dot" style="background:#55b5ff"></i>uhlík</span></div>']};
+function A(x,y,z,c,r=8){l3atoms.push({x,y,z,c,r});return l3atoms.length-1}
+function B(i,j,c='#8aa0ad',w=2){l3bonds.push({i,j,c,w})}
+function buildSalt(){const s=38,map={};for(let x=-2;x<=2;x++)for(let y=-2;y<=2;y++)for(let z=-2;z<=2;z++){const i=A(x*s,y*s,z*s,(x+y+z)&1?'#7b5cd6':'#58c46a',8);map[[x,y,z]]=i}for(let x=-2;x<=2;x++)for(let y=-2;y<=2;y++)for(let z=-2;z<=2;z++){const i=map[[x,y,z]];[[1,0,0],[0,1,0],[0,0,1]].forEach(d=>{const j=map[[x+d[0],y+d[1],z+d[2]]];if(j!==undefined)B(i,j,'#a5b3bd',1.6)})}}
+function sugarMol(ox,oy,oz){const pts=[[-18,0,0,'#4d5963',8],[0,-13,7,'#4d5963',8],[18,0,0,'#4d5963',8],[0,14,-8,'#4d5963',8],[0,0,18,'#e45a4f',7],[28,15,11,'#e45a4f',7],[-28,-13,10,'#9ed0ff',5],[27,-15,-7,'#9ed0ff',5]];const ids=pts.map(q=>A(ox+q[0],oy+q[1],oz+q[2],q[3],q[4]));[[0,1],[1,2],[2,3],[3,0],[0,4],[2,5],[0,6],[2,7]].forEach(e=>B(ids[e[0]],ids[e[1]],'#8799a5',2))}
+function buildSugar(){[-58,58].forEach(x=>[-52,52].forEach(y=>[-52,52].forEach(z=>sugarMol(x,y,z))))}
+function buildSteel(){const s=62,map={};for(let x=-1;x<=1;x++)for(let y=-1;y<=1;y++)for(let z=-1;z<=1;z++)map[[x,y,z]]=A(x*s,y*s,z*s,'#9aa6b2',9);for(let x=-1;x<1;x++)for(let y=-1;y<1;y++)for(let z=-1;z<1;z++){const c=A((x+.5)*s,(y+.5)*s,(z+.5)*s,'#adb7c1',9);for(let dx=0;dx<=1;dx++)for(let dy=0;dy<=1;dy++)for(let dz=0;dz<=1;dz++)B(c,map[[x+dx,y+dy,z+dz]],'#9ba9b3',1.4)}A(0,0,31,'#303740',4);A(31,-31,0,'#303740',4)}
+function buildDiamond(){const a=72,basis=[[0,0,0],[0,.5,.5],[.5,0,.5],[.5,.5,0],[.25,.25,.25],[.25,.75,.75],[.75,.25,.75],[.75,.75,.25]],ids=[];for(let cx=0;cx<2;cx++)for(let cy=0;cy<2;cy++)for(let cz=0;cz<2;cz++)basis.forEach(q=>ids.push(A((cx+q[0]-1)*a,(cy+q[1]-1)*a,(cz+q[2]-1)*a,'#55b5ff',7)));const lim=a*Math.sqrt(3)/4*1.08;for(let i=0;i<ids.length;i++)for(let j=i+1;j<ids.length;j++){const p=l3atoms[ids[i]],q=l3atoms[ids[j]],d=Math.hypot(p.x-q.x,p.y-q.y,p.z-q.z);if(d<lim)B(ids[i],ids[j],'#6ea9d0',2)}}
+function rotate(p){const cy=Math.cos(l3ry),sy=Math.sin(l3ry),cx=Math.cos(l3rx),sx=Math.sin(l3rx);const x=p.x*cy+p.z*sy,z=-p.x*sy+p.z*cy;return{x,y:p.y*cx-z*sx,z:p.y*sx+z*cx}}
+function proj(p,w,h){const q=rotate(p),f=520/(520+q.z*.75);return{x:w/2+q.x*f*l3scale,y:h/2+q.y*f*l3scale,z:q.z,r:p.r*f*l3scale}}
+function shade(hex,k){const n=parseInt(hex.slice(1),16),r=Math.max(0,Math.min(255,((n>>16)&255)+k)),g=Math.max(0,Math.min(255,((n>>8)&255)+k)),b=Math.max(0,Math.min(255,(n&255)+k));return `rgb(${r},${g},${b})`}
+function l3draw(){if(!l3canvas||!l3ctx)return;const dpr=Math.min(devicePixelRatio||1,2),w=l3canvas.clientWidth,h=l3canvas.clientHeight;if(!w||!h)return;if(l3canvas.width!=Math.round(w*dpr)||l3canvas.height!=Math.round(h*dpr)){l3canvas.width=Math.round(w*dpr);l3canvas.height=Math.round(h*dpr)}l3ctx.setTransform(dpr,0,0,dpr,0,0);l3ctx.clearRect(0,0,w,h);const pp=l3atoms.map(a=>proj(a,w,h));l3bonds.map(b=>({b,z:(pp[b.i].z+pp[b.j].z)/2})).sort((a,b)=>a.z-b.z).forEach(o=>{const b=o.b,p=pp[b.i],q=pp[b.j];l3ctx.strokeStyle=b.c;l3ctx.lineWidth=b.w*l3scale;l3ctx.lineCap='round';l3ctx.beginPath();l3ctx.moveTo(p.x,p.y);l3ctx.lineTo(q.x,q.y);l3ctx.stroke()});pp.map((p,i)=>({p,a:l3atoms[i]})).sort((a,b)=>a.p.z-b.p.z).forEach(o=>{const {p,a}=o,g=l3ctx.createRadialGradient(p.x-p.r*.35,p.y-p.r*.35,Math.max(1,p.r*.1),p.x,p.y,Math.max(2,p.r));g.addColorStop(0,'#fff');g.addColorStop(.22,shade(a.c,40));g.addColorStop(.55,a.c);g.addColorStop(1,shade(a.c,-55));l3ctx.fillStyle=g;l3ctx.beginPath();l3ctx.arc(p.x,p.y,Math.max(2,p.r),0,Math.PI*2);l3ctx.fill()})}
+function showLattice3D(k){l3model=k;l3atoms=[];l3bonds=[];document.querySelectorAll('.lattice3d-buttons button').forEach(b=>b.classList.remove('sel'));document.getElementById('l3-'+k)?.classList.add('sel');({salt:buildSalt,sugar:buildSugar,steel:buildSteel,diamond:buildDiamond}[k])();lattice3dInfo.innerHTML=`<h3>${l3data[k][0]}</h3><p>${l3data[k][1]}</p>${l3data[k][2]}<p><b>Poznámka:</b> jde o názorný model, ne o přesné měřítko částic a vzdáleností.</p>`;l3Reset()}
+function l3Zoom(f){l3scale=Math.max(.45,Math.min(2.2,l3scale*f));l3draw()}
+function l3Reset(){l3rx=-.45;l3ry=.55;l3scale=1;l3draw()}
+if(l3canvas){l3canvas.addEventListener('pointerdown',e=>{l3drag=true;l3px=e.clientX;l3py=e.clientY;l3canvas.setPointerCapture(e.pointerId)});l3canvas.addEventListener('pointermove',e=>{if(!l3drag)return;l3ry+=(e.clientX-l3px)*.012;l3rx+=(e.clientY-l3py)*.012;l3px=e.clientX;l3py=e.clientY;l3draw()});['pointerup','pointercancel'].forEach(ev=>l3canvas.addEventListener(ev,()=>l3drag=false));l3canvas.addEventListener('wheel',e=>{e.preventDefault();l3Zoom(e.deltaY>0?.9:1.1)},{passive:false});window.addEventListener('resize',l3draw);setTimeout(()=>showLattice3D('salt'),100)}
+'''
+t=t[:js_start]+new_js+t[js_end:]
+p.write_text(t,encoding="utf-8")
+print("patched")
