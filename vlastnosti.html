@@ -110,20 +110,60 @@ const lattice3dInfo=document.getElementById('lattice3d-info');
 let l3model='salt',l3rx=-0.45,l3ry=0.55,l3scale=1,l3drag=false,l3px=0,l3py=0,l3atoms=[],l3bonds=[];
 const l3data={
  salt:['Kuchyňská sůl (NaCl)','Pravidelně se střídají dva druhy částic. Čáry ukazují nejbližší sousedy v kubické mřížce.','<div class="lattice-key"><span><i class="key-dot" style="background:#7b5cd6"></i>1. druh částic</span><span><i class="key-dot" style="background:#58c46a"></i>2. druh částic</span></div>'],
- sugar:['Cukr','Krystal cukru tvoří mnoho stejných molekul uspořádaných v prostoru. Každá barevná skupina je zjednodušená molekula; vazby jsou zobrazené uvnitř molekul.','<div class="lattice-key"><span><i class="key-dot" style="background:#4d5963"></i>uhlík</span><span><i class="key-dot" style="background:#e45a4f"></i>kyslík</span><span><i class="key-dot" style="background:#9ed0ff"></i>vodík</span></div>'],
+ sugar:['Cukr','Krystal cukru tvoří mnoho stejných molekul pravidelně uspořádaných v prostoru. Plné čáry jsou vazby uvnitř molekul. Světle modré přerušované čáry znázorňují slabší přitažlivé síly mezi sousedními molekulami – nejsou to další chemické vazby uvnitř jedné molekuly.','<div class="lattice-key"><span><i class="key-dot" style="background:#4d5963"></i>uhlík</span><span><i class="key-dot" style="background:#e45a4f"></i>kyslík</span><span><i class="key-dot" style="background:#9ed0ff"></i>vodík</span><span style="gap:7px"><i style="width:22px;border-top:2px dashed #9ecbdc;display:inline-block"></i>mezimolekulové přitažlivé síly</span></div>'],
  steel:['Železo / ocel','Zjednodušený model kovové mřížky. Čáry jsou spojnice nejbližších atomů, ne klasické směrové chemické vazby. Malé tmavé kuličky znázorňují příměs uhlíku v oceli.','<div class="lattice-key"><span><i class="key-dot" style="background:#9aa6b2"></i>Fe</span><span><i class="key-dot" style="background:#303740"></i>C</span></div>'],
  diamond:['Diamant','Atomy uhlíku jsou spojeny do pevné trojrozměrné sítě. Každý atom je navázán na své nejbližší sousedy.','<div class="lattice-key"><span><i class="key-dot" style="background:#55b5ff"></i>uhlík</span></div>']};
 function A(x,y,z,c,r=8){l3atoms.push({x,y,z,c,r});return l3atoms.length-1}
-function B(i,j,c='#8aa0ad',w=2){l3bonds.push({i,j,c,w})}
+function B(i,j,c='#8aa0ad',w=2,dash=0,alpha=1){l3bonds.push({i,j,c,w,dash,alpha})}
 function buildSalt(){const s=38,map={};for(let x=-2;x<=2;x++)for(let y=-2;y<=2;y++)for(let z=-2;z<=2;z++){const i=A(x*s,y*s,z*s,(x+y+z)&1?'#7b5cd6':'#58c46a',8);map[[x,y,z]]=i}for(let x=-2;x<=2;x++)for(let y=-2;y<=2;y++)for(let z=-2;z<=2;z++){const i=map[[x,y,z]];[[1,0,0],[0,1,0],[0,0,1]].forEach(d=>{const j=map[[x+d[0],y+d[1],z+d[2]]];if(j!==undefined)B(i,j,'#a5b3bd',1.6)})}}
-function sugarMol(ox,oy,oz){const pts=[[-18,0,0,'#4d5963',8],[0,-13,7,'#4d5963',8],[18,0,0,'#4d5963',8],[0,14,-8,'#4d5963',8],[0,0,18,'#e45a4f',7],[28,15,11,'#e45a4f',7],[-28,-13,10,'#9ed0ff',5],[27,-15,-7,'#9ed0ff',5]];const ids=pts.map(q=>A(ox+q[0],oy+q[1],oz+q[2],q[3],q[4]));[[0,1],[1,2],[2,3],[3,0],[0,4],[2,5],[0,6],[2,7]].forEach(e=>B(ids[e[0]],ids[e[1]],'#8799a5',2))}
-function buildSugar(){[-58,58].forEach(x=>[-52,52].forEach(y=>[-52,52].forEach(z=>sugarMol(x,y,z))))}
+function sugarMol(ox,oy,oz){
+  const pts=[[-17,0,0,'#4d5963',7.5],[0,-12,7,'#4d5963',7.5],[17,0,0,'#4d5963',7.5],[0,13,-7,'#4d5963',7.5],[0,0,17,'#e45a4f',6.5],[25,13,10,'#e45a4f',6.5],[-24,-12,9,'#9ed0ff',4.5],[24,-13,-7,'#9ed0ff',4.5]];
+  const ids=pts.map(q=>A(ox+q[0],oy+q[1],oz+q[2],q[3],q[4]));
+  [[0,1],[1,2],[2,3],[3,0],[0,4],[2,5],[0,6],[2,7]].forEach(e=>B(ids[e[0]],ids[e[1]],'#8799a5',2));
+  return {ids,anchorO:ids[4],anchorH:ids[7]};
+}
+function buildSugar(){
+  const pos=[-62,0,62],mols={};
+  pos.forEach((x,ix)=>pos.forEach((y,iy)=>pos.forEach((z,iz)=>{mols[[ix,iy,iz]]=sugarMol(x,y,z)})));
+  for(let ix=0;ix<3;ix++)for(let iy=0;iy<3;iy++)for(let iz=0;iz<3;iz++){
+    const m=mols[[ix,iy,iz]];
+    [[1,0,0],[0,1,0],[0,0,1]].forEach(d=>{
+      const n=mols[[ix+d[0],iy+d[1],iz+d[2]]];
+      if(n) B(m.anchorO,n.anchorH,'#9ecbdc',1.25,5,0.72);
+    });
+  }
+}
 function buildSteel(){const s=62,map={};for(let x=-1;x<=1;x++)for(let y=-1;y<=1;y++)for(let z=-1;z<=1;z++)map[[x,y,z]]=A(x*s,y*s,z*s,'#9aa6b2',9);for(let x=-1;x<1;x++)for(let y=-1;y<1;y++)for(let z=-1;z<1;z++){const c=A((x+.5)*s,(y+.5)*s,(z+.5)*s,'#adb7c1',9);for(let dx=0;dx<=1;dx++)for(let dy=0;dy<=1;dy++)for(let dz=0;dz<=1;dz++)B(c,map[[x+dx,y+dy,z+dz]],'#9ba9b3',1.4)}A(0,0,31,'#303740',4);A(31,-31,0,'#303740',4)}
 function buildDiamond(){const a=72,basis=[[0,0,0],[0,.5,.5],[.5,0,.5],[.5,.5,0],[.25,.25,.25],[.25,.75,.75],[.75,.25,.75],[.75,.75,.25]],ids=[];for(let cx=0;cx<2;cx++)for(let cy=0;cy<2;cy++)for(let cz=0;cz<2;cz++)basis.forEach(q=>ids.push(A((cx+q[0]-1)*a,(cy+q[1]-1)*a,(cz+q[2]-1)*a,'#55b5ff',7)));const lim=a*Math.sqrt(3)/4*1.08;for(let i=0;i<ids.length;i++)for(let j=i+1;j<ids.length;j++){const p=l3atoms[ids[i]],q=l3atoms[ids[j]],d=Math.hypot(p.x-q.x,p.y-q.y,p.z-q.z);if(d<lim)B(ids[i],ids[j],'#6ea9d0',2)}}
 function rotate(p){const cy=Math.cos(l3ry),sy=Math.sin(l3ry),cx=Math.cos(l3rx),sx=Math.sin(l3rx);const x=p.x*cy+p.z*sy,z=-p.x*sy+p.z*cy;return{x,y:p.y*cx-z*sx,z:p.y*sx+z*cx}}
-function proj(p,w,h){const q=rotate(p),f=520/(520+q.z*.75);return{x:w/2+q.x*f*l3scale,y:h/2+q.y*f*l3scale,z:q.z,r:p.r*f*l3scale}}
+function proj(p,w,h){const q=rotate(p),camera=760,den=Math.max(260,camera+q.z),f=camera/den;return{x:w/2+q.x*f*l3scale,y:h/2+q.y*f*l3scale,z:q.z,r:p.r*f*l3scale}}
 function shade(hex,k){const n=parseInt(hex.slice(1),16),r=Math.max(0,Math.min(255,((n>>16)&255)+k)),g=Math.max(0,Math.min(255,((n>>8)&255)+k)),b=Math.max(0,Math.min(255,(n&255)+k));return `rgb(${r},${g},${b})`}
-function l3draw(){if(!l3canvas||!l3ctx)return;const dpr=Math.min(devicePixelRatio||1,2),w=l3canvas.clientWidth,h=l3canvas.clientHeight;if(!w||!h)return;if(l3canvas.width!=Math.round(w*dpr)||l3canvas.height!=Math.round(h*dpr)){l3canvas.width=Math.round(w*dpr);l3canvas.height=Math.round(h*dpr)}l3ctx.setTransform(dpr,0,0,dpr,0,0);l3ctx.clearRect(0,0,w,h);const pp=l3atoms.map(a=>proj(a,w,h));l3bonds.map(b=>({b,z:(pp[b.i].z+pp[b.j].z)/2})).sort((a,b)=>a.z-b.z).forEach(o=>{const b=o.b,p=pp[b.i],q=pp[b.j];l3ctx.strokeStyle=b.c;l3ctx.lineWidth=b.w*l3scale;l3ctx.lineCap='round';l3ctx.beginPath();l3ctx.moveTo(p.x,p.y);l3ctx.lineTo(q.x,q.y);l3ctx.stroke()});pp.map((p,i)=>({p,a:l3atoms[i]})).sort((a,b)=>a.p.z-b.p.z).forEach(o=>{const {p,a}=o,g=l3ctx.createRadialGradient(p.x-p.r*.35,p.y-p.r*.35,Math.max(1,p.r*.1),p.x,p.y,Math.max(2,p.r));g.addColorStop(0,'#fff');g.addColorStop(.22,shade(a.c,40));g.addColorStop(.55,a.c);g.addColorStop(1,shade(a.c,-55));l3ctx.fillStyle=g;l3ctx.beginPath();l3ctx.arc(p.x,p.y,Math.max(2,p.r),0,Math.PI*2);l3ctx.fill()})}
+function l3draw(){
+  if(!l3canvas||!l3ctx)return;
+  const dpr=Math.min(devicePixelRatio||1,2),w=l3canvas.clientWidth,h=l3canvas.clientHeight;
+  if(!w||!h)return;
+  if(l3canvas.width!=Math.round(w*dpr)||l3canvas.height!=Math.round(h*dpr)){l3canvas.width=Math.round(w*dpr);l3canvas.height=Math.round(h*dpr)}
+  l3ctx.setTransform(dpr,0,0,dpr,0,0);l3ctx.clearRect(0,0,w,h);
+  const pp=l3atoms.map(a=>proj(a,w,h)),drawables=[];
+  l3bonds.forEach(b=>drawables.push({type:'bond',z:(pp[b.i].z+pp[b.j].z)/2,b}));
+  pp.forEach((p,i)=>drawables.push({type:'atom',z:p.z,p,a:l3atoms[i]}));
+  drawables.sort((a,b)=>b.z-a.z); // far first, near last
+  for(const o of drawables){
+    if(o.type==='bond'){
+      const b=o.b,p=pp[b.i],q=pp[b.j];
+      l3ctx.save();
+      l3ctx.globalAlpha=b.alpha??1;
+      l3ctx.strokeStyle=b.c;l3ctx.lineWidth=b.w*l3scale;l3ctx.lineCap='round';
+      l3ctx.setLineDash(b.dash?[b.dash*l3scale,b.dash*.75*l3scale]:[]);
+      l3ctx.beginPath();l3ctx.moveTo(p.x,p.y);l3ctx.lineTo(q.x,q.y);l3ctx.stroke();
+      l3ctx.restore();
+    }else{
+      const {p,a}=o,g=l3ctx.createRadialGradient(p.x-p.r*.35,p.y-p.r*.35,Math.max(1,p.r*.1),p.x,p.y,Math.max(2,p.r));
+      g.addColorStop(0,'#fff');g.addColorStop(.22,shade(a.c,40));g.addColorStop(.55,a.c);g.addColorStop(1,shade(a.c,-55));
+      l3ctx.fillStyle=g;l3ctx.beginPath();l3ctx.arc(p.x,p.y,Math.max(2,p.r),0,Math.PI*2);l3ctx.fill();
+    }
+  }
+}
 function showLattice3D(k){l3model=k;l3atoms=[];l3bonds=[];document.querySelectorAll('.lattice3d-buttons button').forEach(b=>b.classList.remove('sel'));document.getElementById('l3-'+k)?.classList.add('sel');({salt:buildSalt,sugar:buildSugar,steel:buildSteel,diamond:buildDiamond}[k])();lattice3dInfo.innerHTML=`<h3>${l3data[k][0]}</h3><p>${l3data[k][1]}</p>${l3data[k][2]}<p><b>Poznámka:</b> jde o názorný model, ne o přesné měřítko částic a vzdáleností.</p>`;l3Reset()}
 function l3Zoom(f){l3scale=Math.max(.45,Math.min(2.2,l3scale*f));l3draw()}
 function l3Reset(){l3rx=-.45;l3ry=.55;l3scale=1;l3draw()}
