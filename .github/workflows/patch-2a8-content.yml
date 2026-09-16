@@ -1,0 +1,125 @@
+name: Patch 2A8 content
+
+on:
+  push:
+    paths:
+      - '.github/workflows/patch-2a8-content.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Patch HTML pages
+        shell: python
+        run: |
+          from pathlib import Path
+          import re
+
+          # ---------- latka.html: CT edu video k tekutinam ----------
+          p = Path('latka.html')
+          t = p.read_text(encoding='utf-8')
+          if 'ctedu-fluid-video' not in t:
+              css = '''\n  .ctedu-fluid-video{margin-top:16px;border:1px solid var(--line);border-radius:16px;padding:16px;background:#fbfdff}\n  .ctedu-fluid-video h3{margin:0 0 8px}\n  .ctedu-fluid-video .video-frame{position:relative;width:100%;aspect-ratio:16/9;border-radius:14px;overflow:hidden;background:#0f172a;margin-top:12px}\n  .ctedu-fluid-video iframe{position:absolute;inset:0;width:100%;height:100%;border:0}\n  .ctedu-fluid-video .video-fallback{margin:10px 0 0;color:var(--muted);font-size:.9rem;line-height:1.45}\n  .ctedu-fluid-video a{color:var(--accent);font-weight:800}\n'''
+              t = t.replace('  @media print{', css + '\n  @media print{', 1)
+              marker = '    <div class="note"><b>Důležitá fintička:</b> stejné slovo může podle věty znamenat něco jiného. „Voda“ jako materiál je látka, ale „voda v této láhvi“ je konkrétní těleso tvořené vodou.</div>'
+              video = '''\n    <div class="ctedu-fluid-video" id="ctedu-fluid-video">\n      <h3>🎥 Plyn se dá „přelévat“ – i plyn je tekutina</h3>\n      <p>V pokusu vznikne oxid uhličitý. Protože je hustší než okolní vzduch, můžeme ho z kádinky <b>přelít</b> k hořící svíčce. Je to pěkná ukázka toho, že také plyny mohou proudit a chovat se jako tekutiny.</p>\n      <div class="video-frame">\n        <iframe src="https://edu.ceskatelevize.cz/video/6176-pokus-haseni-svicky" title="Pokus: Hašení svíčky – ČT edu" loading="lazy" allow="fullscreen; autoplay" allowfullscreen></iframe>\n      </div>\n      <p class="video-fallback">Pokud ČT edu nepovolí přehrání přímo v rámečku, <a href="https://edu.ceskatelevize.cz/video/6176-pokus-haseni-svicky" target="_blank" rel="noopener">otevři video na ČT edu</a>.</p>\n    </div>'''
+              t = t.replace(marker, marker + video, 1)
+              p.write_text(t, encoding='utf-8')
+
+          # ---------- vlastnosti.html: realnejsi pohyb castic + 3D mrizky ----------
+          p = Path('vlastnosti.html')
+          t = p.read_text(encoding='utf-8')
+
+          # Realističtější pohyb: srážky + kapalina chvíli kmitá v okolí polohy a pak se přesune.
+          new_setstate = r'''function setState(s){
+            clearT();
+            const box=stateStage;box.innerHTML='';
+            const W=box.clientWidth,H=box.clientHeight,a=[];
+            const diameter=12;
+            const n=s==='gas'?30:42;
+            function freePosition(minY=4){
+              for(let tries=0;tries<400;tries++){
+                const x=4+Math.random()*(W-diameter-8),y=minY+Math.random()*(H-diameter-minY-4);
+                let ok=true;for(const o of a){const dx=x-o.x,dy=y-o.y;if(dx*dx+dy*dy<(diameter+2)*(diameter+2)){ok=false;break}}
+                if(ok)return [x,y];
+              }
+              return [4+Math.random()*(W-diameter-8),minY+Math.random()*(H-diameter-minY-4)];
+            }
+            for(let i=0;i<n;i++){
+              const p=document.createElement('div');p.className='p mol';let x,y,vx=0,vy=0;
+              if(s==='solid'){x=55+(i%7)*55;y=35+Math.floor(i/7)*42}
+              else if(s==='liquid'){
+                const cols=Math.max(7,Math.floor((W-30)/24)),row=Math.floor(i/cols),col=i%cols;
+                x=18+col*24+(row%2)*12+(Math.random()-.5)*3;y=H*.50+row*21+(Math.random()-.5)*3;
+                x=Math.min(W-diameter-5,x);y=Math.min(H-diameter-5,y);
+              }else{
+                [x,y]=freePosition(5);const ang=Math.random()*Math.PI*2,speed=1.9+Math.random()*1.7;vx=Math.cos(ang)*speed;vy=Math.sin(ang)*speed;
+              }
+              p.style.left=x+'px';p.style.top=y+'px';box.appendChild(p);
+              a.push({p,x,y,vx,vy,x0:x,y0:y,targetX:x,targetY:y,phase:Math.random()*Math.PI*2,nextHop:performance.now()+500+Math.random()*1400,hopping:false,hopUntil:0});
+            }
+            stateText.innerHTML={solid:'<b>Pevná látka:</b> částice kmitají kolem stálých poloh.',liquid:'<b>Kapalina:</b> částice jsou těsně u sebe. Chvíli kmitají v okolí své polohy, narážejí do sousedních částic a potom se přeskupí do nové polohy.',gas:'<b>Plyn:</b> částice se pohybují volně, narážejí do sebe navzájem i do stěn nádoby.'}[s];
+            function collide(){
+              for(let i=0;i<a.length;i++)for(let j=i+1;j<a.length;j++){
+                const A=a[i],B=a[j];let dx=B.x-A.x,dy=B.y-A.y,d2=dx*dx+dy*dy;if(d2===0){dx=.01;d2=.0001}
+                if(d2<diameter*diameter){const d=Math.sqrt(d2),nx=dx/d,ny=dy/d,overlap=diameter-d;A.x-=nx*overlap*.5;A.y-=ny*overlap*.5;B.x+=nx*overlap*.5;B.y+=ny*overlap*.5;const rel=(B.vx-A.vx)*nx+(B.vy-A.vy)*ny;if(rel<0){const imp=-rel;A.vx-=imp*nx;A.vy-=imp*ny;B.vx+=imp*nx;B.vy+=imp*ny}}
+              }
+            }
+            timer=setInterval(()=>{
+              const w=box.clientWidth,h=box.clientHeight,now=performance.now();
+              if(s==='solid')a.forEach(o=>{o.x=o.x0+Math.sin(now/90+o.phase)*3;o.y=o.y0+Math.cos(now/105+o.phase)*3});
+              else if(s==='gas'){
+                a.forEach(o=>{o.x+=o.vx;o.y+=o.vy;if(o.x<1){o.x=1;o.vx=Math.abs(o.vx)}if(o.x>w-diameter-1){o.x=w-diameter-1;o.vx=-Math.abs(o.vx)}if(o.y<1){o.y=1;o.vy=Math.abs(o.vy)}if(o.y>h-diameter-1){o.y=h-diameter-1;o.vy=-Math.abs(o.vy)}});collide();
+              }else{
+                const top=h*.38;
+                a.forEach(o=>{
+                  if(!o.hopping&&now>o.nextHop){const ang=Math.random()*Math.PI*2,step=16+Math.random()*18;o.targetX=Math.max(4,Math.min(w-diameter-4,o.x+Math.cos(ang)*step));o.targetY=Math.max(top,Math.min(h-diameter-4,o.y+Math.sin(ang)*step*.55));o.hopping=true;o.hopUntil=now+300+Math.random()*280}
+                  if(o.hopping){const dx=o.targetX-o.x,dy=o.targetY-o.y;o.vx+=dx*.055;o.vy+=dy*.055;o.vx*=.88;o.vy*=.88;if(dx*dx+dy*dy<9||now>o.hopUntil){o.hopping=false;o.x0=o.x;o.y0=o.y;o.nextHop=now+650+Math.random()*1500}}
+                  else{o.vx+=(o.x0-o.x)*.07+Math.sin(now/85+o.phase)*.025;o.vy+=(o.y0-o.y)*.07+Math.cos(now/95+o.phase)*.025;o.vx*=.82;o.vy*=.82}
+                  o.x+=o.vx;o.y+=o.vy;if(o.x<2){o.x=2;o.vx=Math.abs(o.vx)}if(o.x>w-diameter-2){o.x=w-diameter-2;o.vx=-Math.abs(o.vx)}if(o.y<top){o.y=top;o.vy=Math.abs(o.vy);o.y0=Math.max(o.y0,top)}if(o.y>h-diameter-2){o.y=h-diameter-2;o.vy=-Math.abs(o.vy);o.y0=Math.min(o.y0,h-diameter-2)}
+                });collide();
+              }
+              a.forEach(o=>{o.p.style.left=o.x+'px';o.p.style.top=o.y+'px'});
+            },30);
+          }'''
+          t = re.sub(r'function setState\(s\)\{.*?\}\nfunction startBrown', new_setstate+'\nfunction startBrown', t, count=1, flags=re.S)
+
+          if 'lattice3d-stage' not in t:
+              lattice_css = '''\n.lattice3d-wrap{display:grid;grid-template-columns:1.25fr .9fr;gap:16px;align-items:start;margin-top:14px}.lattice3d-stage{height:400px;border:1px solid var(--line);border-radius:18px;background:radial-gradient(circle at 50% 45%,#fff,#eaf3f8);perspective:700px;overflow:hidden;touch-action:none;position:relative}.lattice3d-world{position:absolute;left:50%;top:50%;width:0;height:0;transform-style:preserve-3d;transform:rotateX(-20deg) rotateY(30deg)}.l3ball{position:absolute;width:18px;height:18px;margin:-9px;border-radius:50%;box-shadow:inset -4px -5px 8px rgba(0,0,0,.18),0 2px 4px rgba(0,0,0,.16);transform-style:preserve-3d}.l3-small{width:10px;height:10px;margin:-5px}.lattice3d-info{border:1px solid var(--line);border-radius:16px;padding:14px;background:#fbfdff}.lattice3d-info h3{margin:0 0 8px}.lattice3d-buttons{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}.lattice3d-buttons button.sel{background:var(--accent);color:#fff;border-color:var(--accent)}.lattice3d-hint{font-size:13px;color:var(--muted);margin-top:8px}@media(max-width:800px){.lattice3d-wrap{grid-template-columns:1fr}.lattice3d-stage{height:340px}}\n'''
+              t = t.replace('@media(max-width:650px){button{flex:1}.score{width:100%;margin-left:0}}', lattice_css+'\n@media(max-width:650px){button{flex:1}.score{width:100%;margin-left:0}}', 1)
+              old = '<section id="krystaly" class="panel"><div class="card"><h2>Krystaly</h2><p>U některých pevných látek jsou částice uspořádány pravidelně. To se může projevit pravidelným tvarem krystalu.</p><div class="controls"><button onclick="growCrystal()">Vypěstovat krystal</button></div><div id="crystalStage" class="stage"></div><div class="example">Při pomalém odpařování nasyceného roztoku kuchyňské soli mohou vznikat krystaly soli.</div></div></section>'
+              new = old[:-10] + '''<div class="card"><h2>3D mřížky pevných látek</h2><p>Vyber materiál. Model můžeš myší nebo prstem otáčet a kolečkem přibližovat.</p><div class="lattice3d-buttons"><button id="l3-salt" onclick="showLattice3D('salt')">Sůl</button><button id="l3-sugar" onclick="showLattice3D('sugar')">Cukr</button><button id="l3-steel" onclick="showLattice3D('steel')">Železo / ocel</button><button id="l3-diamond" onclick="showLattice3D('diamond')">Diamant</button></div><div class="lattice3d-wrap"><div><div id="lattice3d-stage" class="lattice3d-stage"><div id="lattice3d-world" class="lattice3d-world"></div></div><div class="lattice3d-hint">Táhni po modelu. Kolečkem myši přibližuj a oddaluj.</div></div><div id="lattice3d-info" class="lattice3d-info"></div></div></div></section>'''
+              t = t.replace(old, new, 1)
+              lattice_js = r'''
+          let l3rx=-20,l3ry=30,l3scale=1,l3drag=false,l3x=0,l3y=0;
+          const l3data={salt:['Kuchyňská sůl (NaCl)','Pravidelně se střídají dva druhy částic. Model ukazuje typickou kubickou mřížku.'],sugar:['Cukr','V krystalu se pravidelně opakují celé molekuly cukru. Barevné shluky jsou zjednodušené molekuly.'],steel:['Železo / ocel','Kovové atomy jsou v pravidelné mřížce. U oceli jsou mezi atomy železa i malé příměsi, například uhlík.'],diamond:['Diamant','Atomy uhlíku tvoří pevnou trojrozměrnou síť. Tato struktura souvisí s velkou tvrdostí diamantu.']};
+          function l3ball(x,y,z,c,small=false){const b=document.createElement('div');b.className='l3ball'+(small?' l3-small':'');b.style.background=c;b.style.transform=`translate3d(${x}px,${y}px,${z}px)`;lattice3dWorld.appendChild(b)}
+          function l3apply(){lattice3dWorld.style.transform=`rotateX(${l3rx}deg) rotateY(${l3ry}deg) scale(${l3scale})`}
+          function showLattice3D(k){lattice3dWorld.innerHTML='';document.querySelectorAll('.lattice3d-buttons button').forEach(b=>b.classList.remove('sel'));document.getElementById('l3-'+k)?.classList.add('sel');const s=42;
+            if(k==='salt')for(let x=-2;x<=2;x++)for(let y=-2;y<=2;y++)for(let z=-2;z<=2;z++)l3ball(x*s,y*s,z*s,(x+y+z)%2?'#7b5cd6':'#58c46a');
+            if(k==='steel'){for(let x=-2;x<=2;x++)for(let y=-2;y<=2;y++)for(let z=-2;z<=2;z++)l3ball(x*s,y*s,z*s,'#9aa6b2');[[-21,-21,0],[21,21,0],[0,-21,21],[21,0,-21],[-21,21,21]].forEach(v=>l3ball(...v,'#303740',true));}
+            if(k==='sugar')for(let x=-1;x<=1;x++)for(let y=-1;y<=1;y++){const bx=x*85,by=y*75;l3ball(bx,by,0,'#49a86b');l3ball(bx+18,by-12,10,'#e45a4f',true);l3ball(bx-17,by+11,-10,'#3d7dd8',true);l3ball(bx+8,by+17,-12,'#3d7dd8',true);}
+            if(k==='diamond'){const pts=[[0,0,0],[55,55,55],[-55,-55,55],[-55,55,-55],[55,-55,-55],[110,0,0],[-110,0,0],[0,110,0],[0,-110,0]];pts.forEach(v=>l3ball(...v,'#55b5ff'));}
+            lattice3dInfo.innerHTML=`<h3>${l3data[k][0]}</h3><p>${l3data[k][1]}</p><p><b>Poznámka:</b> jde o názorný zjednodušený model, ne o přesné měřítko atomů a vzdáleností.</p>`;l3rx=-20;l3ry=30;l3scale=1;l3apply();
+          }
+          setTimeout(()=>{const st=document.getElementById('lattice3d-stage');if(st){st.addEventListener('pointerdown',e=>{l3drag=true;l3x=e.clientX;l3y=e.clientY;st.setPointerCapture(e.pointerId)});st.addEventListener('pointermove',e=>{if(!l3drag)return;l3ry+=(e.clientX-l3x)*.5;l3rx-=(e.clientY-l3y)*.5;l3x=e.clientX;l3y=e.clientY;l3apply()});st.addEventListener('pointerup',()=>l3drag=false);st.addEventListener('pointercancel',()=>l3drag=false);st.addEventListener('wheel',e=>{e.preventDefault();l3scale=Math.max(.55,Math.min(2,l3scale-e.deltaY*.001));l3apply()},{passive:false});showLattice3D('salt')}} ,100);
+          '''
+              t = t.replace('function growCrystal(){', lattice_js+'\nfunction growCrystal(){', 1)
+
+          p.write_text(t, encoding='utf-8')
+
+      - name: Commit patched pages
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add latka.html vlastnosti.html
+          if git diff --cached --quiet; then
+            echo "No changes"
+          else
+            git commit -m "Improve particle models and add CT edu video"
+            git push
+          fi
