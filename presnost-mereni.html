@@ -1,0 +1,275 @@
+<!doctype html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Přesnost měření – procvičování</title>
+<style>
+:root{
+  --bg:#f4f7fb;--card:#fff;--ink:#18212f;--muted:#607086;
+  --blue:#1f6feb;--blue2:#eaf2ff;--green:#15803d;--greenbg:#ecfdf3;
+  --red:#b42318;--redbg:#fff1f0;--amber:#9a6700;--amberbg:#fff8db;
+  --line:#dbe3ef;--shadow:0 8px 30px rgba(31,55,90,.08)
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.45}
+header{background:linear-gradient(135deg,#1557b0,#2484ff);color:white;padding:24px 16px}
+.wrap{max-width:980px;margin:auto}
+header h1{margin:0 0 6px;font-size:clamp(1.65rem,5vw,2.5rem)}
+header p{margin:0;opacity:.92}
+nav{display:flex;gap:8px;flex-wrap:wrap;padding:14px 16px;background:white;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:10}
+nav button,.btn{border:0;border-radius:12px;padding:10px 14px;font-weight:700;cursor:pointer}
+nav button{background:#eef3f9;color:#27364c}
+nav button.active{background:var(--blue);color:white}
+main{max-width:980px;margin:18px auto;padding:0 14px 40px}
+section{display:none}
+section.active{display:block}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px;margin:14px 0;box-shadow:var(--shadow)}
+.card h2,.card h3{margin-top:0}
+.note{background:var(--blue2);border-left:5px solid var(--blue);padding:12px 14px;border-radius:12px}
+.rule{background:var(--amberbg);border-left:5px solid #d99b00;padding:12px 14px;border-radius:12px}
+.formula{font-family:Georgia,serif;font-size:1.22rem;text-align:center;padding:10px;background:#f8fafc;border-radius:12px;margin:10px 0}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
+.q{padding:14px;border:1px solid var(--line);border-radius:14px;margin:12px 0;background:#fff}
+.q b{display:block;margin-bottom:8px}
+input,select{font:inherit;width:100%;padding:10px 12px;border:1px solid #b9c6d8;border-radius:10px;background:white}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.btn.primary{background:var(--blue);color:#fff}
+.btn.secondary{background:#edf2f7;color:#26364a}
+.btn.ghost{background:white;border:1px solid var(--line);color:#26364a}
+.feedback{margin-top:10px;padding:10px 12px;border-radius:10px;display:none}
+.feedback.ok{display:block;background:var(--greenbg);color:var(--green)}
+.feedback.bad{display:block;background:var(--redbg);color:var(--red)}
+.feedback.info{display:block;background:var(--blue2);color:#174a8b}
+.big{font-size:1.1rem;font-weight:700}
+.progress{height:10px;background:#e7edf5;border-radius:20px;overflow:hidden}
+.progress>div{height:100%;background:var(--blue);width:0}
+table{width:100%;border-collapse:collapse}
+th,td{border-bottom:1px solid var(--line);padding:9px;text-align:left}
+.small{font-size:.92rem;color:var(--muted)}
+.badge{display:inline-block;padding:4px 8px;border-radius:999px;background:#eef3f9;font-size:.83rem;font-weight:700}
+@media(max-width:600px){
+  .card{padding:14px;border-radius:14px}
+  nav{position:static}
+  .actions .btn{flex:1}
+}
+@media print{
+  nav,.actions{display:none!important}
+  body{background:white}
+  .card{box-shadow:none;break-inside:avoid}
+  section{display:block!important}
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <h1>Přesnost měření</h1>
+    <p>Nejmenší dílek • odchylka • zápis výsledku • opakované měření • aritmetický průměr</p>
+  </div>
+</header>
+
+<nav class="wrap">
+  <button class="active" data-tab="prehled">Přehled</button>
+  <button data-tab="trenink">Procvičování</button>
+  <button data-tab="opak">Opakované měření</button>
+  <button data-tab="test">Mini test</button>
+</nav>
+
+<main>
+<section id="prehled" class="active">
+  <div class="card">
+    <h2>1. Co znamená přesnost měření?</h2>
+    <p>Při měření porovnáváme měřenou fyzikální veličinu se zvolenou <b>jednotkou</b> pomocí vhodného <b>měřidla</b>.</p>
+    <div class="rule"><b>Výsledek měření nikdy není dokonale přesný.</b> Skutečnou hodnotu obvykle neznáme – měřením ji pouze přibližně určujeme.</div>
+  </div>
+
+  <div class="card">
+    <h2>2. Nejmenší dílek a odchylka</h2>
+    <div class="grid">
+      <div class="note">
+        <b>Nejmenší dílek stupnice</b><br>
+        Určuje, jak jemně je měřidlo rozdělené.
+      </div>
+      <div class="note">
+        <b>Odchylka měření</b><br>
+        Při správném měření je nejvýše polovina nejmenšího dílku.
+      </div>
+    </div>
+    <div class="formula">odchylka = ½ × nejmenší dílek</div>
+    <p><b>Příklad:</b> Pravítko má nejmenší dílek 1 mm → odchylka je ±0,5 mm.</p>
+    <p><b>Příklad:</b> Stupnice po 1 cm → odchylka je ±0,5 cm.</p>
+  </div>
+
+  <div class="card">
+    <h2>3. Jak zapisujeme výsledek</h2>
+    <p>Poslední zapsaná číslice má odpovídat přesnosti měření.</p>
+    <table>
+      <tr><th>Měření</th><th>Správný zápis</th><th>Stejná přesnost</th></tr>
+      <tr><td>na centimetry</td><td>d = 3 cm</td><td>d = 0,3 dm = 0,03 m</td></tr>
+      <tr><td>na milimetry</td><td>d = 32 mm</td><td>d = 3,2 cm = 0,032 m</td></tr>
+    </table>
+    <p class="small">Pozor: 3 cm a 3,0 cm nevyjadřují stejnou přesnost.</p>
+  </div>
+
+  <div class="card">
+    <h2>4. Chyby měření</h2>
+    <div class="grid">
+      <div><span class="badge">měřidlo</span><p>Nepřesná nebo poškozená stupnice, vytažené pásmo…</p></div>
+      <div><span class="badge">člověk</span><p>Špatné přiložení, odečet pod úhlem, chybné přečtení…</p></div>
+      <div><span class="badge">měřený předmět</span><p>Měření může předmět ovlivnit nebo je obtížné přesně určit jeho okraj.</p></div>
+    </div>
+    <div class="rule"><b>Hrubá chyba</b> je zjevně chybný výsledek měření. Při zpracování výsledků ji vyřadíme.</div>
+  </div>
+
+  <div class="card">
+    <h2>5. Opakované měření</h2>
+    <p>Když měříme stejnou veličinu vícekrát, výsledky se mohou trochu lišit. Nejlepší odhad získáme pomocí <b>aritmetického průměru</b>.</p>
+    <div class="formula">průměr = (součet všech platných měření) ÷ (počet platných měření)</div>
+    <p>Výsledek průměru nakonec <b>zaokrouhlíme podle přesnosti původního měření</b>.</p>
+  </div>
+
+  <div class="card">
+    <h2>6. Jak zvýšit přesnost</h2>
+    <p>U velmi malých rozměrů někdy měříme <b>více stejných objektů najednou</b> a výsledek vydělíme jejich počtem.</p>
+    <p><b>Příklad:</b> 50 závitů drátu má délku 41 mm → průměr drátu je 41 ÷ 50 = <b>0,82 mm</b>.</p>
+  </div>
+</section>
+
+<section id="trenink">
+  <div class="card">
+    <h2>Procvičování</h2>
+    <p class="small">Vyplň odpověď a zkontroluj ji. U každé úlohy můžeš zobrazit řešení.</p>
+    <div id="practice"></div>
+  </div>
+</section>
+
+<section id="opak">
+  <div class="card">
+    <h2>Opakované měření – kalkulačka</h2>
+    <p>Zadej naměřené hodnoty oddělené čárkou. Zjevnou hrubou chybu můžeš před výpočtem smazat.</p>
+    <label class="big">Naměřené hodnoty</label>
+    <input id="vals" value="9.48, 9.45, 9.47, 8.48, 9.48, 9.46, 9.49, 9.51, 9.46, 9.47, 9.45">
+    <div class="actions">
+      <button class="btn primary" onclick="calcAvg()">Vypočítat průměr</button>
+      <button class="btn secondary" onclick="document.getElementById('vals').value='9.48, 9.45, 9.47, 9.48, 9.46, 9.49, 9.51, 9.46, 9.47, 9.45';calcAvg()">Vyřadit 8,48</button>
+    </div>
+    <div id="avgout" class="feedback"></div>
+  </div>
+
+  <div class="card">
+    <h2>Měření násobku</h2>
+    <p>Např. změříš tloušťku 50 listů knihy nebo délku 30 závitů drátu a vydělíš počtem kusů.</p>
+    <div class="grid">
+      <div><label>Celková délka / tloušťka</label><input id="total" type="number" step="any" value="41"></div>
+      <div><label>Počet kusů / závitů</label><input id="count" type="number" step="1" value="50"></div>
+    </div>
+    <div class="actions"><button class="btn primary" onclick="multiCalc()">Spočítat jeden kus</button></div>
+    <div id="multiout" class="feedback"></div>
+  </div>
+</section>
+
+<section id="test">
+  <div class="card">
+    <h2>Mini test</h2>
+    <p>6 otázek. Po odevzdání uvidíš skóre.</p>
+    <div id="quiz"></div>
+    <div class="actions"><button class="btn primary" onclick="gradeQuiz()">Odevzdat test</button><button class="btn secondary" onclick="buildQuiz()">Nový test</button></div>
+    <div id="score" class="feedback"></div>
+  </div>
+</section>
+</main>
+
+<script>
+const tabs=[...document.querySelectorAll('nav button')];
+tabs.forEach(b=>b.onclick=()=>{
+  tabs.forEach(x=>x.classList.remove('active')); b.classList.add('active');
+  document.querySelectorAll('main section').forEach(s=>s.classList.remove('active'));
+  document.getElementById(b.dataset.tab).classList.add('active');
+});
+
+const practiceData=[
+ {q:"Pravítko má nejmenší dílek 1 mm. Jaká je největší odchylka měření?",a:["0,5 mm","0.5 mm","±0,5 mm","+-0,5 mm"],sol:"Odchylka = polovina nejmenšího dílku = 0,5 mm."},
+ {q:"Měřidlo má stupnici po 1 cm. Jaká je odchylka měření?",a:["0,5 cm","0.5 cm","±0,5 cm","+-0,5 cm"],sol:"½ · 1 cm = 0,5 cm."},
+ {q:"Délka byla zapsána d = 32 mm. Na jakou jednotku bylo měřeno?",a:["milimetry","mm","na milimetry"],sol:"Poslední číslice je v milimetrech, proto bylo měřeno na milimetry."},
+ {q:"Převeď 32 mm do centimetrů se stejnou přesností.",a:["3,2 cm","3.2 cm"],sol:"32 mm = 3,2 cm. Zápis 3,20 cm by tvrdil vyšší přesnost."},
+ {q:"Převeď 3 cm do metrů se stejnou přesností.",a:["0,03 m","0.03 m"],sol:"3 cm = 0,03 m."},
+ {q:"50 závitů drátu měří dohromady 41 mm. Jaký je průměr drátu?",a:["0,82 mm","0.82 mm"],sol:"41 ÷ 50 = 0,82 mm."},
+ {q:"Naměřili jsme 7,9 cm; 8,0 cm; 7,8 cm; 7,9 cm; 8,1 cm. Jaký je aritmetický průměr?",a:["7,94 cm","7.94 cm"],sol:"(7,9+8,0+7,8+7,9+8,1) ÷ 5 = 7,94 cm. Pokud měření bylo na 0,1 cm, konečný výsledek zaokrouhlíme na 7,9 cm."},
+ {q:"Jak se nazývá zjevně chybný výsledek, který z opakovaných měření vyřadíme?",a:["hrubá chyba","hrubou chybou"],sol:"Jde o hrubou chybu měření."}
+];
+
+function norm(s){return s.toLowerCase().trim().replace(/\s+/g,' ').replace('.',',')}
+function renderPractice(){
+ const box=document.getElementById('practice'); box.innerHTML='';
+ practiceData.forEach((it,i)=>{
+  const d=document.createElement('div'); d.className='q';
+  d.innerHTML=`<b>${i+1}. ${it.q}</b>
+  <input id="p${i}" placeholder="Napiš odpověď">
+  <div class="actions">
+    <button class="btn primary" onclick="checkP(${i})">Zkontrolovat</button>
+    <button class="btn ghost" onclick="showP(${i})">Ukázat řešení</button>
+  </div><div id="pf${i}" class="feedback"></div>`;
+  box.appendChild(d);
+ });
+}
+function checkP(i){
+ const v=norm(document.getElementById('p'+i).value), f=document.getElementById('pf'+i);
+ const ok=practiceData[i].a.some(x=>norm(x)===v);
+ f.className='feedback '+(ok?'ok':'bad');
+ f.textContent=ok?'✓ Správně.':'✗ Zkus to ještě jednou.';
+}
+function showP(i){
+ const f=document.getElementById('pf'+i); f.className='feedback info'; f.textContent=practiceData[i].sol;
+}
+renderPractice();
+
+function calcAvg(){
+ const raw=document.getElementById('vals').value.split(',').map(x=>Number(x.trim().replace(',','.'))).filter(Number.isFinite);
+ const out=document.getElementById('avgout');
+ if(!raw.length){out.className='feedback bad';out.textContent='Zadej alespoň jednu hodnotu.';return}
+ const avg=raw.reduce((a,b)=>a+b,0)/raw.length;
+ out.className='feedback info';
+ out.innerHTML=`Počet hodnot: <b>${raw.length}</b><br>Aritmetický průměr: <b>${avg.toFixed(3).replace('.',',')}</b>`;
+}
+function multiCalc(){
+ const t=Number(document.getElementById('total').value), n=Number(document.getElementById('count').value);
+ const out=document.getElementById('multiout');
+ if(!isFinite(t)||!isFinite(n)||n<=0){out.className='feedback bad';out.textContent='Zadej platné hodnoty.';return}
+ out.className='feedback ok'; out.innerHTML=`Jeden kus: <b>${(t/n).toFixed(3).replace('.',',')}</b> ve stejné jednotce jako celková délka.`;
+}
+
+const quizBank=[
+ {q:"Nejmenší dílek stupnice je 2 mm. Odchylka je:",opts:["±2 mm","±1 mm","±0,2 mm"],correct:1},
+ {q:"Který zápis zachovává stejnou přesnost jako 32 mm?",opts:["3,2 cm","3,20 cm","0,32 m"],correct:0},
+ {q:"Co je nejlepší odhad z několika platných měření?",opts:["největší hodnota","aritmetický průměr","první hodnota"],correct:1},
+ {q:"Zjevně špatně přečtený údaj je:",opts:["náhodná odchylka","hrubá chyba","jednotka"],correct:1},
+ {q:"Proč měříme 50 listů knihy najednou?",opts:["abychom zvýšili přesnost určení tloušťky jednoho listu","abychom nemuseli používat jednotky","aby vyšel větší výsledek"],correct:0},
+ {q:"Výsledek měření je vždy:",opts:["přesná skutečná hodnota","přibližná hodnota","bez jednotky"],correct:1},
+ {q:"Pravítko má dílky po 1 cm. Odchylka je:",opts:["±1 cm","±0,5 cm","±0,1 cm"],correct:1},
+ {q:"Po výpočtu průměru výsledek:",opts:["zapíšeme s libovolným počtem desetinných míst","zaokrouhlíme podle přesnosti původních měření","vždy zaokrouhlíme na celé číslo"],correct:1}
+];
+let currentQuiz=[];
+function buildQuiz(){
+ currentQuiz=[...quizBank].sort(()=>Math.random()-.5).slice(0,6);
+ const q=document.getElementById('quiz'); q.innerHTML='';
+ currentQuiz.forEach((it,i)=>{
+   const d=document.createElement('div');d.className='q';
+   d.innerHTML=`<b>${i+1}. ${it.q}</b>`+it.opts.map((o,j)=>`<label style="display:block;margin:7px 0"><input style="width:auto" type="radio" name="q${i}" value="${j}"> ${o}</label>`).join('');
+   q.appendChild(d);
+ });
+ const s=document.getElementById('score'); s.className='feedback'; s.textContent='';
+}
+function gradeQuiz(){
+ let pts=0;
+ currentQuiz.forEach((it,i)=>{
+   const el=document.querySelector(`input[name=q${i}]:checked`);
+   if(el && Number(el.value)===it.correct) pts++;
+ });
+ const s=document.getElementById('score'); s.className='feedback '+(pts>=5?'ok':pts>=3?'info':'bad');
+ s.innerHTML=`Výsledek: <b>${pts} / ${currentQuiz.length}</b>`;
+}
+buildQuiz();
+</script>
+</body>
+</html>
