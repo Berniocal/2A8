@@ -1,0 +1,511 @@
+<!doctype html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Měření objemu – 2A8</title>
+<style>
+:root{
+  --bg:#f5f7fb;--card:#fff;--ink:#172033;--muted:#64748b;--line:#dbe3ef;
+  --accent:#2563eb;--accent2:#0ea5e9;--good:#15803d;--bad:#b91c1c;--warn:#a16207;
+  --soft:#eff6ff;--shadow:0 10px 30px rgba(15,23,42,.08);--radius:18px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;background:linear-gradient(180deg,#eaf3ff 0,#f8fafc 320px);color:var(--ink)}
+button,input{font:inherit}
+button{cursor:pointer}
+a{color:inherit}
+.shell{max-width:1080px;margin:auto;padding:18px}
+header{background:rgba(255,255,255,.95);border:1px solid rgba(255,255,255,.9);box-shadow:var(--shadow);border-radius:24px;padding:22px 24px;margin-bottom:16px}
+.topline{display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+.eyebrow{font-size:.78rem;letter-spacing:.15em;text-transform:uppercase;color:var(--accent);font-weight:850}
+.home{font-size:.9rem;text-decoration:none;color:#475569;font-weight:750}
+h1{margin:.3rem 0 .4rem;font-size:clamp(1.9rem,4.6vw,3.15rem);line-height:1.03}
+.lead{margin:0;color:var(--muted);font-size:1.02rem;line-height:1.55;max-width:860px}
+.toprow{display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-top:18px}
+.progress-wrap{flex:1;min-width:220px}
+.score{font-weight:800;font-size:.93rem;color:#334155;margin-bottom:6px}
+.progress{height:10px;background:#e8eef7;border-radius:999px;overflow:hidden}
+.progress>div{height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:.25s}
+.toolbar{display:flex;gap:8px;flex-wrap:wrap}
+.btn{border:0;border-radius:12px;padding:10px 14px;font-weight:800;background:#e8eef8;color:#1e293b}
+.btn.primary{background:var(--accent);color:#fff}
+.btn.ghost{background:#fff;border:1px solid var(--line)}
+.tabs{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin:14px 0}
+.tab{border:1px solid var(--line);background:#fff;border-radius:14px;padding:11px 8px;font-weight:850;color:#475569}
+.tab.active{background:var(--soft);color:#1d4ed8;border-color:#93c5fd}
+.panel{display:none;background:var(--card);border:1px solid var(--line);box-shadow:var(--shadow);border-radius:var(--radius);padding:22px}
+.panel.active{display:block}
+.panel h2{margin:0 0 8px;font-size:1.55rem}
+.intro{color:var(--muted);margin:0 0 18px;line-height:1.55}
+.note-sheet{max-width:920px;margin:auto}
+.note-title{padding-bottom:10px;border-bottom:2px solid #cbd5e1;margin-bottom:14px}
+.note-title h2{font-size:1.75rem;margin:0}
+.note-block{padding:14px 0;border-bottom:1px solid #e2e8f0}
+.note-block:last-child{border-bottom:0}
+.note-block h3{margin:0 0 8px;font-size:1.12rem}
+.note-block p{margin:6px 0;line-height:1.58}
+.note-block ul,.note-block ol{margin:7px 0;padding-left:22px;line-height:1.65}
+.formula{display:inline-block;padding:4px 9px;border-radius:8px;background:#eef2ff;font-weight:850;color:#3730a3}
+.key{font-weight:850;color:#0f172a}
+.callout{margin-top:10px;padding:12px 14px;border-left:4px solid #f59e0b;background:#fffbeb;border-radius:10px;color:#713f12;line-height:1.5}
+.unit-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:12px 0}
+.unit{border:1px solid var(--line);border-radius:12px;padding:10px;text-align:center;background:#fbfdff}
+.unit b{display:block;font-size:1.08rem}
+.unit small{color:var(--muted)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.card{border:1px solid var(--line);border-radius:16px;padding:16px;background:#fbfdff}
+.card h3{margin:0 0 8px}.card p{margin:6px 0;line-height:1.5;color:#475569}
+.game-card{border:1px solid var(--line);border-radius:18px;padding:20px;background:linear-gradient(180deg,#fff,#fbfdff)}
+.prompt{font-size:clamp(1.2rem,3vw,1.65rem);font-weight:900;margin:4px 0 7px}
+.subprompt{color:var(--muted);line-height:1.45}
+.answers{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:18px}
+.answer{min-width:145px;border:1px solid #cbd5e1;background:#fff;border-radius:14px;padding:13px 16px;font-weight:850}
+.answer:hover{border-color:#93c5fd;background:#eff6ff}
+.answer.correct{background:#ecfdf5;border-color:#86efac;color:#166534}
+.answer.wrong{background:#fef2f2;border-color:#fca5a5;color:#991b1b}
+.feedback{margin-top:15px;min-height:48px;border-radius:12px;padding:11px 13px;display:none;line-height:1.45}
+.feedback.show{display:block}.feedback.good{background:#ecfdf5;color:#166534}.feedback.bad{background:#fff7ed;color:#9a3412}.feedback.info{background:#eff6ff;color:#1d4ed8}
+.inputrow{display:flex;gap:9px;justify-content:center;align-items:center;flex-wrap:wrap;margin-top:18px}
+.inputrow input{width:180px;border:1px solid #cbd5e1;border-radius:12px;padding:12px 14px;text-align:center;font-weight:850;background:#fff}
+.inputrow .unit-suffix{font-weight:900}
+.nextrow{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-top:12px}
+.cylinder-wrap{display:flex;justify-content:center;margin:18px 0}
+.cylinder-wrap svg{max-width:310px;width:100%;height:auto}
+.scale-info{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:12px}
+.mini{border:1px solid var(--line);border-radius:12px;padding:12px;text-align:center;background:#fff}
+.mini b{display:block;font-size:1.1rem}.mini small{color:var(--muted)}
+.quizbox{max-width:760px;margin:auto}
+.qmeta{display:flex;justify-content:space-between;color:var(--muted);font-weight:800;margin-bottom:10px}
+.quiz-options{display:grid;gap:10px;margin-top:14px}
+.quiz-option{text-align:left;border:1px solid var(--line);background:#fff;border-radius:12px;padding:12px 14px;font-weight:750}
+.quiz-option.correct{background:#ecfdf5;border-color:#86efac;color:#166534}
+.quiz-option.wrong{background:#fef2f2;border-color:#fca5a5;color:#991b1b}
+.result{display:none;text-align:center;padding:22px}.result.show{display:block}.bigscore{font-size:3rem;font-weight:950;color:#1d4ed8}
+footer{color:#64748b;text-align:center;padding:18px 4px 8px;font-size:.85rem}
+@media(max-width:800px){.tabs{grid-template-columns:repeat(3,1fr)}.two{grid-template-columns:1fr}.unit-grid{grid-template-columns:repeat(2,1fr)}.scale-info{grid-template-columns:1fr 1fr}}
+@media(max-width:520px){.shell{padding:10px}header,.panel{padding:16px;border-radius:16px}.tabs{grid-template-columns:repeat(2,1fr)}.unit-grid,.scale-info{grid-template-columns:1fr}.answer{width:100%}.inputrow input{width:145px}}
+@media print{
+ body{background:#fff}.tabs,.toolbar,.progress-wrap,.score,footer,.home{display:none!important}
+ header{box-shadow:none;border:0;padding:0;margin:0 0 8px}.lead,.eyebrow{display:none}
+ .panel{display:none!important;box-shadow:none;border:0;padding:0}#notes{display:block!important}
+ .note-sheet{max-width:none}.note-block{break-inside:avoid}.callout{border:1px solid #ddd;border-left:4px solid #999;background:#fff}
+ h1{font-size:24px}
+}
+</style>
+</head>
+<body>
+<div class="shell">
+<header>
+  <div class="topline">
+    <div class="eyebrow">Fyzika • 6. ročník</div>
+    <a class="home" href="index.html">← zpět na rozcestník</a>
+  </div>
+  <h1>Měření objemu</h1>
+  <p class="lead">Jednotky objemu, měření kapaliny odměrným válcem, správný odečet hladiny a určování objemu nepravidelných těles vytlačením kapaliny.</p>
+  <div class="toprow">
+    <div class="progress-wrap">
+      <div class="score" id="scoreText">Procvičeno: 0 správně z 0 odpovědí</div>
+      <div class="progress"><div id="progressBar"></div></div>
+    </div>
+    <div class="toolbar">
+      <button class="btn ghost" onclick="window.print()">Tisk zápisu</button>
+      <button class="btn ghost" id="resetAll">↻ Vynulovat</button>
+    </div>
+  </div>
+</header>
+
+<nav class="tabs" aria-label="Části aplikace">
+  <button class="tab active" data-tab="notes">1. Zápis</button>
+  <button class="tab" data-tab="units">2. Převody</button>
+  <button class="tab" data-tab="scale">3. Stupnice</button>
+  <button class="tab" data-tab="liquid">4. Kapalina</button>
+  <button class="tab" data-tab="solid">5. Těleso</button>
+  <button class="tab" data-tab="quiz">6. Kvíz</button>
+</nav>
+
+<section class="panel active" id="notes">
+  <div class="note-sheet">
+    <div class="note-title"><h2>Zápis do sešitu – Měření objemu</h2></div>
+
+    <div class="note-block">
+      <h3>Objem</h3>
+      <p><span class="key">Objem</span> je fyzikální veličina, která vyjadřuje, jak velký prostor těleso nebo látka zaujímá.</p>
+      <p>Značka objemu je <span class="formula">V</span>. Hlavní jednotkou je <span class="formula">metr krychlový (m³)</span>.</p>
+    </div>
+
+    <div class="note-block">
+      <h3>Jednotky objemu</h3>
+      <div class="unit-grid">
+        <div class="unit"><b>1 m³</b><small>1000 dm³</small></div>
+        <div class="unit"><b>1 dm³</b><small>1000 cm³</small></div>
+        <div class="unit"><b>1 l</b><small>1 dm³</small></div>
+        <div class="unit"><b>1 ml</b><small>1 cm³</small></div>
+      </div>
+      <p><b>1 dm³ = 0,001 m³</b> a <b>1 cm³ = 0,000 001 m³</b>.</p>
+      <p>Pro kapaliny často používáme litry a mililitry:</p>
+      <p><span class="formula">1 l = 1 dm³</span> &nbsp; <span class="formula">1 ml = 1 cm³ = 0,001 l</span></p>
+      <div class="callout"><b>Pozor:</b> při převodech krychlových jednotek se mezi sousedními jednotkami mění hodnota tisíckrát, ne desetkrát.</div>
+    </div>
+
+    <div class="note-block">
+      <h3>Měření objemu kapaliny</h3>
+      <p>K měření objemu kapaliny používáme <b>odměrné nádoby</b>, nejčastěji <b>odměrný válec</b>.</p>
+      <p>Před měřením zjistíme:</p>
+      <ul>
+        <li>v jakých jednotkách je stupnice,</li>
+        <li>kolik jednotek odpovídá jednomu dílku,</li>
+        <li>nejmenší a největší měřitelný objem – <b>měřicí rozsah</b>.</li>
+      </ul>
+      <p>Odměrný válec postavíme na <b>vodorovnou podložku</b> a hladinu odečítáme <b>ve výšce očí</b>.</p>
+      <p>U vody a většiny běžných kapalin je hladina u stěn mírně výše. Odečítáme proto <b>spodní část menisku uprostřed válce</b>.</p>
+      <p>Je-li nejmenší dílek například 2 ml, odchylka měření je <b>±1 ml</b>.</p>
+    </div>
+
+    <div class="note-block">
+      <h3>Objem nepravidelného pevného tělesa</h3>
+      <p>Objem tělesa, jehož rozměry nelze jednoduše změřit, můžeme určit pomocí kapaliny v odměrném válci.</p>
+      <ol>
+        <li>Změříme počáteční objem kapaliny <b>V₁</b>.</li>
+        <li>Těleso úplně ponoříme do kapaliny.</li>
+        <li>Změříme nový objem <b>V₂</b>.</li>
+        <li>Objem tělesa vypočítáme rozdílem:</li>
+      </ol>
+      <p><span class="formula">V = V₂ − V₁</span></p>
+      <p><b>Příklad:</b> V₁ = 150 ml, V₂ = 176 ml → V = 26 ml = <b>26 cm³</b>.</p>
+      <p>Pokud mají obě měření V₁ a V₂ odchylku ±1 ml, při odčítání se mohou odchylky sčítat. Objem tělesa tedy určíme s odchylkou až <b>±2 ml</b>.</p>
+    </div>
+  </div>
+</section>
+
+<section class="panel" id="units">
+  <h2>Převody jednotek objemu</h2>
+  <p class="intro">Doplň výsledek. Desetinnou čárku i tečku aplikace přijme.</p>
+  <div class="game-card">
+    <div class="prompt" id="unitPrompt"></div>
+    <div class="subprompt" id="unitHint"></div>
+    <div class="inputrow">
+      <input id="unitInput" inputmode="decimal" autocomplete="off">
+      <span class="unit-suffix" id="unitSuffix"></span>
+    </div>
+    <div class="nextrow">
+      <button class="btn primary" onclick="checkUnit()">Zkontrolovat</button>
+      <button class="btn" onclick="newUnit()">Nový příklad</button>
+    </div>
+    <div class="feedback" id="unitFeedback"></div>
+  </div>
+</section>
+
+<section class="panel" id="scale">
+  <h2>Nejmenší dílek, rozsah a odchylka</h2>
+  <p class="intro">Procvič si informace, které musíš zjistit před měřením.</p>
+  <div class="game-card">
+    <div class="prompt" id="scalePrompt"></div>
+    <div class="scale-info">
+      <div class="mini"><small>dolní mez</small><b id="scaleMin"></b></div>
+      <div class="mini"><small>horní mez</small><b id="scaleMax"></b></div>
+      <div class="mini"><small>počet intervalů</small><b id="scaleIntervals"></b></div>
+    </div>
+    <div class="inputrow">
+      <input id="scaleInput" inputmode="decimal" autocomplete="off">
+      <span class="unit-suffix" id="scaleSuffix">ml</span>
+    </div>
+    <div class="nextrow">
+      <button class="btn primary" onclick="checkScale()">Zkontrolovat</button>
+      <button class="btn" onclick="newScale()">Nová stupnice</button>
+    </div>
+    <div class="feedback" id="scaleFeedback"></div>
+  </div>
+</section>
+
+<section class="panel" id="liquid">
+  <h2>Čtení z odměrného válce</h2>
+  <p class="intro">Hladinu odečítej ve výšce očí. U vody čteme spodní část menisku.</p>
+  <div class="game-card">
+    <div class="prompt">Jaký objem kapaliny ukazuje válec?</div>
+    <div class="cylinder-wrap">
+      <svg viewBox="0 0 260 430" aria-label="Odměrný válec">
+        <defs>
+          <linearGradient id="water" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#7dd3fc" stop-opacity=".75"/>
+            <stop offset="100%" stop-color="#38bdf8" stop-opacity=".9"/>
+          </linearGradient>
+        </defs>
+        <rect x="75" y="20" width="110" height="350" rx="10" fill="white" stroke="#64748b" stroke-width="4"/>
+        <rect x="55" y="370" width="150" height="18" rx="7" fill="#cbd5e1"/>
+        <g id="ticks"></g>
+        <path id="liquidShape" fill="url(#water)" stroke="#0284c7" stroke-width="2"></path>
+        <text x="130" y="414" text-anchor="middle" font-size="18" font-weight="700" fill="#475569">ml</text>
+      </svg>
+    </div>
+    <div class="inputrow">
+      <input id="liquidInput" inputmode="decimal" autocomplete="off">
+      <span class="unit-suffix">ml</span>
+    </div>
+    <div class="nextrow">
+      <button class="btn primary" onclick="checkLiquid()">Zkontrolovat</button>
+      <button class="btn" onclick="newLiquid()">Nové měření</button>
+    </div>
+    <div class="feedback" id="liquidFeedback"></div>
+  </div>
+</section>
+
+<section class="panel" id="solid">
+  <h2>Objem nepravidelného tělesa</h2>
+  <p class="intro">Vypočítej objem ponořeného tělesa z rozdílu dvou odečtů.</p>
+  <div class="game-card">
+    <div class="two">
+      <div class="card">
+        <h3>Před ponořením</h3>
+        <p>V₁ = <b id="solidV1"></b> ml</p>
+      </div>
+      <div class="card">
+        <h3>Po ponoření</h3>
+        <p>V₂ = <b id="solidV2"></b> ml</p>
+      </div>
+    </div>
+    <div class="prompt" style="margin-top:18px">Jaký je objem tělesa?</div>
+    <div class="inputrow">
+      <input id="solidInput" inputmode="decimal" autocomplete="off">
+      <span class="unit-suffix">cm³</span>
+    </div>
+    <div class="nextrow">
+      <button class="btn primary" onclick="checkSolid()">Zkontrolovat</button>
+      <button class="btn" onclick="newSolid()">Nové těleso</button>
+    </div>
+    <div class="feedback" id="solidFeedback"></div>
+  </div>
+</section>
+
+<section class="panel" id="quiz">
+  <div class="quizbox">
+    <h2>Závěrečný kvíz</h2>
+    <p class="intro">Deset otázek z celé kapitoly.</p>
+    <div id="quizGame">
+      <div class="qmeta"><span id="quizCount"></span><span id="quizScore"></span></div>
+      <div class="prompt" id="quizPrompt"></div>
+      <div class="quiz-options" id="quizOptions"></div>
+      <div class="feedback" id="quizFeedback"></div>
+      <div class="nextrow"><button class="btn primary" id="quizNext" style="display:none">Další otázka</button></div>
+    </div>
+    <div class="result" id="quizResult">
+      <div class="bigscore" id="bigScore"></div>
+      <p id="resultText"></p>
+      <button class="btn primary" onclick="startQuiz()">Zkusit znovu</button>
+    </div>
+  </div>
+</section>
+
+<footer>2A8 · fyzika · měření objemu</footer>
+</div>
+
+<script>
+const tabs=[...document.querySelectorAll('.tab')];
+tabs.forEach(b=>b.addEventListener('click',()=>{
+  tabs.forEach(x=>x.classList.remove('active'));
+  document.querySelectorAll('.panel').forEach(x=>x.classList.remove('active'));
+  b.classList.add('active');
+  document.getElementById(b.dataset.tab).classList.add('active');
+}));
+
+let good=0,total=0;
+function addScore(ok){
+  total++; if(ok) good++;
+  document.getElementById('scoreText').textContent='Procvičeno: '+good+' správně z '+total+' odpovědí';
+  document.getElementById('progressBar').style.width=(total?Math.round(100*good/total):0)+'%';
+}
+function num(v){return Number(String(v).trim().replace(',','.'))}
+function close(a,b){return Math.abs(a-b)<1e-9}
+function fb(id,type,text){
+  const el=document.getElementById(id);
+  el.className='feedback show '+type;
+  el.innerHTML=text;
+}
+function clearFb(id){const el=document.getElementById(id);el.className='feedback';el.innerHTML='';}
+
+document.getElementById('resetAll').onclick=()=>{
+  good=0;total=0;addScore(false);total=0;good=0;
+  document.getElementById('scoreText').textContent='Procvičeno: 0 správně z 0 odpovědí';
+  document.getElementById('progressBar').style.width='0%';
+  newUnit();newScale();newLiquid();newSolid();startQuiz();
+};
+
+const unitTasks=[
+  {a:2.4,from:'l',to:'ml',factor:1000,h:'1 l = 1000 ml'},
+  {a:350,from:'ml',to:'l',factor:.001,h:'1000 ml = 1 l'},
+  {a:4.2,from:'dm³',to:'cm³',factor:1000,h:'1 dm³ = 1000 cm³'},
+  {a:5600,from:'cm³',to:'dm³',factor:.001,h:'1000 cm³ = 1 dm³'},
+  {a:.75,from:'l',to:'cm³',factor:1000,h:'1 l = 1 dm³ = 1000 cm³'},
+  {a:125,from:'ml',to:'cm³',factor:1,h:'1 ml = 1 cm³'},
+  {a:.006,from:'m³',to:'l',factor:1000,h:'1 m³ = 1000 l'},
+  {a:3.5,from:'dm³',to:'l',factor:1,h:'1 dm³ = 1 l'}
+];
+let uTask;
+function newUnit(){
+  uTask=unitTasks[Math.floor(Math.random()*unitTasks.length)];
+  document.getElementById('unitPrompt').textContent=uTask.a.toString().replace('.',',')+' '+uTask.from+' = ? '+uTask.to;
+  document.getElementById('unitHint').textContent='Pomůcka: '+uTask.h;
+  document.getElementById('unitSuffix').textContent=uTask.to;
+  document.getElementById('unitInput').value='';
+  clearFb('unitFeedback');
+}
+function checkUnit(){
+  const ans=num(document.getElementById('unitInput').value);
+  const correct=uTask.a*uTask.factor;
+  const ok=Number.isFinite(ans)&&close(ans,correct);
+  addScore(ok);
+  fb('unitFeedback',ok?'good':'bad',ok?'✓ Správně.':'Správně je <b>'+String(correct).replace('.',',')+' '+uTask.to+'</b>.');
+}
+
+let sTask;
+function newScale(){
+  const min=[0,20,50][Math.floor(Math.random()*3)];
+  const step=[1,2,5,10][Math.floor(Math.random()*4)];
+  const intervals=[10,20,25,50][Math.floor(Math.random()*4)];
+  const max=min+step*intervals;
+  sTask={min,max,intervals,step,mode:Math.random()<.5?'step':'dev'};
+  document.getElementById('scaleMin').textContent=min+' ml';
+  document.getElementById('scaleMax').textContent=max+' ml';
+  document.getElementById('scaleIntervals').textContent=intervals;
+  document.getElementById('scalePrompt').textContent=sTask.mode==='step'?'Kolik ml odpovídá jednomu dílku?':'Jaká je největší odchylka měření?';
+  document.getElementById('scaleInput').value='';
+  clearFb('scaleFeedback');
+}
+function checkScale(){
+  const ans=num(document.getElementById('scaleInput').value);
+  const correct=sTask.mode==='step'?sTask.step:sTask.step/2;
+  const ok=Number.isFinite(ans)&&close(ans,correct);
+  addScore(ok);
+  fb('scaleFeedback',ok?'good':'bad',ok?'✓ Správně.':'Správně je <b>'+String(correct).replace('.',',')+' ml</b>.');
+}
+
+let lTask;
+function drawCylinder(){
+  const ticks=document.getElementById('ticks');ticks.innerHTML='';
+  const top=40,bottom=350,left=75,right=185;
+  const range=lTask.max-lTask.min;
+  const count=Math.round(range/lTask.step);
+  for(let i=0;i<=count;i++){
+    const val=lTask.min+i*lTask.step;
+    const y=bottom-(val-lTask.min)/range*(bottom-top);
+    const major=i%5===0;
+    const line=document.createElementNS('http://www.w3.org/2000/svg','line');
+    line.setAttribute('x1',major?145:158);line.setAttribute('x2',right);
+    line.setAttribute('y1',y);line.setAttribute('y2',y);
+    line.setAttribute('stroke','#64748b');line.setAttribute('stroke-width',major?'2':'1');
+    ticks.appendChild(line);
+    if(major){
+      const text=document.createElementNS('http://www.w3.org/2000/svg','text');
+      text.setAttribute('x','138');text.setAttribute('y',y+5);text.setAttribute('text-anchor','end');
+      text.setAttribute('font-size','13');text.setAttribute('fill','#475569');text.textContent=val;
+      ticks.appendChild(text);
+    }
+  }
+  const y=bottom-(lTask.value-lTask.min)/range*(bottom-top);
+  const p=document.getElementById('liquidShape');
+  p.setAttribute('d','M77 '+(y+3)+' Q130 '+(y+13)+' 183 '+(y+3)+' L183 367 L77 367 Z');
+}
+function newLiquid(){
+  const configs=[
+    {min:0,max:100,step:2},
+    {min:0,max:100,step:5},
+    {min:20,max:250,step:2},
+    {min:0,max:250,step:5}
+  ];
+  const c=configs[Math.floor(Math.random()*configs.length)];
+  const count=Math.floor((c.max-c.min)/c.step);
+  const k=5+Math.floor(Math.random()*(count-10));
+  lTask={...c,value:c.min+k*c.step};
+  document.getElementById('liquidInput').value='';
+  clearFb('liquidFeedback');
+  drawCylinder();
+}
+function checkLiquid(){
+  const ans=num(document.getElementById('liquidInput').value);
+  const ok=Number.isFinite(ans)&&close(ans,lTask.value);
+  addScore(ok);
+  fb('liquidFeedback',ok?'good':'bad',
+     ok?'✓ Správně. Nejmenší dílek je '+lTask.step+' ml, takže odchylka je ±'+String(lTask.step/2).replace('.',',')+' ml.':
+     'Správný odečet je <b>'+lTask.value+' ml</b>. Čti spodní část menisku ve výšce očí.');
+}
+
+let bodyTask;
+function newSolid(){
+  const v1=80+Math.floor(Math.random()*13)*5;
+  const obj=(4+Math.floor(Math.random()*9))*5;
+  bodyTask={v1,v2:v1+obj,obj};
+  document.getElementById('solidV1').textContent=bodyTask.v1;
+  document.getElementById('solidV2').textContent=bodyTask.v2;
+  document.getElementById('solidInput').value='';
+  clearFb('solidFeedback');
+}
+function checkSolid(){
+  const ans=num(document.getElementById('solidInput').value);
+  const ok=Number.isFinite(ans)&&close(ans,bodyTask.obj);
+  addScore(ok);
+  fb('solidFeedback',ok?'good':'bad',
+     ok?'✓ Správně: V = V₂ − V₁ = '+bodyTask.v2+' − '+bodyTask.v1+' = <b>'+bodyTask.obj+' cm³</b>.':
+     'Použij V = V₂ − V₁. Správně: <b>'+bodyTask.obj+' cm³</b>.');
+}
+
+const quizBank=[
+ {q:'Jaká je značka objemu?',o:['V','O','S'],c:0},
+ {q:'Jaká je hlavní jednotka objemu?',o:['m²','m³','l'],c:1},
+ {q:'Čemu se rovná 1 litr?',o:['1 cm³','1 dm³','1 m³'],c:1},
+ {q:'Čemu se rovná 1 ml?',o:['1 cm³','1 dm³','10 cm³'],c:0},
+ {q:'Kolik litrů je 1 m³?',o:['10 l','100 l','1000 l'],c:2},
+ {q:'Co zjistíme před měřením odměrným válcem?',o:['jen barvu kapaliny','jednotku, nejmenší dílek a rozsah','jen největší číslo'],c:1},
+ {q:'Jak správně odečítáme hladinu vody?',o:['shora','ve výšce očí, u spodní části menisku','zdola'],c:1},
+ {q:'Nejmenší dílek válce je 2 ml. Jaká je odchylka?',o:['±2 ml','±1 ml','±0,2 ml'],c:1},
+ {q:'Jak určíme objem nepravidelného tělesa ponořením?',o:['V = V₁ + V₂','V = V₂ − V₁','V = V₁ · V₂'],c:1},
+ {q:'V₁ = 150 ml a V₂ = 176 ml. Objem tělesa je:',o:['26 cm³','326 cm³','176 cm³'],c:0},
+ {q:'Každý z odečtů V₁ a V₂ má odchylku ±1 ml. Odchylka rozdílu může být až:',o:['±0 ml','±1 ml','±2 ml'],c:2},
+ {q:'Proč musí těleso být při vytlačovací metodě celé ponořené?',o:['jinak nevytlačí kapalinu odpovídající celému svému objemu','aby se zahřálo','jen kvůli barvě kapaliny'],c:0}
+];
+let qOrder=[],qIndex=0,qScore=0,qLocked=false;
+function startQuiz(){
+  qOrder=[...quizBank].sort(()=>Math.random()-.5).slice(0,10);
+  qIndex=0;qScore=0;qLocked=false;
+  document.getElementById('quizGame').style.display='block';
+  document.getElementById('quizResult').classList.remove('show');
+  showQuestion();
+}
+function showQuestion(){
+  qLocked=false;
+  const q=qOrder[qIndex];
+  document.getElementById('quizCount').textContent='Otázka '+(qIndex+1)+' / '+qOrder.length;
+  document.getElementById('quizScore').textContent='Body: '+qScore;
+  document.getElementById('quizPrompt').textContent=q.q;
+  const box=document.getElementById('quizOptions');box.innerHTML='';
+  q.o.forEach((txt,i)=>{
+    const b=document.createElement('button');b.className='quiz-option';b.textContent=txt;
+    b.onclick=()=>answerQuiz(i,b);
+    box.appendChild(b);
+  });
+  clearFb('quizFeedback');
+  document.getElementById('quizNext').style.display='none';
+}
+function answerQuiz(i,btn){
+  if(qLocked)return;qLocked=true;
+  const q=qOrder[qIndex],buttons=[...document.querySelectorAll('.quiz-option')],ok=i===q.c;
+  buttons[q.c].classList.add('correct');if(!ok)btn.classList.add('wrong');
+  if(ok){qScore++;addScore(true);fb('quizFeedback','good','✓ Správně.');}
+  else{addScore(false);fb('quizFeedback','bad','Správná odpověď: <b>'+q.o[q.c]+'</b>.');}
+  document.getElementById('quizScore').textContent='Body: '+qScore;
+  const n=document.getElementById('quizNext');n.style.display='inline-block';n.textContent=qIndex===qOrder.length-1?'Výsledek':'Další otázka';
+}
+document.getElementById('quizNext').onclick=()=>{
+  qIndex++;
+  if(qIndex>=qOrder.length){
+    document.getElementById('quizGame').style.display='none';
+    const r=document.getElementById('quizResult');r.classList.add('show');
+    document.getElementById('bigScore').textContent=qScore+' / '+qOrder.length;
+    document.getElementById('resultText').textContent=qScore>=9?'Výborně!':qScore>=7?'Velmi dobře.':qScore>=5?'Základ máš, ještě trochu procvič.':'Vrať se k zápisu a zkus kvíz znovu.';
+  }else showQuestion();
+};
+
+newUnit();newScale();newLiquid();newSolid();startQuiz();
+</script>
+</body>
+</html>
