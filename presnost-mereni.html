@@ -65,7 +65,7 @@ th,td{border-bottom:1px solid var(--line);padding:9px;text-align:left}
 <header>
   <div class="wrap">
     <h1>Přesnost měření</h1>
-    <p>Nejmenší dílek • odchylka • zápis výsledku • opakované měření • aritmetický průměr</p>
+    <p>Nejmenší dílek • odchylka • meze měření • opakované měření • aritmetický průměr</p>
   </div>
 </header>
 
@@ -124,14 +124,29 @@ th,td{border-bottom:1px solid var(--line);padding:9px;text-align:left}
 
   <div class="card">
     <h2>5. Opakované měření</h2>
-    <p>Když měříme stejnou veličinu vícekrát, výsledky se mohou trochu lišit. Nejlepší odhad získáme pomocí <b>aritmetického průměru</b>.</p>
+    <p>Když měříme stejnou veličinu vícekrát, výsledky se mohou trochu lišit. Opakované měření je důležité hlavně tehdy, když je obtížné měřidlo pokaždé přiložit úplně stejně.</p>
+
+    <div class="grid">
+      <div class="note"><b>Dolní mez měření</b><br>Nejmenší z platných naměřených hodnot.</div>
+      <div class="note"><b>Horní mez měření</b><br>Největší z platných naměřených hodnot.</div>
+    </div>
+
+    <p><b>Příklad:</b> 6,46 m; 6,48 m; 6,45 m; 6,47 m; 6,45 m → dolní mez je <b>6,45 m</b> a horní mez je <b>6,48 m</b>.</p>
+    <p>Skutečná hodnota se podle série měření nachází mezi dolní a horní mezí. Ještě lepším odhadem je <b>aritmetický průměr</b> platných měření.</p>
+
     <div class="formula">průměr = (součet všech platných měření) ÷ (počet platných měření)</div>
-    <p>Výsledek průměru nakonec <b>zaokrouhlíme podle přesnosti původního měření</b>.</p>
+    <p>V uvedeném příkladu vyjde průměr <b>6,462 m</b>. Protože jednotlivá měření byla provedena s přesností na centimetry, výsledek zapíšeme <b>6,46 m</b>.</p>
+    <div class="rule"><b>Aritmetický průměr z více platných měření je zpravidla přesnější odhad než jedno samotné měření.</b></div>
   </div>
 
   <div class="card">
     <h2>6. Jak zvýšit přesnost</h2>
-    <p>U velmi malých rozměrů někdy měříme <b>více stejných objektů najednou</b> a výsledek vydělíme jejich počtem.</p>
+    <p>U velmi malých rozměrů někdy změříme <b>více stejných částí najednou</b> a výsledek vydělíme jejich počtem.</p>
+    <div class="grid">
+      <div class="note"><b>Tenký drát</b><br>Navineme např. 30–50 závitů těsně vedle sebe, změříme délku vinutí a vydělíme počtem závitů.</div>
+      <div class="note"><b>List papíru</b><br>Změříme tloušťku např. 50 listů knihy a výsledek vydělíme 50.</div>
+      <div class="note"><b>Průměr míčku</b><br>Míček sevřeme mezi dva rovnoběžné předměty a změříme jejich vzdálenost. Měření několikrát zopakujeme v různých polohách.</div>
+    </div>
     <p><b>Příklad:</b> 50 závitů drátu má délku 41 mm → průměr drátu je 41 ÷ 50 = <b>0,82 mm</b>.</p>
   </div>
 </section>
@@ -196,7 +211,11 @@ const practiceData=[
  {q:"Převeď 3 cm do metrů se stejnou přesností.",a:["0,03 m","0.03 m"],sol:"3 cm = 0,03 m."},
  {q:"50 závitů drátu měří dohromady 41 mm. Jaký je průměr drátu?",a:["0,82 mm","0.82 mm"],sol:"41 ÷ 50 = 0,82 mm."},
  {q:"Naměřili jsme 7,9 cm; 8,0 cm; 7,8 cm; 7,9 cm; 8,1 cm. Jaký je aritmetický průměr?",a:["7,94 cm","7.94 cm"],sol:"(7,9+8,0+7,8+7,9+8,1) ÷ 5 = 7,94 cm. Pokud měření bylo na 0,1 cm, konečný výsledek zaokrouhlíme na 7,9 cm."},
- {q:"Jak se nazývá zjevně chybný výsledek, který z opakovaných měření vyřadíme?",a:["hrubá chyba","hrubou chybou"],sol:"Jde o hrubou chybu měření."}
+ {q:"Jak se nazývá zjevně chybný výsledek, který z opakovaných měření vyřadíme?",a:["hrubá chyba","hrubou chybou"],sol:"Jde o hrubou chybu měření."},
+ {q:"Naměřili jsme 6,46 m; 6,48 m; 6,45 m; 6,47 m; 6,45 m. Jaká je dolní mez měření?",a:["6,45 m","6.45 m"],sol:"Dolní mez je nejmenší z platných naměřených hodnot, tedy 6,45 m."},
+ {q:"Naměřili jsme 6,46 m; 6,48 m; 6,45 m; 6,47 m; 6,45 m. Jaká je horní mez měření?",a:["6,48 m","6.48 m"],sol:"Horní mez je největší z platných naměřených hodnot, tedy 6,48 m."},
+ {q:"Průměr pěti měření vyšel 6,462 m, ale měřili jsme s přesností na centimetry. Jak zapíšeme výsledek?",a:["6,46 m","6.46 m"],sol:"Původní měření byla na centimetry, proto průměr zaokrouhlíme na 6,46 m."},
+ {q:"Změříme tloušťku 50 listů knihy 4,5 mm. Jaká je tloušťka jednoho listu?",a:["0,09 mm","0.09 mm"],sol:"4,5 ÷ 50 = 0,09 mm."}
 ];
 
 function norm(s){return s.toLowerCase().trim().replace(/\s+/g,' ').replace('.',',')}
@@ -229,8 +248,9 @@ function calcAvg(){
  const out=document.getElementById('avgout');
  if(!raw.length){out.className='feedback bad';out.textContent='Zadej alespoň jednu hodnotu.';return}
  const avg=raw.reduce((a,b)=>a+b,0)/raw.length;
+ const min=Math.min(...raw), max=Math.max(...raw);
  out.className='feedback info';
- out.innerHTML=`Počet hodnot: <b>${raw.length}</b><br>Aritmetický průměr: <b>${avg.toFixed(3).replace('.',',')}</b>`;
+ out.innerHTML=`Počet hodnot: <b>${raw.length}</b><br>Dolní mez: <b>${min.toString().replace('.',',')}</b><br>Horní mez: <b>${max.toString().replace('.',',')}</b><br>Aritmetický průměr: <b>${avg.toFixed(3).replace('.',',')}</b>`;
 }
 function multiCalc(){
  const t=Number(document.getElementById('total').value), n=Number(document.getElementById('count').value);
@@ -247,7 +267,11 @@ const quizBank=[
  {q:"Proč měříme 50 listů knihy najednou?",opts:["abychom zvýšili přesnost určení tloušťky jednoho listu","abychom nemuseli používat jednotky","aby vyšel větší výsledek"],correct:0},
  {q:"Výsledek měření je vždy:",opts:["přesná skutečná hodnota","přibližná hodnota","bez jednotky"],correct:1},
  {q:"Pravítko má dílky po 1 cm. Odchylka je:",opts:["±1 cm","±0,5 cm","±0,1 cm"],correct:1},
- {q:"Po výpočtu průměru výsledek:",opts:["zapíšeme s libovolným počtem desetinných míst","zaokrouhlíme podle přesnosti původních měření","vždy zaokrouhlíme na celé číslo"],correct:1}
+ {q:"Po výpočtu průměru výsledek:",opts:["zapíšeme s libovolným počtem desetinných míst","zaokrouhlíme podle přesnosti původních měření","vždy zaokrouhlíme na celé číslo"],correct:1},
+ {q:"Dolní mez opakovaného měření je:",opts:["nejmenší platná naměřená hodnota","aritmetický průměr","největší platná naměřená hodnota"],correct:0},
+ {q:"Horní mez opakovaného měření je:",opts:["nejmenší platná naměřená hodnota","největší platná naměřená hodnota","polovina nejmenšího dílku"],correct:1},
+ {q:"Jak nejlépe určíme tloušťku jednoho velmi tenkého listu pravítkem?",opts:["změříme jeden list jednou","změříme více listů najednou a vydělíme jejich počtem","odhadneme ji pohledem"],correct:1},
+ {q:"Proč opakujeme měření průměru míčku v různých polohách?",opts:["abychom získali spolehlivější hodnotu","aby se změnila jednotka","abychom nepotřebovali měřidlo"],correct:0}
 ];
 let currentQuiz=[];
 function buildQuiz(){
