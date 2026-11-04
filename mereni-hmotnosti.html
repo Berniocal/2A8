@@ -1,0 +1,432 @@
+<!doctype html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#2563eb">
+<meta name="description" content="Fyzika 2A8: hmotnost, jednotky, převody, rovnoramenné váhy, vážení kapaliny a interaktivní úlohy.">
+<title>Hmotnost a měření hmotnosti – 2A8</title>
+<style>
+:root{--bg:#f4f7fc;--card:#fff;--ink:#172033;--muted:#596a82;--line:#dbe4ef;--blue:#2563eb;--soft:#eff6ff;--green:#15803d;--red:#b91c1c;--amber:#a16207;--shadow:0 8px 28px rgba(15,36,76,.07)}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:linear-gradient(180deg,#eaf2ff 0,#f4f7fc 320px);color:var(--ink);font:16px/1.57 system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif}
+button,input{font:inherit}button{cursor:pointer}a{color:inherit}
+.shell{max-width:1060px;margin:auto;padding:18px 16px 60px}
+header,.panel{background:var(--card);border:1px solid var(--line);border-radius:20px;box-shadow:var(--shadow)}
+header{padding:24px;margin-bottom:14px}
+.eyebrow{font-size:.8rem;text-transform:uppercase;letter-spacing:.11em;font-weight:850;color:var(--blue)}
+.top{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.back{color:#475569;font-size:.9rem;text-decoration:none;font-weight:750}
+h1{font-size:clamp(1.9rem,5vw,3.1rem);line-height:1.13;margin:8px 0}
+.lead{color:var(--muted);max-width:820px;margin:0}
+.actions{display:flex;gap:9px;align-items:center;flex-wrap:wrap;margin-top:16px}
+.btn{border:1px solid transparent;border-radius:11px;padding:10px 15px;background:#e8eef8;color:#27364c;font-weight:800}
+.btn:hover{filter:brightness(.96)}.btn.primary{background:var(--blue);color:#fff}.btn.outline{border-color:var(--line);background:#fff}
+.tabs{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:7px;margin:0 0 15px}
+.tab{border:1px solid var(--line);border-radius:13px;padding:10px 7px;font-size:.89rem;font-weight:850;background:#fff;color:#53627b}
+.tab.active{background:#e8f0ff;border-color:#95b6ff;color:#1949a7}
+.panel{display:none;padding:23px}.panel.active{display:block}
+h2{font-size:1.55rem;margin:0 0 8px}h3{font-size:1.12rem;margin:0 0 8px}
+.intro,.muted{color:var(--muted)}.intro{margin:0 0 16px}
+.notes{max-width:895px;margin:auto}.block{padding:15px 0;border-bottom:1px solid var(--line)}.block:last-child{border:0}
+.block p{margin:6px 0}.block ul,.block ol{margin:7px 0;padding-left:24px}.block li{margin-bottom:3px}
+.formula{font-size:1.03rem;display:inline-block;background:#eef2ff;color:#283ea4;font-weight:850;border-radius:7px;padding:3px 9px;margin:2px 0}
+.callout{padding:12px 15px;border-left:4px solid #e8a72d;background:#fffbeb;border-radius:11px;margin:14px 0}
+.note{background:#eff6ff;border-left:4px solid var(--blue);padding:12px 14px;border-radius:11px;margin:12px 0}
+.units{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin:12px 0}
+.unit{text-align:center;border:1px solid var(--line);background:#f8fbff;border-radius:13px;padding:11px}
+.unit b{display:block;font-size:1.12rem}.unit small{color:var(--muted)}
+.example{background:#f8fafc;border:1px solid var(--line);border-radius:13px;padding:13px 15px;margin:11px 0}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:15px}
+.card{border:1px solid var(--line);border-radius:16px;background:#fbfdff;padding:17px}
+.card p{margin:5px 0}.work{padding:18px;border:1px solid var(--line);border-radius:16px;background:linear-gradient(#fff,#fafdff)}
+.question{font-size:clamp(1.16rem,3vw,1.52rem);font-weight:900;margin:7px 0 11px}
+.sub{color:var(--muted);font-size:.92rem}
+.inputrow{display:flex;align-items:center;flex-wrap:wrap;gap:8px;margin:13px 0}
+input[type=number],input[type=text]{min-height:44px;max-width:220px;min-width:125px;padding:10px 12px;background:white;border:1px solid #b4c4d8;border-radius:11px;font-weight:750;color:var(--ink)}
+input:focus-visible,button:focus-visible{outline:3px solid #a5c6ff;outline-offset:2px}
+.feedback{display:none;padding:12px 14px;border-radius:11px;margin:12px 0 0;line-height:1.5}
+.feedback.show{display:block}.feedback.good{background:#eaf8ee;color:#166534}.feedback.bad{background:#fff1f2;color:#991b1b}.feedback.info{background:#edf5ff;color:#1e40af}
+.options{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin:14px 0}
+.option{border:1px solid var(--line);background:#fff;border-radius:12px;min-height:48px;padding:10px;font-weight:750;text-align:center}
+.option:hover:not(:disabled){background:#edf5ff;border-color:#91baff}
+.option.correct{background:#dcfce7;color:#166534;border-color:#86efac}
+.option.wrong{background:#ffe4e6;color:#9f1239;border-color:#fda4af}
+.option:disabled{cursor:default}
+.balancebox{background:#f6faff;border:1px solid #d8e6fa;border-radius:16px;padding:8px 12px}
+.balance-svg{width:100%;max-height:350px;display:block;overflow:visible}
+.scale-label{font-size:19px;font-weight:850;fill:#1e293b;text-anchor:middle}
+.diagram-caption{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;color:#405270;font-weight:750;text-align:center}
+.weights{display:flex;gap:8px;flex-wrap:wrap;margin:13px 0}
+.weight{border:2px solid #cbd5e1;background:linear-gradient(180deg,#e4e7ed,#b8c1cc);color:#18283b;border-radius:11px;min-width:63px;min-height:52px;padding:6px 10px;font-weight:900}
+.weight.chosen{background:#bfdbfe;border-color:#2563eb;color:#1e40af}
+.weight:disabled{opacity:.48;cursor:not-allowed}
+.statrow{display:flex;gap:10px;flex-wrap:wrap}
+.stat{flex:1;border:1px solid var(--line);border-radius:13px;padding:11px;text-align:center;background:#fff}
+.stat b{display:block;font-size:1.25rem}
+.smallcaps{text-transform:uppercase;font-size:.77rem;letter-spacing:.09em;color:var(--muted);font-weight:850}
+.liquidgrid{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start}
+.digital{border:1px solid #9eabc0;background:linear-gradient(#e1e7ef,#c0cbd9);border-radius:19px;padding:22px 15px 16px;margin:15px auto;max-width:360px;box-shadow:0 8px 0 #98a8b9;text-align:center}
+.digital .screen{font:800 2rem/1.2 ui-monospace,SFMono-Regular,Consolas,monospace;background:#e9f0d8;border:5px solid #70828b;border-radius:10px;padding:12px;min-height:77px}
+.digital .digitalhint{margin-top:8px;font-size:.86rem;color:#334155;font-weight:750}
+.vessel{margin:14px auto 5px;border:4px solid #7893b7;border-top:0;border-radius:0 0 15px 15px;width:112px;height:120px;position:relative;overflow:hidden;background:#f5fbff}
+.vessel:before{content:"";position:absolute;top:0;left:0;right:0;border-top:4px solid #7893b7;border-radius:50%;z-index:2}
+.water{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(#90d7fb,#5eb4ef);height:60%;transition:height .2s}
+.step{padding:9px 12px;border-radius:12px;background:#f1f5fb;margin:8px 0}
+.step.done{background:#e8f7ef;color:#166534}
+.task-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.task{background:#fbfdff;border:1px solid var(--line);border-radius:15px;padding:15px}
+.task p{margin:4px 0 10px}
+details{margin-top:10px;background:#f1f5fb;padding:10px 12px;border-radius:10px}
+summary{cursor:pointer;font-weight:800;color:#204da3}
+.quizstats{display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+.pbar{width:100%;height:10px;background:#e5eaf2;border-radius:99px;overflow:hidden;margin:10px 0 20px}
+.pbar div{width:0;height:100%;background:#2563eb;transition:width .3s}
+.footer{margin-top:15px;font-size:.85rem;text-align:center;color:var(--muted)}
+@media(max-width:900px){.tabs{grid-template-columns:repeat(4,1fr)}}
+@media(max-width:680px){.shell{padding:10px 10px 40px}header,.panel{padding:16px;border-radius:15px}.tabs{grid-template-columns:repeat(2,1fr)}.grid2,.liquidgrid,.task-list{grid-template-columns:1fr}.units{grid-template-columns:repeat(2,1fr)}.options{grid-template-columns:1fr}.weight{min-width:55px;flex:1}}
+@media print{body{background:#fff}.shell{max-width:none;padding:0}header{box-shadow:none;border:0;padding:0 0 6px}.lead,.eyebrow,.back,.actions,.tabs,.footer{display:none!important}.panel{display:none!important;box-shadow:none;border:0;padding:0}#notes{display:block!important}.block{break-inside:avoid}.callout{border:1px solid #ddd;border-left:4px solid #aaa;background:#fff}h1{font-size:22pt}}
+</style>
+</head>
+<body>
+<div class="shell">
+<header>
+  <div class="top"><span class="eyebrow">2A8 · Fyzika · Hmotnost</span><a href="index.html" class="back">← Zpět na rozcestník</a></div>
+  <h1>Hmotnost a měření hmotnosti</h1>
+  <p class="lead">Zápis do sešitu, převody jednotek, poznávání správných měřidel, rovnoramenné váhy, vážení kapaliny a závěrečný test. Všechna cvičení mají vlastní původní zadání.</p>
+  <div class="actions"><button class="btn outline" id="printNotes">Tisk zápisu</button><button class="btn outline" id="resetProgress">Vynulovat výsledky</button><span id="globalScore" class="sub" aria-live="polite"></span></div>
+</header>
+<nav class="tabs" aria-label="Výběr části učiva">
+<button class="tab active" data-tab="notes">1. Zápis</button>
+<button class="tab" data-tab="convert">2. Převody</button>
+<button class="tab" data-tab="estimate">3. Odhady</button>
+<button class="tab" data-tab="balance">4. Váhy</button>
+<button class="tab" data-tab="liquids">5. Kapaliny</button>
+<button class="tab" data-tab="tasks">6. Úlohy</button>
+<button class="tab" data-tab="quiz">7. Test</button>
+</nav>
+
+<section class="panel active" id="notes">
+<div class="notes">
+<h2>Zápis do sešitu</h2>
+<div class="block">
+  <h3>1. Hmotnost tělesa</h3>
+  <p><b>Hmotnost</b> je fyzikální veličina vyjadřující množství látky v tělese.</p>
+  <p>Značka: <span class="formula">m</span> &nbsp; Základní jednotka: <span class="formula">kilogram (kg)</span></p>
+  <p>Hmotnost měříme pomocí <b>vah</b>. Příklad zápisu: <span class="formula">m = 2,5 kg</span>.</p>
+</div>
+<div class="block">
+  <h3>2. Jednotky hmotnosti</h3>
+  <div class="units"><div class="unit"><b>t</b><small>tuna</small></div><div class="unit"><b>kg</b><small>kilogram</small></div><div class="unit"><b>g</b><small>gram</small></div><div class="unit"><b>mg</b><small>miligram</small></div></div>
+  <p><b>1 t = 1 000 kg</b> &nbsp; <b>1 kg = 1 000 g</b> &nbsp; <b>1 g = 1 000 mg</b></p>
+  <p>2,5 kg = 2 500 g; 350 g = 0,35 kg; 75 mg = 0,075 g.</p>
+  <div class="note">Při převodu na menší jednotku násobíme 1 000. Při převodu na větší jednotku dělíme 1 000 (pro každou sousední jednotku v řadě t – kg – g – mg).</div>
+</div>
+<div class="block">
+  <h3>3. Druhy vah</h3>
+  <ul>
+    <li><b>Digitální váhy</b> – hmotnost zobrazují na displeji.</li>
+    <li><b>Pružinové váhy</b> – hmotnost určují nepřímo podle protažení pružiny; musí být správně kalibrovány.</li>
+    <li><b>Rovnoramenné váhy</b> – porovnávají hmotnost tělesa se známými závažími.</li>
+  </ul>
+</div>
+<div class="block">
+  <h3>4. Rovnoramenné váhy</h3>
+  <p>Hlavní části: <b>vahadlo, dvě misky, jazýček (ukazatel), stupnice, stojan a aretace</b>.</p>
+  <p><b>Rovnováha</b> nastane, mají-li obě misky stejnou hmotnost (a ramena vah jsou stejně dlouhá).</p>
+  <p><b>Aretace</b> zastaví vahadlo. Při přikládání či odebírání předmětů váhy vždy zaaretujeme, aby se nepoškodil jejich břit.</p>
+  <h3 style="margin-top:10px">Postup měření</h3>
+  <ol>
+    <li>Váhy postavíme vodorovně a ověříme vyvážení prázdných vah.</li>
+    <li>Váhy zaaretujeme; na jednu misku položíme těleso, na druhou závaží.</li>
+    <li>Odaretujeme a sledujeme jazýček. Před změnou závaží opět zaaretujeme.</li>
+    <li>Opakujeme až do rovnováhy. <b>Sečteme hmotnosti použitých závaží.</b></li>
+  </ol>
+  <p>Příklad: <span class="formula">m = 100 g + 50 g + 20 g + 5 g = 175 g</span>.</p>
+</div>
+<div class="block">
+  <h3>5. Měření hmotnosti kapalin</h3>
+  <p>Kapalinu musíme vážit v nádobě. Hmotnost prázdné nádoby odečteme:</p>
+  <p><span class="formula">m(kapaliny) = m(nádoby s kapalinou) − m(prázdné nádoby)</span></p>
+  <p>Digitální váhy mají často funkci <b>TARA</b>, která vynuluje údaj při položení prázdné nádoby.</p>
+  <p>Příklad: plná nádoba 285 g, prázdná 95 g → <b>m(kapaliny) = 190 g</b>.</p>
+  <div class="callout"><b>Nezaměňuj:</b> Hmotnost m (kg) není totéž co tíhová síla F<sub>g</sub> (N). Hmotnost tělesa se při přemístění ze Země na Měsíc nezmění, tíhová síla ano.</div>
+</div>
+</div>
+</section>
+
+<section class="panel" id="convert">
+<h2>Převody jednotek hmotnosti</h2>
+<p class="intro">Převáděj mezi tunami, kilogramy, gramy a miligramy. Zapisuj pouze číslo, můžeš použít desetinnou čárku.</p>
+<div class="work">
+<div class="quizstats"><span id="convertLevel" class="smallcaps">Příklady</span><button class="btn outline" id="newConvert">Další příklad ↻</button></div>
+<div class="question" id="convertQ"></div>
+<p id="convertHint" class="sub"></p>
+<div class="inputrow"><input type="text" inputmode="decimal" id="convertAnswer" autocomplete="off" aria-label="Číselná odpověď"><b id="convertUnit"></b><button class="btn primary" id="checkConvert">Zkontrolovat</button></div>
+<div class="feedback" id="convertFeedback" aria-live="polite"></div>
+</div>
+<div class="grid2" style="margin-top:14px">
+<div class="card"><h3>Rychlé převody</h3><p>1 kg = 1 000 g = 1 000 000 mg</p><p>1 t = 1 000 kg = 1 000 000 g</p><p>0,001 kg = 1 g</p></div>
+<div class="card"><h3>Jak na součet?</h3><p>2 kg + 75 g + 40 mg = ? g</p><p>2 000 + 75 + 0,04 = <b>2 075,04 g</b></p></div>
+</div>
+</section>
+
+<section class="panel" id="estimate">
+<h2>Odhad hmotnosti</h2>
+<p class="intro">Vyber nejpravděpodobnější hmotnost. Údaje jsou orientační, skutečné předměty se mohou lišit.</p>
+<div class="work">
+<div class="question" id="estimateQ"></div>
+<div class="options" id="estimateOptions"></div>
+<div class="feedback" id="estimateFeedback" aria-live="polite"></div>
+<div class="actions"><button class="btn primary" id="nextEstimate">Jiný předmět ↻</button></div>
+</div>
+</section>
+
+<section class="panel" id="balance">
+<h2>Virtuální rovnoramenné váhy</h2>
+<p class="intro">Na levé misce je těleso neznámé hmotnosti. Kliknutím na závaží je přidávej na pravou misku. Při vyvažování sleduj polohu vahadla.</p>
+<div class="balancebox">
+<svg class="balance-svg" viewBox="0 0 800 355" role="img" aria-label="Rovnoramenné váhy se dvěma miskami a jazýčkem ukazujícím rovnováhu">
+ <rect x="335" y="315" width="130" height="18" rx="7" fill="#7b8da9"/>
+ <rect x="387" y="95" width="26" height="225" rx="10" fill="#8c9eb3"/>
+ <rect x="340" y="78" width="120" height="58" rx="8" fill="#dce6f2" stroke="#9bb0cb" stroke-width="2"/>
+ <path d="M342 125 A76 76 0 0 1 458 125" stroke="#8499b7" stroke-width="3" fill="none"/>
+ <path d="M400 90 V120" stroke="#506988" stroke-width="3"/>
+ <circle cx="400" cy="126" r="4" fill="#506988"/>
+ <g id="beamGroup">
+  <path d="M165 98 L635 98" stroke="#4c6887" stroke-width="16" stroke-linecap="round"/>
+  <circle cx="400" cy="98" r="14" fill="#bccddd" stroke="#365471" stroke-width="4"/>
+  <path d="M400 111 L400 164" stroke="#b45309" stroke-width="6" stroke-linecap="round"/>
+  <path d="M165 98 L165 206 M635 98 L635 206" stroke="#627c99" stroke-width="4"/>
+  <path d="M93 206 Q165 251 237 206" fill="none" stroke="#607894" stroke-width="7" stroke-linecap="round"/>
+  <path d="M563 206 Q635 251 707 206" fill="none" stroke="#607894" stroke-width="7" stroke-linecap="round"/>
+  <path d="M96 206 L235 206 M565 206 L704 206" stroke="#9fb3ca" stroke-width="4"/>
+  <rect x="117" y="164" width="96" height="43" rx="10" fill="#2563eb"/>
+  <text x="165" y="192" class="scale-label" fill="white" style="fill:#fff;font-size:16px">? g</text>
+  <text x="635" y="194" class="scale-label" id="panRightText" style="font-size:17px">0 g</text>
+ </g>
+ <text x="400" y="342" text-anchor="middle" font-size="15" font-weight="800" fill="#48627e">Jazýček ukazuje výchylku vahadla</text>
+</svg>
+<div class="diagram-caption"><span>Levá miska: neznámé těleso</span><span>Pravá miska: tvoje závaží</span></div>
+</div>
+<div class="statrow" style="margin-top:13px">
+<div class="stat"><span class="smallcaps">Vybraná závaží</span><b id="balanceSum">0 g</b></div>
+<div class="stat"><span class="smallcaps">Co ukazují váhy?</span><b id="balanceState">Levá miska klesá</b></div>
+</div>
+<h3 style="margin-top:15px">Sada závaží – klikni pro vložení/odebrání</h3>
+<div class="weights" id="weightButtons"></div>
+<div id="balanceFeedback" class="feedback show info" aria-live="polite">Závaží začni přikládat od největšího vhodného kusu.</div>
+<div class="actions"><button class="btn outline" id="clearWeights">Sundat závaží</button><button class="btn primary" id="newBalance">Nové těleso</button></div>
+<div class="callout"><b>Ve skutečnosti:</b> Rovnoramenné váhy při přidávání a odebírání závaží vždy zaaretujeme. Tato simulace umožňuje klikání bez aretace jen kvůli pohodlí.</div>
+</section>
+
+<section class="panel" id="liquids">
+<h2>Jak zvážit kapalinu?</h2>
+<p class="intro">Digitální váhy mohou ukazovat buď hmotnost celé nádoby, nebo po vynulování (TARA) jen přidané kapaliny.</p>
+<div class="liquidgrid">
+<div class="card">
+<h3>Simulace vážení</h3>
+<div class="vessel"><div class="water" id="waterLevel"></div></div>
+<div class="digital"><div id="liquidScreen" class="screen">0 g</div><div class="digitalhint">Kuchyňské váhy · digitální displej</div></div>
+<div class="actions"><button class="btn outline" id="emptyVessel">1. Prázdná nádoba</button><button class="btn outline" id="tareVessel">2. TARA</button><button class="btn primary" id="addWater">3. Nalít kapalinu</button></div>
+<div id="liquidStep" class="feedback show info">Nejprve polož na váhy prázdnou nádobu.</div>
+<div class="actions"><button class="btn outline" id="newLiquid">Nové měření</button></div>
+</div>
+<div class="card">
+<h3>Vypočti hmotnost kapaliny</h3>
+<p>Hmotnost nádoby s kapalinou: <b id="fullMass">—</b></p>
+<p>Hmotnost prázdné nádoby: <b id="emptyMass">—</b></p>
+<div class="inputrow"><input id="liquidAnswer" type="text" inputmode="decimal" aria-label="Hmotnost kapaliny"><b>g</b></div>
+<div class="actions"><button id="checkLiquid" class="btn primary">Ověřit výpočet</button></div>
+<div id="liquidFeedback" class="feedback" aria-live="polite"></div>
+<div class="note"><b>Proč je TARA užitečná?</b> Váhy s prázdnou nádobou vynulujeme. Po nalití pak ukážou přímo hmotnost samotné kapaliny.</div>
+</div>
+</div>
+</section>
+
+<section class="panel" id="tasks">
+<h2>Úlohy a pokusy</h2>
+<p class="intro">Autorské úlohy inspirované probíranými principy. Zkus nejprve úkol vyřešit a až potom rozbal řešení.</p>
+<div class="task-list">
+<div class="task"><h3>1. Smíšené jednotky</h3><p>Kolik gramů je 4,2 kg + 85 g + 600 mg?</p><details><summary>Ukázat řešení</summary><p>4 200 + 85 + 0,6 = <b>4 285,6 g</b>.</p></details></div>
+<div class="task"><h3>2. Sada závaží</h3><p>Vyber co nejméně závaží ze sady 200 g, 100 g, 50 g, 20 g, 10 g, 5 g pro hmotnost 385 g. Každý kus smíš použít jen jednou.</p><details><summary>Ukázat řešení</summary><p>200 + 100 + 50 + 20 + 10 + 5 = <b>385 g</b> (6 závaží).</p></details></div>
+<div class="task"><h3>3. Balení potravin</h3><p>Na poličce stojí sáček rýže 750 g, krabice mouky 1,5 kg a balíček těstovin 400 g. Kolik kilogramů váží dohromady obsah obalů?</p><details><summary>Ukázat řešení</summary><p>0,75 + 1,5 + 0,4 = <b>2,65 kg</b>. Hmotnost obalů nepočítáme.</p></details></div>
+<div class="task"><h3>4. Kapalina v nádobě</h3><p>Prázdný hrnek má 240 g a s čajem 555 g. Jakou hmotnost má čaj?</p><details><summary>Ukázat řešení</summary><p>555 − 240 = <b>315 g</b>.</p></details></div>
+<div class="task"><h3>5. Dvě porce plastelíny</h3><p>Rozděl plastelínu na dva stejně těžké díly a navrhni, jak ověříš jejich rovnost bez závaží.</p><details><summary>Nápověda a řešení</summary><p>Každou polovinu polož na jednu misku rovnoramenných vah. Jsou-li vyvážené, mají stejnou hmotnost.</p></details></div>
+<div class="task"><h3>6. Hmotnost jedné kapky</h3><p>Navrhni, jak pomocí kuchyňských vah určit hmotnost jediné kapky vody, která je pro váhy příliš lehká.</p><details><summary>Možný postup</summary><p>Vynuluj váhy s nádobou, nakapej např. 100 podobně velkých kapek. Jejich společnou hmotnost vyděl 100. Získáš průměrnou hmotnost kapky.</p></details></div>
+<div class="task"><h3>7. Kolik váží voda?</h3><p>Odměř 80 ml vody. Odhadni a změř její hmotnost. Co potřebuješ navíc kromě vah?</p><details><summary>Možný postup</summary><p>Odměrný válec a nádobu. Při pokojové teplotě má 80 ml vody hmotnost přibližně <b>80 g</b>. Nádobu na váze nejprve vynuluj.</p></details></div>
+<div class="task"><h3>8. Nafouknutý balónek</h3><p>Proč není přesné určit hmotnost vzduchu jen odečtením údaje váhy u nafouknutého a prázdného balónku?</p><details><summary>Vysvětlení</summary><p>Nafouknutý balónek vytlačuje více okolního vzduchu, a proto na něj působí větší vztlaková síla. Prostý rozdíl údajů vah není přímo hmotností přidaného vzduchu. Je potřeba vztlak zohlednit nebo zvolit vhodnější uspořádání pokusu.</p></details></div>
+</div>
+</section>
+
+<section class="panel" id="quiz">
+<h2>Závěrečný test</h2>
+<p class="intro">Deset náhodně vybraných otázek: jednotky, princip vah, postup měření a kapaliny.</p>
+<div class="work" id="quizPlay">
+<div class="quizstats"><b id="quizCount">Otázka 1 / 10</b><b id="quizScore">0 bodů</b></div>
+<div class="pbar"><div id="quizProgress"></div></div>
+<div class="question" id="quizQ"></div>
+<div class="options" id="quizOptions"></div>
+<div class="feedback" id="quizFeedback" aria-live="polite"></div>
+<div class="actions"><button class="btn primary" id="nextQuiz" style="display:none">Další otázka →</button></div>
+</div>
+<div class="work" id="quizResult" style="display:none;text-align:center">
+<div style="font-size:3rem;font-weight:950;color:#2563eb" id="quizFinal">0/10</div>
+<h3 id="quizMessage">Hotovo!</h3>
+<button class="btn primary" id="restartQuiz">Nový test</button>
+</div>
+</section>
+<footer class="footer">2A8 · Fyzika · Vytvořené výukové úlohy, bez převzatých obrázků a doslovných zadání z učebnice. Funguje i bez internetu.</footer>
+</div>
+<script>
+"use strict";
+const $ = s => document.querySelector(s);
+const $$ = s => [...document.querySelectorAll(s)];
+const choose = a => a[Math.floor(Math.random()*a.length)];
+const shuffle = a => a.slice().sort(()=>Math.random()-.5);
+const fmt = n => Number(n.toFixed(6)).toLocaleString('cs-CZ',{maximumFractionDigits:6});
+const parseNum = s => Number(String(s).trim().replace(/\s|\u00a0/g,'').replace(',','.'));
+let stats = {ok:0,total:0};
+try{const saved=JSON.parse(localStorage.getItem('2a8-hmotnost-v1')||'null');if(saved&&Number.isFinite(saved.ok)&&Number.isFinite(saved.total))stats=saved;}catch(e){}
+function updateScore(){ $('#globalScore').textContent='Procvičování: '+stats.ok+' správně / '+stats.total+' odpovědí';try{localStorage.setItem('2a8-hmotnost-v1',JSON.stringify(stats));}catch(e){}}
+function score(ok){stats.total++;if(ok)stats.ok++;updateScore();}
+function showFB(el,kind,txt){el.className='feedback show '+kind;el.textContent=txt;}
+function checkNumber(input,target){let a=parseNum(input.value);return input.value.trim()!==''&&Number.isFinite(a)&&Math.abs(a-target)<Math.max(0.0000001,Math.abs(target)*0.0000001);}
+function activateTab(id){$$('.tab').forEach(b=>{const on=b.dataset.tab===id;b.classList.toggle('active',on);b.setAttribute('aria-selected',on?'true':'false')});$$('.panel').forEach(s=>s.classList.toggle('active',s.id===id));try{localStorage.setItem('2a8-hmotnost-tab',id)}catch(e){}}
+$$('.tab').forEach(b=>b.addEventListener('click',()=>activateTab(b.dataset.tab)));
+try{const tab=localStorage.getItem('2a8-hmotnost-tab');if(tab&&document.getElementById(tab)&&$('.tab[data-tab="'+tab+'"]'))activateTab(tab)}catch(e){}
+$('#printNotes').onclick=()=>{activateTab('notes');window.print()};
+$('#resetProgress').onclick=()=>{if(!confirm('Vynulovat dosavadní počty správných odpovědí?'))return;stats={ok:0,total:0};updateScore();};
+updateScore();
+
+// Převody a sčítání jednotek
+const toMg={t:1000000000,kg:1000000,g:1000,mg:1};
+const unitNames=['t','kg','g','mg'];
+let conversion,convertLocked=false;
+function newConversion(){
+ convertLocked=false;
+ let cat=Math.random()<.70?'simple':'sum';
+ if(cat==='simple'){
+  let u1=choose(unitNames),u2=choose(unitNames.filter(v=>v!==u1)),v=choose([0.025,0.075,0.12,0.25,0.4,0.8,1.2,1.5,2.4,3.75,12,25,48,125,360,750]);
+  let a=v*toMg[u1]/toMg[u2];conversion={text:fmt(v)+' '+u1+' = ?',answer:a,unit:u2,help:'1 '+u1+' = '+fmt(toMg[u1]/toMg[u2])+' '+u2};
+  $('#convertLevel').textContent='Převod jednotky';
+ }else{
+  let u1=choose(['kg','g']),u2=u1==='kg'?'g':'mg',out=choose(['g','mg']);
+  let v1=u1==='kg'?choose([0.45,1.2,2.3,3.7]):choose([25,85,180,420]);
+  let v2=choose([15,25,65,95,125,340,750]);
+  conversion={text:fmt(v1)+' '+u1+' + '+fmt(v2)+' '+u2+' = ?',unit:out,answer:(v1*toMg[u1]+v2*toMg[u2])/toMg[out],help:'Nejprve obě hodnoty převeď na '+out+' a potom je sečti.'};
+  $('#convertLevel').textContent='Součet různých jednotek';
+ }
+ $('#convertQ').textContent=conversion.text;
+ $('#convertHint').textContent=conversion.help;
+ $('#convertUnit').textContent=conversion.unit;
+ $('#convertAnswer').value='';
+ $('#convertFeedback').className='feedback';
+ $('#convertAnswer').disabled=false;
+ $('#checkConvert').disabled=false;
+}
+function verifyConversion(){if(convertLocked)return;if($('#convertAnswer').value.trim()==='')return showFB($('#convertFeedback'),'bad','Zadej nejprve číselnou odpověď.');let ok=checkNumber($('#convertAnswer'),conversion.answer);score(ok);convertLocked=true;$('#checkConvert').disabled=true;$('#convertAnswer').disabled=true;showFB($('#convertFeedback'),ok?'good':'bad',(ok?'Správně! ':'Tentokrát ne. ')+'Výsledek: '+fmt(conversion.answer)+' '+conversion.unit+'. '+conversion.help);}
+$('#newConvert').onclick=newConversion;$('#checkConvert').onclick=verifyConversion;$('#convertAnswer').addEventListener('keydown',e=>{if(e.key==='Enter')verifyConversion()});
+
+// Odhad hmotností
+const objects=[
+ {q:'Jízdní kolo pro dospělého',o:['14 kg','14 g','14 t'],a:0,why:'Běžné jízdní kolo má hmotnost řádově desítek kilogramů.'},
+ {q:'Jedna kancelářská sponka',o:['1 kg','1 g','1 t'],a:1,why:'Lehká kancelářská sponka má hmotnost přibližně jeden gram.'},
+ {q:'Osobní automobil',o:['1,4 t','1,4 kg','1,4 g'],a:0,why:'Osobní automobil má běžně hmotnost kolem jedné až dvou tun.'},
+ {q:'Jablko',o:['180 kg','180 g','180 mg'],a:1,why:'Středně velké jablko váží přibližně 100 až 250 g.'},
+ {q:'Zrnko rýže',o:['25 mg','25 kg','25 g'],a:0,why:'Jedno suché zrnko rýže má přibližně několik desítek miligramů.'},
+ {q:'Plný batoh s učebnicemi',o:['5 mg','5 g','5 kg'],a:2,why:'Batoh s učebnicemi má hmotnost řádově kilogramů.'},
+ {q:'Balíček másla',o:['250 mg','250 g','250 kg'],a:1,why:'Typický balíček obsahuje 250 g másla.'},
+ {q:'Balení mouky',o:['1 t','1 g','1 kg'],a:2,why:'Běžné balení mouky váží 1 kilogram.'}
+];
+let oldObject=-1,estimateLocked=false;
+function newEstimate(){
+ let i=Math.floor(Math.random()*objects.length);if(objects.length>1&&i===oldObject)i=(i+1)%objects.length;oldObject=i;estimateLocked=false;const q=objects[i];
+ $('#estimateQ').textContent='Jakou hmotnost může mít '+q.q.toLowerCase()+'?';
+ $('#estimateFeedback').className='feedback';
+ $('#estimateOptions').replaceChildren();
+ q.o.forEach((o,j)=>{let b=document.createElement('button');b.className='option';b.textContent=o;b.onclick=()=>{if(estimateLocked)return;estimateLocked=true;let ok=j===q.a;score(ok);$$('#estimateOptions .option').forEach((x,k)=>{x.disabled=true;if(k===q.a)x.classList.add('correct')});if(!ok)b.classList.add('wrong');showFB($('#estimateFeedback'),ok?'good':'bad',(ok?'Správně! ':'Správná možnost je označena zeleně. ')+q.why);};$('#estimateOptions').append(b)});
+}
+$('#nextEstimate').onclick=newEstimate;
+
+// Rovnoramenné váhy
+const masses=[200,200,100,50,20,20,10,5];
+const targets=[35,55,65,85,115,135,155,185,205,235,275,320,365,405];
+let target=135,selected=new Set(),balanceSolved=false;
+function updateBalance(){
+ let total=[...selected].reduce((s,i)=>s+masses[i],0),diff=total-target;
+ // Záporný úhel znamená pokles levé misky
+ let ang=Math.max(-13,Math.min(13, diff/Math.max(10,target)*20));
+ $('#beamGroup').setAttribute('transform','rotate('+ang+' 400 98)');
+ $('#panRightText').textContent=total+' g';
+ $('#balanceSum').textContent=total+' g';
+ const balanced=diff===0;
+ $('#balanceState').textContent=balanced?'Rovnováha':diff<0?'Levá miska klesá':'Pravá miska klesá';
+ $$('#weightButtons .weight').forEach((b,i)=>{b.classList.toggle('chosen',selected.has(i));b.setAttribute('aria-pressed',selected.has(i)?'true':'false')});
+ if(balanced){showFB($('#balanceFeedback'),'good','Rovnováha! Hmotnost neznámého tělesa je '+total+' g = '+fmt(total/1000)+' kg.');if(!balanceSolved){balanceSolved=true;score(true)}}
+ else showFB($('#balanceFeedback'),'info',diff<0?'Levá miska je těžší. Přidej nebo uprav závaží na pravé misce.':'Pravá miska je těžší. Odeber některé závaží.');
+}
+masses.forEach((m,i)=>{let b=document.createElement('button');b.className='weight';b.textContent=m+' g';b.title='Závaží '+m+' g';b.onclick=()=>{if(selected.has(i))selected.delete(i);else selected.add(i);updateBalance()};$('#weightButtons').append(b)});
+function newBalance(){target=choose(targets);selected=new Set();balanceSolved=false;updateBalance()}
+$('#newBalance').onclick=newBalance;$('#clearWeights').onclick=()=>{selected=new Set();updateBalance()};
+
+// Kapalina
+let containerMass=115,waterMass=85,liquidPhase=0,tare=false,liquidLocked=false;
+function liquidDisplay(){
+ let reading=liquidPhase===0?0:liquidPhase===1?containerMass:containerMass+waterMass;
+ if(tare&&liquidPhase>=1)reading-=containerMass;
+ $('#liquidScreen').textContent=fmt(reading)+' g';
+ $('#waterLevel').style.height=(liquidPhase===3?62:0)+'%';
+}
+function newLiquid(){
+ containerMass=choose([65,90,115,140,175,210,245]);
+ waterMass=choose([45,70,85,120,155,180,230]);
+ liquidPhase=0;tare=false;liquidLocked=false;
+ $('#emptyMass').textContent=fmt(containerMass)+' g';
+ $('#fullMass').textContent=fmt(containerMass+waterMass)+' g';
+ $('#liquidAnswer').value='';$('#liquidAnswer').disabled=false;$('#checkLiquid').disabled=false;$('#liquidFeedback').className='feedback';
+ showFB($('#liquidStep'),'info','1. Polož na váhy prázdnou nádobu.');liquidDisplay();
+}
+$('#emptyVessel').onclick=()=>{liquidPhase=1;tare=false;liquidDisplay();showFB($('#liquidStep'),'info','Prázdná nádoba váží '+containerMass+' g. Teď použij TARA (nebo kapalinu můžeš dopočítat rozdílem).');};
+$('#tareVessel').onclick=()=>{if(liquidPhase<1)return showFB($('#liquidStep'),'bad','Nejprve polož na váhy prázdnou nádobu.');tare=true;liquidPhase=2;liquidDisplay();showFB($('#liquidStep'),'good','TARA: údaj se vynuloval při zatížených vahách. Nyní nalij kapalinu.');};
+$('#addWater').onclick=()=>{if(liquidPhase<1)return showFB($('#liquidStep'),'bad','Nejprve polož prázdnou nádobu.');liquidPhase=3;liquidDisplay();showFB($('#liquidStep'),'info',tare?'Displej ukazuje přímo hmotnost kapaliny.':'Displej ukazuje hmotnost nádoby i kapaliny. Odečti hmotnost nádoby.');};
+$('#checkLiquid').onclick=()=>{if(liquidLocked)return;if($('#liquidAnswer').value.trim()==='')return showFB($('#liquidFeedback'),'bad','Napiš svou odpověď v gramech.');let ok=checkNumber($('#liquidAnswer'),waterMass);score(ok);liquidLocked=true;$('#liquidAnswer').disabled=true;$('#checkLiquid').disabled=true;showFB($('#liquidFeedback'),ok?'good':'bad',(ok?'Správně! ':'Nesprávně. ')+fmt(containerMass+waterMass)+' − '+containerMass+' = '+waterMass+' g.');};
+$('#newLiquid').onclick=newLiquid;
+$('#liquidAnswer').addEventListener('keydown',e=>{if(e.key==='Enter')$('#checkLiquid').click()});
+
+// Závěrečný test
+const quizBank=[
+ {q:'Jaká je značka fyzikální veličiny hmotnost?',o:['m','V','F'],a:0},
+ {q:'Základní jednotka hmotnosti je:',o:['gram','kilogram','tuna'],a:1},
+ {q:'Kolik gramů je 3,4 kg?',o:['340 g','34 000 g','3 400 g'],a:2},
+ {q:'Kolik kilogramů je 860 g?',o:['0,86 kg','8,6 kg','0,086 kg'],a:0},
+ {q:'Kolik miligramů je 0,6 g?',o:['60 mg','600 mg','6 000 mg'],a:1},
+ {q:'Na rovnoramenných vahách porovnáváme:',o:['hmotnosti těles','jen objemy těles','jejich barvu'],a:0},
+ {q:'Co znamená aretovat váhy?',o:['Postavit je na stůl','Zastavit vahadlo','Odměřit čas'],a:1},
+ {q:'Kdy měníme závaží na skutečných rovnoramenných vahách?',o:['Při aretaci','Při největším rozkmitu','Zásadně jen za pohybu'],a:0},
+ {q:'Pokud je pravá miska níže než levá, znamená to:',o:['Pravá miska je těžší','Misky mají stejnou hmotnost','Levá miska je těžší'],a:0},
+ {q:'Jak určíme hmotnost tělesa při vyvážení?',o:['Odečteme počet závaží','Sečteme hmotnosti závaží','Vynásobíme délku vahadla dvěma'],a:1},
+ {q:'Jaká závaží dávají dohromady 165 g?',o:['100 g + 50 g + 10 g + 5 g','100 g + 20 g + 10 g','50 g + 20 g + 5 g'],a:0},
+ {q:'Nádoba má 180 g, s vodou 410 g. Hmotnost vody je:',o:['590 g','410 g','230 g'],a:2},
+ {q:'K čemu slouží tlačítko TARA?',o:['K vynulování údajů se zatíženou váhou','K vypnutí gravitace','K převodu gramů na newtony'],a:0},
+ {q:'Která dvojice je správná?',o:['1 t = 100 kg','1 kg = 1 000 g','1 g = 100 mg'],a:1},
+ {q:'Co je nejvhodnější pro zjištění hmotnosti sáčku mouky?',o:['Teploměr','Odměrný válec','Kuchyňské váhy'],a:2},
+ {q:'Při vážení kapaliny bez funkce TARA musíme:',o:['Přičíst hmotnost nádoby','Odečíst hmotnost prázdné nádoby','Vydělit hmotnost nádoby dvěma'],a:1},
+ {q:'Je hmotnost stejného kamene na Měsíci jiná než na Zemi?',o:['Ano, mnohem větší','Ne, hmotnost zůstává stejná','Ano, je vždy nulová'],a:1},
+ {q:'Proč má aretace rovnoramenných vah význam?',o:['Chrání jemné uložení vahadla při manipulaci','Zvyšuje hmotnost tělesa','Mění délku ramen'],a:0}
+];
+let quizSet=[],qi=0,points=0,quizLocked=false;
+function startQuiz(){quizSet=shuffle(quizBank).slice(0,10);qi=0;points=0;$('#quizResult').style.display='none';$('#quizPlay').style.display='block';renderQuiz();}
+function renderQuiz(){
+ quizLocked=false;const q=quizSet[qi];
+ $('#quizQ').textContent=q.q;$('#quizCount').textContent='Otázka '+(qi+1)+' / '+quizSet.length;$('#quizScore').textContent=points+' bodů';$('#quizProgress').style.width=(qi/quizSet.length*100)+'%';
+ $('#quizFeedback').className='feedback';$('#nextQuiz').style.display='none';$('#quizOptions').replaceChildren();
+ q.o.forEach((o,i)=>{let b=document.createElement('button');b.className='option';b.textContent=o;b.onclick=()=>{if(quizLocked)return;quizLocked=true;let ok=i===q.a;score(ok);if(ok)points++;$$('#quizOptions .option').forEach((x,j)=>{x.disabled=true;if(j===q.a)x.classList.add('correct')});if(!ok)b.classList.add('wrong');showFB($('#quizFeedback'),ok?'good':'bad',ok?'Správně!':'Správně je: '+q.o[q.a]+'.');$('#quizScore').textContent=points+' bodů';$('#nextQuiz').style.display='inline-block';};$('#quizOptions').append(b)});
+}
+$('#nextQuiz').onclick=()=>{qi++;if(qi===quizSet.length){$('#quizPlay').style.display='none';$('#quizResult').style.display='block';$('#quizFinal').textContent=points+' / '+quizSet.length;$('#quizMessage').textContent=points>=9?'Výborně!':points>=7?'Dobrá práce!':'Projdi si zápis a zkus test znovu.';}else renderQuiz()};
+$('#restartQuiz').onclick=startQuiz;
+newConversion();newEstimate();newBalance();newLiquid();startQuiz();
+</script>
+</body>
+</html>
