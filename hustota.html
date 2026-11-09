@@ -1,0 +1,354 @@
+<!doctype html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#2563eb">
+<meta name="description" content="Fyzika 2A8: hustota látky, výpočet hustoty a hmotnosti, převody jednotek, názorný model a interaktivní příklady.">
+<title>Hustota látky – zápis a procvičování | 2A8</title>
+<style>
+:root{--bg:#f4f7fc;--paper:#fff;--ink:#18243a;--muted:#5f7087;--line:#dbe4ef;--blue:#265ee9;--soft:#eff5ff;--green:#157c47;--red:#b42335;--shadow:0 8px 30px #1429530d}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;color:var(--ink);background:linear-gradient(180deg,#e8f1ff,var(--bg) 340px);font:16px/1.6 system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+button,input,select{font:inherit}button{cursor:pointer}a{color:var(--blue)}
+.shell{width:min(1100px,calc(100% - 26px));margin:auto;padding:22px 0 64px}
+.hero,.panel{border:1px solid var(--line);border-radius:22px;background:var(--paper);box-shadow:var(--shadow)}
+.hero{padding:24px;margin-bottom:14px}.top{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+.eyebrow{font-size:.78rem;color:var(--blue);letter-spacing:.1em;font-weight:850;text-transform:uppercase}
+.back{font-size:.92rem;text-decoration:none;color:#52657f;font-weight:800}
+h1{font-size:clamp(2rem,5vw,3.2rem);line-height:1.14;margin:8px 0}h2{font-size:1.55rem;line-height:1.3;margin:0 0 7px}h3{font-size:1.13rem;margin:0 0 8px}
+.lead,.muted{color:var(--muted)}.lead{max-width:780px;margin:0}
+.actions,.controls{display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin-top:15px}
+.btn{background:#e8eff9;color:#273c58;border:1px solid transparent;border-radius:11px;padding:10px 15px;font-weight:800}
+.btn.primary{background:var(--blue);color:white}.btn.outline{background:#fff;border-color:var(--line)}.btn:hover{filter:brightness(.97)}
+button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid #92b9ff;outline-offset:2px}
+.tabs{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px;margin-bottom:14px}
+.tab{border:1px solid var(--line);border-radius:12px;min-height:50px;background:white;padding:9px;font-size:.91rem;color:#4e607a;font-weight:850}
+.tab[aria-selected=true]{background:#e5efff;color:#1648b8;border-color:#8bacfa}
+.panel{display:none;padding:24px}.panel.active{display:block}
+.note-block{padding:14px 0;border-bottom:1px solid var(--line)}.note-block:last-child{border:0}
+.note-block p{margin:7px 0}.note-block ul{padding-left:23px;margin:6px 0}
+.formula{display:inline-block;padding:5px 12px;background:#ebf1ff;border-radius:10px;color:#1d429d;font-size:1.1rem;font-weight:850}
+.formula.big{font-size:1.7rem;padding:9px 18px}
+.fraction{display:inline-flex;vertical-align:middle;align-items:center;flex-direction:column;line-height:1.05;margin:0 .25em}.fraction .numer{padding:0 .3em .12em;border-bottom:2px solid currentColor}.fraction .denom{padding:.1em .3em 0}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:15px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:11px}
+.card{border:1px solid var(--line);border-radius:15px;padding:16px;background:#fbfdff}
+.callout{background:#fff9e9;border-left:4px solid #e5a53a;padding:12px 15px;border-radius:10px;margin:13px 0}
+.info{background:var(--soft);border-left:4px solid var(--blue);padding:12px 15px;border-radius:10px;margin:13px 0}
+table{width:100%;border-collapse:collapse;margin:12px 0;overflow:hidden}td,th{padding:10px;border-bottom:1px solid var(--line);text-align:left}th{background:#f1f6ff}td:last-child,th:last-child{text-align:right}
+.note-table{max-width:650px}
+.example{background:#f8faff;border:1px solid var(--line);border-radius:14px;padding:16px;margin:13px 0}
+.example p{margin:4px 0}.solution{border-left:3px solid #bad3ff;padding-left:14px;margin:12px 0 3px}
+.step{padding:7px 0}.result{font-weight:850;color:#155e3e}
+small,.small{font-size:.89rem;color:var(--muted)}
+label{font-weight:750}
+select,input{min-height:43px;border:1px solid #b9c9dd;border-radius:10px;background:#fff;padding:8px 10px;color:var(--ink)}
+input[type=number],input[type=text]{width:min(100%,180px)}
+input[type=range]{width:100%;accent-color:var(--blue);padding:0;min-height:28px}
+.stretch{flex:1}
+.materials{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.mat{border:1px solid var(--line);background:#fff;border-radius:15px;padding:14px;text-align:center}
+.mat .cube{width:66px;height:66px;border-radius:8px;transform:rotate(-7deg);margin:6px auto 17px;box-shadow:8px 8px 0 #00000016,inset 8px 8px 0 #ffffff55}
+.mat strong,.mat small{display:block}.mat strong{font-size:1.1rem}
+.bars{display:grid;gap:13px;margin-top:12px}.barrow{display:grid;grid-template-columns:100px 1fr 125px;align-items:center;gap:10px;font-size:.95rem}
+.track{height:29px;background:#e9eff8;border-radius:7px;overflow:hidden}.bar{height:100%;border-radius:7px;min-width:5px;transition:width .25s}
+.work{border:1px solid var(--line);background:#fbfdff;border-radius:15px;padding:19px}
+.question{font-size:clamp(1.17rem,3vw,1.55rem);font-weight:850;margin:7px 0 12px}
+.inputrow{display:flex;align-items:center;flex-wrap:wrap;gap:9px;margin:13px 0}
+.feedback{display:none;border-radius:11px;padding:11px 14px;margin:13px 0;line-height:1.5}
+.feedback.show{display:block}.feedback.good{background:#e9f8ef;color:#116238}.feedback.bad{background:#fff0f2;color:#9c1e2e}.feedback.info{background:#eaf2ff;color:#254d9c}
+.options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:12px 0}
+.option{border:1px solid var(--line);border-radius:11px;padding:12px 10px;background:white;text-align:left;font-weight:750}
+.option.correct{background:#e6f7ea;border-color:#90d9a6;color:#146439}.option.wrong{background:#ffe8eb;border-color:#f5a4ad;color:#912232}
+.option:disabled{cursor:default}
+.statline{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:12px 0}
+.pbar{height:11px;width:100%;background:#e3eafa;border-radius:40px;overflow:hidden}.pbar>div{height:100%;width:0;background:var(--blue);transition:width .2s}
+details{border:1px solid var(--line);background:#f7faff;border-radius:11px;padding:9px 13px;margin:11px 0}
+summary{cursor:pointer;font-weight:850;color:#2654a9}
+footer{text-align:center;color:var(--muted);font-size:.84rem;margin-top:20px}
+@media(max-width:850px){.tabs{grid-template-columns:repeat(3,1fr)}.materials{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:650px){.shell{width:calc(100% - 18px);padding:10px 0 44px}.hero,.panel{padding:17px;border-radius:15px}.grid2,.grid3{grid-template-columns:1fr}.tabs{grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}.tab{min-height:47px;font-size:.83rem;padding:7px}.barrow{grid-template-columns:79px 1fr;gap:8px}.barrow .value{grid-column:2}.options{grid-template-columns:1fr}.mat{padding:10px}}
+@media print{body{background:#fff}.shell{width:100%;padding:0}.hero,.panel{box-shadow:none;border:0}.hero{padding:0 0 10px}.tabs,.actions,.back,footer{display:none!important}.panel{display:none!important}#notes{display:block!important}.note-block{break-inside:avoid}.hero .lead{display:none}h1{font-size:21pt}h2{font-size:15pt}}
+</style>
+</head>
+<body>
+<main class="shell">
+<header class="hero">
+ <div class="top"><span class="eyebrow">2A8 · Fyzika · 2.9–2.11</span><a class="back" href="index.html">← Zpět na rozcestník</a></div>
+ <h1>Hustota látky</h1>
+ <p class="lead">Zápis do sešitu, názorné porovnání hmotnosti a objemu, výpočet hustoty a hmotnosti, převody jednotek a samostatný test.</p>
+ <div class="actions"><button class="btn outline" id="print">🖨 Tisk zápisu</button><button class="btn outline" id="reset">Vynulovat výsledky</button><span class="small" id="progress" aria-live="polite"></span></div>
+</header>
+<nav class="tabs" aria-label="Části kapitoly">
+ <button class="tab" data-tab="notes" aria-selected="true">1. Zápis</button>
+ <button class="tab" data-tab="model" aria-selected="false">2. Model hustoty</button>
+ <button class="tab" data-tab="calc" aria-selected="false">3. Výpočty</button>
+ <button class="tab" data-tab="units" aria-selected="false">4. Převody</button>
+ <button class="tab" data-tab="tasks" aria-selected="false">5. Úlohy</button>
+ <button class="tab" data-tab="quiz" aria-selected="false">6. Test</button>
+</nav>
+
+<section class="panel active" id="notes">
+ <h2>Zápis do sešitu</h2>
+ <div class="note-block">
+  <h3>1. Hustota látky</h3>
+  <p><b>Hustota</b> je fyzikální veličina, která udává, jakou hmotnost má látka o určitém objemu.</p>
+  <p><b>Značka:</b> ρ (ró) &nbsp; <b>Základní jednotka:</b> kg/m<sup>3</sup> &nbsp; <b>Další jednotka:</b> g/cm<sup>3</sup></p>
+  <p><span class="formula">ρ = <span class="fraction"><span class="numer">m</span><span class="denom">V</span></span></span> kde ρ je hustota, m hmotnost a V objem.</p>
+  <ul><li>Tělesa ze stejné látky mají za stejných podmínek stejnou hustotu.</li>
+  <li>Ze dvou těles o <b>stejném objemu</b> má větší hmotnost těleso z látky s vyšší hustotou.</li>
+  <li>Ze dvou těles o <b>stejné hmotnosti</b> má větší objem těleso z látky s nižší hustotou.</li></ul>
+  <p class="small">Hustota závisí na látce a také na teplotě a tlaku. Tabulkové hodnoty bývají přibližné.</p>
+  <table class="note-table"><thead><tr><th>Látka</th><th>Hustota (g/cm<sup>3</sup>)</th></tr></thead>
+  <tbody><tr><td>Dřevo (příklad)</td><td>0,7</td></tr><tr><td>Voda</td><td>1,0</td></tr><tr><td>Hliník</td><td>2,7</td></tr><tr><td>Ocel</td><td>7,8</td></tr><tr><td>Mosaz</td><td>8,6</td></tr></tbody></table>
+ </div>
+ <div class="note-block">
+  <h3>2. Výpočet hustoty látky</h3>
+  <p>Hustotu vypočítáme jako hmotnost dělenou objemem:</p>
+  <p><span class="formula">ρ = m : V</span> nebo <span class="formula">ρ = <span class="fraction"><span class="numer">m</span><span class="denom">V</span></span></span></p>
+  <p><b>Převody:</b> 1 g/cm<sup>3</sup> = 1 000 kg/m<sup>3</sup> &nbsp;|&nbsp; 1 kg/m<sup>3</sup> = 0,001 g/cm<sup>3</sup>.</p>
+  <div class="example"><b>Vzorový příklad:</b> Součástka má hmotnost 54 g a objem 20 cm<sup>3</sup>. Jaká je její hustota?
+   <div class="solution"><div><b>Zápis:</b> m = 54 g, V = 20 cm<sup>3</sup>, ρ = ?</div>
+   <div><b>Vzorec:</b> ρ = m / V</div><div><b>Dosazení:</b> ρ = 54 : 20 = 2,7 g/cm<sup>3</sup></div>
+   <div class="result">Odpověď: Hustota součástky je 2,7 g/cm³.</div></div>
+  </div>
+ </div>
+ <div class="note-block">
+  <h3>3. Výpočet hmotnosti tělesa</h3>
+  <p>Pokud známe objem stejnorodého tělesa a hustotu látky, určíme jeho hmotnost:</p>
+  <p><span class="formula">m = ρ · V</span></p>
+  <div class="example"><b>Vzorový příklad:</b> Hliníkový hranol má objem 40 cm<sup>3</sup>. Hustota hliníku je 2,7 g/cm<sup>3</sup>. Jaká je jeho hmotnost?
+   <div class="solution"><div><b>Zápis:</b> V = 40 cm<sup>3</sup>, ρ = 2,7 g/cm<sup>3</sup>, m = ?</div>
+   <div><b>Vzorec:</b> m = ρ · V</div><div><b>Dosazení:</b> m = 2,7 · 40 = 108 g</div>
+   <div class="result">Odpověď: Hranol má hmotnost 108 g.</div></div>
+  </div>
+  <div class="callout"><b>Pozor na jednotky:</b> g/cm<sup>3</sup> a cm<sup>3</sup> → výsledek v g; kg/m<sup>3</sup> a m<sup>3</sup> → výsledek v kg. Vzorec m = ρ · V pro hustotu materiálu předpokládá stejnorodé těleso bez dutin.</div>
+ </div>
+</section>
+
+<section class="panel" id="model">
+ <h2>Jak si představit hustotu?</h2>
+ <p class="muted">Porovnej stejné objemy různých látek a potom stejné hmotnosti. Používáme přibližné hustoty; dřevo se podle druhu liší.</p>
+ <div class="card">
+  <h3>Stejný objem → různá hmotnost</h3>
+  <label for="volume">Objem každé kostky: <b id="volumeValue">10 cm³</b></label>
+  <input id="volume" type="range" min="1" max="100" step="1" value="10">
+  <div id="cubeCards" class="materials" aria-live="polite"></div>
+  <div class="info">Všechny kostky jsou stejně velké. Těžší je ta, která má vyšší hustotu.</div>
+ </div>
+ <div class="card" style="margin-top:14px">
+  <h3>Stejná hmotnost → různý objem</h3>
+  <label for="mass">Hmotnost každého tělesa: <b id="massValue">78 g</b></label>
+  <input id="mass" type="range" min="10" max="300" step="1" value="78">
+  <div id="volBars" class="bars" aria-live="polite"></div>
+  <div class="info">Při stejné hmotnosti potřebujeme nejvíc dřeva, protože má nejmenší hustotu.</div>
+ </div>
+ <div class="grid2" style="margin-top:14px">
+  <div class="card"><h3>Jak zjistíme hustotu neznámého předmětu?</h3>
+   <ol><li>Zvážíme předmět a zjistíme hmotnost <b>m</b>.</li><li>Změříme jeho objem <b>V</b> (třeba vytlačením vody v odměrném válci).</li><li>Vypočteme <b>ρ = m / V</b> a porovnáme s tabulkou.</li></ol></div>
+  <div class="card"><h3>Vyzkoušej si úvahu</h3><p>Dva stejně těžké válečky jsou z hliníku a mosazi. Který zabere víc místa?</p>
+   <details><summary>Ukázat odpověď</summary>Hliníkový: hliník má menší hustotu (2,7 g/cm³) než mosaz (8,6 g/cm³), takže při stejné hmotnosti má větší objem.</details>
+  </div>
+ </div>
+</section>
+
+<section class="panel" id="calc">
+ <h2>Výpočty krok za krokem</h2>
+ <p class="muted">Vyber, co chceš vypočítat. Zapiš hodnoty ve vzájemně odpovídajících jednotkách a porovnej řešení.</p>
+ <div class="grid2">
+  <div class="work">
+   <h3>Výpočet hustoty</h3>
+   <p class="formula big">ρ = m / V</p>
+   <div class="controls"><label>Hmotnost m <input id="calcM" type="text" inputmode="decimal" value="54"></label>
+   <label>Objem V <input id="calcV" type="text" inputmode="decimal" value="20"></label></div>
+   <div class="controls"><label for="calcDensityUnit">Jednotky</label><select id="calcDensityUnit"><option value="g">m v g, V v cm³</option><option value="kg">m v kg, V v m³</option></select>
+   <button class="btn primary" id="btnDensity">Vypočítat hustotu</button></div>
+   <div class="feedback" id="densityOut" aria-live="polite"></div>
+  </div>
+  <div class="work">
+   <h3>Výpočet hmotnosti</h3>
+   <p class="formula big">m = ρ · V</p>
+   <div class="controls"><label>Hustota ρ <input id="calcRho" type="text" inputmode="decimal" value="2,7"></label>
+   <label>Objem V <input id="calcMV" type="text" inputmode="decimal" value="40"></label></div>
+   <div class="controls"><label for="calcMassUnit">Jednotky</label><select id="calcMassUnit"><option value="g">ρ v g/cm³, V v cm³</option><option value="kg">ρ v kg/m³, V v m³</option></select>
+   <button class="btn primary" id="btnMass">Vypočítat hmotnost</button></div>
+   <div class="feedback" id="massOut" aria-live="polite"></div>
+  </div>
+ </div>
+ <div class="example" style="margin-top:14px"><h3>Kontrolní otázka</h3><p>Co se stane s hmotností krychle, když zdvojnásobíme její objem, ale materiál zůstane stejný?</p><details><summary>Ukázat vysvětlení</summary>Hmotnost se také zdvojnásobí. Hustota je konstantní a ve vztahu m = ρ · V se objem násobí dvěma.</details></div>
+</section>
+
+<section class="panel" id="units">
+ <h2>Převody jednotek hustoty</h2>
+ <div class="grid2"><div class="card"><h3>g/cm³ → kg/m³</h3><p class="formula big">× 1 000</p><p>2,7 g/cm³ = 2 700 kg/m³</p></div>
+ <div class="card"><h3>kg/m³ → g/cm³</h3><p class="formula big">÷ 1 000</p><p>7 800 kg/m³ = 7,8 g/cm³</p></div></div>
+ <div class="work" style="margin-top:14px"><div class="statline"><h3 style="margin:0">Procvičování převodů</h3><button class="btn outline" id="newUnit">Další převod ↻</button></div>
+  <div id="unitQuestion" class="question"></div>
+  <div class="inputrow"><input id="unitAnswer" type="text" inputmode="decimal" aria-label="Číselný výsledek převodu"><b id="unitSuffix"></b><button class="btn primary" id="checkUnit">Zkontrolovat</button></div>
+  <div class="feedback" id="unitFeedback" aria-live="polite"></div></div>
+</section>
+
+<section class="panel" id="tasks">
+ <h2>Samostatné příklady</h2>
+ <p class="muted">Nová zadání na výpočet hustoty, hmotnosti a určení materiálu. Odpovídej pouze číslem; desetinná čárka i tečka fungují.</p>
+ <div class="work"><div class="statline"><span class="small" id="taskCounter"></span><button id="newTask" class="btn outline">Jiný příklad ↻</button></div>
+ <div class="question" id="taskQuestion"></div><div class="small" id="taskData"></div>
+ <div class="inputrow"><input type="text" id="taskAnswer" inputmode="decimal" aria-label="Výsledek příkladu"><b id="taskUnit"></b><button id="checkTask" class="btn primary">Zkontrolovat</button></div>
+ <div class="feedback" id="taskFeedback" aria-live="polite"></div>
+ <details id="taskSolution"><summary>Ukázat vzorové řešení</summary><div id="taskSteps"></div></details>
+ </div>
+</section>
+
+<section class="panel" id="quiz">
+ <h2>Závěrečný test</h2>
+ <p class="muted">Deset otázek: hustota, hmotnost, objem, tabulkové hodnoty a převody. Po odpovědi uvidíš vysvětlení.</p>
+ <div class="work">
+  <div class="statline"><b id="quizCount">Otázka 1/10</b><span id="quizScore" class="small">Správně: 0</span></div>
+  <div class="pbar" aria-label="Postup testu"><div id="quizBar"></div></div>
+  <div class="question" id="quizQuestion"></div>
+  <div id="quizOptions" class="options"></div>
+  <div class="feedback" id="quizFeedback" aria-live="polite"></div>
+  <div class="actions"><button class="btn primary" id="quizNext" disabled>Další otázka →</button><button class="btn outline" id="quizRestart">Spustit test znovu</button></div>
+ </div>
+</section>
+<footer>2A8 · fyzika · Hustota látky · Příklady jsou autorsky upravené pro procvičování.</footer>
+</main>
+<script>
+'use strict';
+var storeKey='2a8-hustota-progress-v1';
+var stats={completed:[],best:0};
+try{var saved=JSON.parse(localStorage.getItem(storeKey)||'{}');if(Array.isArray(saved.completed))stats.completed=saved.completed;if(Number.isFinite(saved.best))stats.best=saved.best;}catch(e){}
+function save(){try{localStorage.setItem(storeKey,JSON.stringify(stats));}catch(e){}showProgress();}
+function showProgress(){document.getElementById('progress').textContent='Vyřešené příklady: '+stats.completed.length+' · nejlepší test: '+stats.best+'/10';}
+function tab(id){document.querySelectorAll('.tab').forEach(function(b){b.setAttribute('aria-selected',b.dataset.tab===id?'true':'false');});
+ document.querySelectorAll('.panel').forEach(function(p){p.classList.toggle('active',p.id===id);});}
+document.querySelectorAll('.tab').forEach(function(b){b.addEventListener('click',function(){tab(b.dataset.tab);});});
+document.getElementById('print').onclick=function(){tab('notes');window.print();};
+document.getElementById('reset').onclick=function(){if(confirm('Opravdu vynulovat výsledky cvičení a testů?')){stats={completed:[],best:0};save();newTask();startQuiz();}};
+showProgress();
+function fmt(n,d){return Number(n.toFixed(d===undefined?3:d)).toLocaleString('cs-CZ',{maximumFractionDigits:d===undefined?3:d});}
+function num(value){var s=String(value).trim().replace(/\s/g,'').replace(',','.');if(s==='')return NaN;return Number(s);}
+function feedback(id,kind,text){var el=document.getElementById(id);el.className='feedback show '+kind;el.textContent=text;}
+function closeFeedback(id){var el=document.getElementById(id);el.className='feedback';el.textContent='';}
+function approx(a,b){return Number.isFinite(a)&&Math.abs(a-b)<=Math.max(.011,Math.abs(b)*.007);}
+function readPositive(id){var x=num(document.getElementById(id).value);return Number.isFinite(x)&&x>0?x:NaN;}
+var materials=[
+ {name:'Dřevo',rho:.7,color:'#d5a06e'},
+ {name:'Hliník',rho:2.7,color:'#9eafc4'},
+ {name:'Ocel',rho:7.8,color:'#667a94'},
+ {name:'Mosaz',rho:8.6,color:'#c6a349'}];
+function renderModel(){
+ var v=Number(document.getElementById('volume').value),m=Number(document.getElementById('mass').value);
+ document.getElementById('volumeValue').textContent=fmt(v)+' cm³';
+ document.getElementById('massValue').textContent=fmt(m)+' g';
+ document.getElementById('cubeCards').innerHTML=materials.map(function(x){
+ return '<div class="mat"><div class="cube" style="background:'+x.color+'"></div><b>'+x.name+'</b><strong>'+fmt(x.rho*v,2)+' g</strong><small>ρ = '+fmt(x.rho)+' g/cm³</small></div>';}).join('');
+ var max=m/.7;
+ document.getElementById('volBars').innerHTML=materials.map(function(x){var vol=m/x.rho;
+ return '<div class="barrow"><b>'+x.name+'</b><div class="track"><div class="bar" style="width:'+fmt(vol/max*100,1)+'%;background:'+x.color+'"></div></div><b class="value">'+fmt(vol,2)+' cm³</b></div>';}).join('');
+}
+document.getElementById('volume').oninput=renderModel;
+document.getElementById('mass').oninput=renderModel;renderModel();
+document.getElementById('btnDensity').onclick=function(){
+ var m=readPositive('calcM'),v=readPositive('calcV'),u=document.getElementById('calcDensityUnit').value;
+ if(!Number.isFinite(m)||!Number.isFinite(v)){feedback('densityOut','bad','Zadej kladnou hmotnost a kladný objem.');return;}
+ feedback('densityOut','good','ρ = m / V = '+fmt(m)+' / '+fmt(v)+' = '+fmt(m/v,4)+' '+(u==='g'?'g/cm³':'kg/m³')+'.');
+};
+document.getElementById('btnMass').onclick=function(){
+ var r=readPositive('calcRho'),v=readPositive('calcMV'),u=document.getElementById('calcMassUnit').value;
+ if(!Number.isFinite(r)||!Number.isFinite(v)){feedback('massOut','bad','Zadej kladnou hustotu a kladný objem.');return;}
+ feedback('massOut','good','m = ρ · V = '+fmt(r)+' · '+fmt(v)+' = '+fmt(r*v,4)+' '+(u==='g'?'g':'kg')+'.');
+};
+var conversions=[
+ {a:2.7,from:'g/cm³',to:'kg/m³',b:2700},
+ {a:7800,from:'kg/m³',to:'g/cm³',b:7.8},
+ {a:1.0,from:'g/cm³',to:'kg/m³',b:1000},
+ {a:930,from:'kg/m³',to:'g/cm³',b:.93},
+ {a:13.5,from:'g/cm³',to:'kg/m³',b:13500},
+ {a:150,from:'kg/m³',to:'g/cm³',b:.15},
+ {a:.7,from:'g/cm³',to:'kg/m³',b:700},
+ {a:1050,from:'kg/m³',to:'g/cm³',b:1.05}
+];
+var unitIdx=-1;
+function newUnit(){unitIdx=(unitIdx+1)%conversions.length;var q=conversions[unitIdx];document.getElementById('unitQuestion').textContent=fmt(q.a)+' '+q.from+' = ? '+q.to;document.getElementById('unitSuffix').textContent=q.to;document.getElementById('unitAnswer').value='';closeFeedback('unitFeedback');}
+document.getElementById('newUnit').onclick=newUnit;
+document.getElementById('checkUnit').onclick=function(){var q=conversions[unitIdx],v=num(document.getElementById('unitAnswer').value);
+ if(!Number.isFinite(v)){feedback('unitFeedback','bad','Zadej číslo.');return;}
+ var correct=approx(v,q.b),method=q.from==='g/cm³'?'násobíme 1 000':'dělíme 1 000';
+ feedback('unitFeedback',correct?'good':'bad',(correct?'Správně! ':'Zatím ne. ')+'Při převodu '+method+'. Výsledek je '+fmt(q.b)+' '+q.to+'.');};
+document.getElementById('unitAnswer').addEventListener('keydown',function(e){if(e.key==='Enter')document.getElementById('checkUnit').click();});newUnit();
+var practice=[
+ {q:'Hliníková destička má hmotnost 81 g a objem 30 cm³. Vypočítej její hustotu.',data:'m = 81 g, V = 30 cm³',unit:'g/cm³',answer:2.7,steps:'ρ = m / V = 81 / 30 = 2,7 g/cm³.'},
+ {q:'Ocelová součástka má hmotnost 117 g a objem 15 cm³. Vypočítej hustotu.',data:'m = 117 g, V = 15 cm³',unit:'g/cm³',answer:7.8,steps:'ρ = 117 / 15 = 7,8 g/cm³.'},
+ {q:'Kostka z neznámého dřeva má hmotnost 36 g a objem 60 cm³. Urči hustotu.',data:'m = 36 g, V = 60 cm³',unit:'g/cm³',answer:.6,steps:'ρ = 36 / 60 = 0,6 g/cm³. U různých druhů dřeva se hustota liší.'},
+ {q:'Těleso má hmotnost 2,4 kg a objem 0,003 m³. Urči hustotu.',data:'m = 2,4 kg, V = 0,003 m³',unit:'kg/m³',answer:800,steps:'ρ = 2,4 / 0,003 = 800 kg/m³.'},
+ {q:'Hliníkový hranol má objem 25 cm³. Jakou má hmotnost?',data:'ρ = 2,7 g/cm³, V = 25 cm³',unit:'g',answer:67.5,steps:'m = ρ · V = 2,7 · 25 = 67,5 g.'},
+ {q:'Mosazný díl má objem 15 cm³. Vypočítej hmotnost.',data:'ρ = 8,6 g/cm³, V = 15 cm³',unit:'g',answer:129,steps:'m = 8,6 · 15 = 129 g.'},
+ {q:'Jakou hmotnost má 0,08 m³ vody?',data:'ρ = 1 000 kg/m³, V = 0,08 m³',unit:'kg',answer:80,steps:'m = 1 000 · 0,08 = 80 kg.'},
+ {q:'Betonový blok má objem 1,4 m³. Vypočítej jeho hmotnost.',data:'ρ = 2 100 kg/m³, V = 1,4 m³',unit:'kg',answer:2940,steps:'m = 2 100 · 1,4 = 2 940 kg.'},
+ {q:'Kolik váží 12 cm³ oceli?',data:'ρ = 7,8 g/cm³, V = 12 cm³',unit:'g',answer:93.6,steps:'m = 7,8 · 12 = 93,6 g.'},
+ {q:'Kolik váží 50 cm³ látky s hustotou 0,8 g/cm³?',data:'ρ = 0,8 g/cm³, V = 50 cm³',unit:'g',answer:40,steps:'m = 0,8 · 50 = 40 g.'},
+ {q:'Předmět má hmotnost 172 g a objem 20 cm³. Urči hustotu.',data:'m = 172 g, V = 20 cm³',unit:'g/cm³',answer:8.6,steps:'ρ = 172 / 20 = 8,6 g/cm³. To odpovídá přibližně mosazi.'},
+ {q:'Kámen má hmotnost 390 g. Ve válci vytlačí 150 cm³ vody. Urči hustotu.',data:'m = 390 g, V = 150 cm³',unit:'g/cm³',answer:2.6,steps:'Objem kamene je objem vytlačené vody. ρ = 390 / 150 = 2,6 g/cm³.'}
+];
+var taskIdx=-1;
+function newTask(){taskIdx=(taskIdx+1)%practice.length;var q=practice[taskIdx];
+ document.getElementById('taskCounter').textContent='Příklad '+(taskIdx+1)+' z '+practice.length;
+ document.getElementById('taskQuestion').textContent=q.q;
+ document.getElementById('taskData').textContent='Zadané hodnoty: '+q.data;
+ document.getElementById('taskUnit').textContent=q.unit;
+ document.getElementById('taskSteps').textContent=q.steps;
+ document.getElementById('taskSolution').open=false;
+ document.getElementById('taskAnswer').value='';
+ closeFeedback('taskFeedback');}
+document.getElementById('newTask').onclick=newTask;
+document.getElementById('checkTask').onclick=function(){var q=practice[taskIdx],v=num(document.getElementById('taskAnswer').value);
+ if(!Number.isFinite(v)){feedback('taskFeedback','bad','Zadej číselný výsledek.');return;}
+ if(approx(v,q.answer)){feedback('taskFeedback','good','Správně! Výsledek je '+fmt(q.answer)+' '+q.unit+'.');if(stats.completed.indexOf(taskIdx)===-1){stats.completed.push(taskIdx);save();}}
+ else{feedback('taskFeedback','bad','To zatím nesedí. Zkontroluj vzorec, jednotky i dosazení. Můžeš rozbalit vzorové řešení.');}};
+document.getElementById('taskAnswer').addEventListener('keydown',function(e){if(e.key==='Enter')document.getElementById('checkTask').click();});newTask();
+var questions=[
+ {q:'Co vyjadřuje hustota látky?',opts:['Hmotnost připadající na určitý objem','Celkovou velikost tělesa','Sílu, kterou těleso působí na podložku'],a:0,why:'Hustota je poměr hmotnosti a objemu: ρ = m / V.'},
+ {q:'Jakou značkou označujeme hustotu?',opts:['m','ρ','V'],a:1,why:'Řecké písmeno ρ (ró) označuje hustotu.'},
+ {q:'Který vztah umožní vypočítat hmotnost?',opts:['m = V / ρ','m = ρ / V','m = ρ · V'],a:2,why:'Hmotnost stejnorodého tělesa vypočítáme jako hustota krát objem.'},
+ {q:'Která jednotka je základní jednotkou hustoty v SI?',opts:['g/cm³','kg/m³','kg'],a:1,why:'Základní jednotka hustoty je kilogram na krychlový metr.'},
+ {q:'Kolik je 2,7 g/cm³ v kg/m³?',opts:['270 kg/m³','2 700 kg/m³','27 000 kg/m³'],a:1,why:'Z g/cm³ do kg/m³ násobíme tisícem.'},
+ {q:'Mají-li stejně velká tělesa různou hustotu, které je těžší?',opts:['To s menší hustotou','Obě stejně','To s větší hustotou'],a:2,why:'Při stejném objemu roste hmotnost s hustotou.'},
+ {q:'Dva předměty mají stejnou hmotnost. Který má větší objem?',opts:['Předmět s menší hustotou','Předmět s větší hustotou','Nelze použít hustotu'],a:0,why:'Z V = m / ρ vyplývá, že při stejné hmotnosti nižší hustota znamená větší objem.'},
+ {q:'Hranol má hmotnost 60 g a objem 20 cm³. Jaká je hustota?',opts:['3 g/cm³','1 200 g/cm³','0,33 g/cm³'],a:0,why:'ρ = 60 / 20 = 3 g/cm³.'},
+ {q:'Kolik váží 10 cm³ hliníku při ρ = 2,7 g/cm³?',opts:['2,7 g','27 g','270 g'],a:1,why:'m = 2,7 · 10 = 27 g.'},
+ {q:'Jak lze zjistit objem nepravidelného kamene?',opts:['Stačí ho zvážit','Pomocí odměrného válce a vytlačené vody','Podle jeho barvy'],a:1,why:'Při ponoření do vody je přírůstek odečteného objemu roven objemu ponořeného kamene.'}
+];
+var quizIdx=0,quizPoints=0,quizDone=false;
+function startQuiz(){quizIdx=0;quizPoints=0;quizDone=false;showQuiz();}
+function showQuiz(){
+ var q=questions[quizIdx];document.getElementById('quizCount').textContent='Otázka '+(quizIdx+1)+'/10';
+ document.getElementById('quizScore').textContent='Správně: '+quizPoints;
+ document.getElementById('quizBar').style.width=(quizIdx/10*100)+'%';
+ document.getElementById('quizQuestion').textContent=q.q;
+ document.getElementById('quizOptions').innerHTML='';
+ q.opts.forEach(function(label,i){var b=document.createElement('button');b.className='option';b.textContent=label;b.addEventListener('click',function(){answerQuiz(i);});document.getElementById('quizOptions').appendChild(b);});
+ document.getElementById('quizNext').disabled=true;document.getElementById('quizNext').textContent=quizIdx===9?'Zobrazit výsledek':'Další otázka →';quizDone=false;closeFeedback('quizFeedback');
+}
+function answerQuiz(i){
+ if(quizDone)return;quizDone=true;var q=questions[quizIdx];var correct=i===q.a;if(correct)quizPoints++;
+ Array.from(document.getElementById('quizOptions').children).forEach(function(b,j){b.disabled=true;if(j===q.a)b.classList.add('correct');else if(j===i)b.classList.add('wrong');});
+ feedback('quizFeedback',correct?'good':'bad',(correct?'Správně! ':'Nesprávně. ')+q.why);
+ document.getElementById('quizScore').textContent='Správně: '+quizPoints;document.getElementById('quizNext').disabled=false;
+}
+document.getElementById('quizNext').onclick=function(){
+ if(!quizDone)return;
+ if(quizIdx<9){quizIdx++;showQuiz();return;}
+ document.getElementById('quizBar').style.width='100%';
+ document.getElementById('quizCount').textContent='Test dokončen';
+ document.getElementById('quizQuestion').textContent='Výsledek: '+quizPoints+' z 10 správně';
+ document.getElementById('quizOptions').innerHTML='';
+ feedback('quizFeedback','info',quizPoints>=8?'Výborně! Hustotě dobře rozumíš.':'Vyzkoušej další procvičování a pak test zopakuj.');
+ document.getElementById('quizNext').disabled=true;
+ if(quizPoints>stats.best){stats.best=quizPoints;save();}
+};
+document.getElementById('quizRestart').onclick=startQuiz;startQuiz();
+</script>
+</body>
+</html>
