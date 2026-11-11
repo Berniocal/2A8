@@ -22,7 +22,7 @@ h1{font-size:clamp(2rem,5vw,3.2rem);line-height:1.14;margin:8px 0}h2{font-size:1
 .btn{background:#e8eff9;color:#273c58;border:1px solid transparent;border-radius:11px;padding:10px 15px;font-weight:800}
 .btn.primary{background:var(--blue);color:white}.btn.outline{background:#fff;border-color:var(--line)}.btn:hover{filter:brightness(.97)}
 button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid #92b9ff;outline-offset:2px}
-.tabs{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px;margin-bottom:14px}
+.tabs{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:8px;margin-bottom:14px}
 .tab{border:1px solid var(--line);border-radius:12px;min-height:50px;background:white;padding:9px;font-size:.91rem;color:#4e607a;font-weight:850}
 .tab[aria-selected=true]{background:#e5efff;color:#1648b8;border-color:#8bacfa}
 .panel{display:none;padding:24px}.panel.active{display:block}
@@ -70,6 +70,33 @@ footer{text-align:center;color:var(--muted);font-size:.84rem;margin-top:20px}
 @media(max-width:850px){.tabs{grid-template-columns:repeat(3,1fr)}.materials{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:650px){.shell{width:calc(100% - 18px);padding:10px 0 44px}.hero,.panel{padding:17px;border-radius:15px}.grid2,.grid3{grid-template-columns:1fr}.tabs{grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}.tab{min-height:47px;font-size:.83rem;padding:7px}.barrow{grid-template-columns:79px 1fr;gap:8px}.barrow .value{grid-column:2}.options{grid-template-columns:1fr}.mat{padding:10px}}
 @media print{body{background:#fff}.shell{width:100%;padding:0}.hero,.panel{box-shadow:none;border:0}.hero{padding:0 0 10px}.tabs,.actions,.back,footer{display:none!important}.panel{display:none!important}#notes{display:block!important}.note-block{break-inside:avoid}.hero .lead{display:none}h1{font-size:21pt}h2{font-size:15pt}}
+
+/* Kosmické extrémy */
+.cosmo-hero{background:radial-gradient(circle at 86% 22%,#344479,#131e3c 55%,#0e1831);color:#eff5ff;border-radius:18px;padding:22px;margin:16px 0;overflow:hidden}
+.cosmo-hero p{color:#c4d4f0}.cosmo-hero .muted{color:#c4d4f0}
+.cosmo-cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:14px 0}
+.cosmo-card{border:1px solid var(--line);border-radius:16px;padding:16px;background:#fcfdff;min-width:0}
+.cosmo-card p{margin:7px 0}.cosmo-card .big-number{font-size:clamp(1.12rem,2.5vw,1.5rem);font-weight:900;color:#173f94;overflow-wrap:anywhere}
+.cosmo-icon{width:64px;height:64px;display:grid;place-items:center;border-radius:50%;margin-bottom:13px;font-size:37px;background:#e5edff}
+.cosmo-card .cosmo-icon.sun{background:radial-gradient(circle,#ffe087,#f5a32b 65%,#fae8ad)}
+.cosmo-card .cosmo-icon.white{background:radial-gradient(circle,#fff,#94c9ec 60%,#e1f4ff);color:#25466a}
+.cosmo-card .cosmo-icon.neutron{background:radial-gradient(circle,#fff,#a88af8 35%,#283e90 70%);color:#102050}
+.cosmo-card .cosmo-icon.hole{background:radial-gradient(circle,#070b19 36%,#fd9929 39%,#edb865 44%,#352251 62%);color:transparent}
+.cosmo-card .cosmo-icon.universe{background:radial-gradient(circle at 30% 30%,#a97bff,#152857 63%,#070b21)}
+.cosmo-calc{background:#f8faff;border:1px solid #d6e1f8;border-radius:16px;padding:16px;margin:15px 0}
+.cosmo-calc label{display:block;margin-bottom:4px}
+.cosmo-meter{display:grid;grid-template-columns:minmax(110px,190px) 1fr auto;gap:8px;align-items:center;margin:9px 0}
+.cosmo-meter .meter-track{height:20px;background:#e6edf9;border-radius:6px;overflow:hidden}
+.cosmo-meter .meter-fill{height:100%;border-radius:6px}
+.cosmo-meter .meter-value{font-size:.83rem;font-weight:700;text-align:right;min-width:110px}
+.cosmo-sources{font-size:.86rem;line-height:1.75;color:#53647c}
+.cosmo-sources a{margin-right:12px;display:inline-block}
+.cosmo-statgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin:11px 0}
+.cosmo-stat{border-radius:11px;padding:12px;background:white;border:1px solid var(--line);overflow-wrap:anywhere}
+.cosmo-stat b,.cosmo-stat span{display:block}.cosmo-stat b{font-size:1.12rem}
+@media(max-width:750px){.cosmo-cards{grid-template-columns:repeat(2,minmax(0,1fr))}.cosmo-statgrid{grid-template-columns:1fr}.cosmo-meter{grid-template-columns:100px 1fr}.cosmo-meter .meter-value{grid-column:2;text-align:left}}
+@media(max-width:490px){.cosmo-cards{grid-template-columns:1fr}}
+
 </style>
 </head>
 <body>
@@ -83,10 +110,11 @@ footer{text-align:center;color:var(--muted);font-size:.84rem;margin-top:20px}
 <nav class="tabs" aria-label="Části kapitoly">
  <button class="tab" data-tab="notes" aria-selected="true">1. Zápis</button>
  <button class="tab" data-tab="model" aria-selected="false">2. Model hustoty</button>
- <button class="tab" data-tab="calc" aria-selected="false">3. Výpočty</button>
- <button class="tab" data-tab="units" aria-selected="false">4. Převody</button>
- <button class="tab" data-tab="tasks" aria-selected="false">5. Úlohy</button>
- <button class="tab" data-tab="quiz" aria-selected="false">6. Test</button>
+ <button class="tab" data-tab="cosmos" aria-selected="false">3. Vesmírné extrémy</button>
+ <button class="tab" data-tab="calc" aria-selected="false">4. Výpočty</button>
+ <button class="tab" data-tab="units" aria-selected="false">5. Převody</button>
+ <button class="tab" data-tab="tasks" aria-selected="false">6. Úlohy</button>
+ <button class="tab" data-tab="quiz" aria-selected="false">7. Test</button>
 </nav>
 
 <section class="panel active" id="notes">
@@ -151,6 +179,88 @@ footer{text-align:center;color:var(--muted);font-size:.84rem;margin-top:20px}
    <details><summary>Ukázat odpověď</summary>Hliníkový: hliník má menší hustotu (2,7 g/cm³) než mosaz (8,6 g/cm³), takže při stejné hmotnosti má větší objem.</details>
   </div>
  </div>
+</section>
+
+
+<section class="panel" id="cosmos">
+<h2>🌌 Kosmické extrémy hustoty</h2>
+<p class="muted">Od téměř prázdného vesmíru po neutronové hvězdy. Přibližné hodnoty dobře ukazují, proč nestačí vědět, že je něco „velké“ nebo „těžké“. Rozhoduje poměr hmotnosti k objemu.</p>
+<div class="cosmo-hero">
+ <h3>Jedna lžička neutronové hvězdy může mít hmotnost miliard tun!</h3>
+ <p>Naopak <b>Slunce má průměrnou hustotu jen 1,4krát větší než voda</b>. Vnější vrstvy Slunce jsou velmi řídké a jeho jádro naopak extrémně husté. V následujících číslech porovnáváme průměrnou hustotu celých objektů.</p>
+</div>
+<div class="cosmo-cards">
+ <article class="cosmo-card"><div class="cosmo-icon sun" aria-hidden="true">☀</div><h3>Slunce</h3><div class="big-number">1 408 kg/m³</div><p>Naše hvězda má průměrnou hustotu přibližně <b>1,4 g/cm³</b>. Je tedy v průměru jen o něco hustší než voda.</p><small>Uprostřed Slunce je hustota mnohem vyšší než na jeho okraji.</small></article>
+ <article class="cosmo-card"><div class="cosmo-icon white" aria-hidden="true">✦</div><h3>Bílý trpaslík</h3><div class="big-number">asi 2 × 10⁹ kg/m³</div><p>Hvězdný pozůstatek s hmotností srovnatelnou se Sluncem, ale velikostí přibližně jako Země.</p><small>Hustoty bílých trpaslíků se liší; jde o orientační hodnotu.</small></article>
+ <article class="cosmo-card"><div class="cosmo-icon neutron" aria-hidden="true">✺</div><h3>Neutronová hvězda</h3><div class="big-number">asi 3 × 10¹⁷ kg/m³</div><p>Hmotnost přibližně jako 1,4 Slunce může být stlačena do koule o poloměru asi <b>12 km</b>.</p><small>Extrémní hustota hmoty, ne jen velká hmotnost celého tělesa.</small></article>
+ <article class="cosmo-card"><div class="cosmo-icon hole" aria-hidden="true">●</div><h3>Menší černá díra</h3><div class="big-number">asi 1,8 × 10¹⁶ kg/m³</div><p>Pro černou díru o <b>10 hmotnostech Slunce</b> vychází tato efektivní průměrná hustota uvnitř horizontu událostí.</p><small>Nejde o skutečnou hustotu látky uvnitř černé díry.</small></article>
+ <article class="cosmo-card"><div class="cosmo-icon hole" aria-hidden="true">●</div><h3>Obří černá díra</h3><div class="big-number">asi 1,8 kg/m³</div><p>Černá díra o <b>miliardě hmotností Slunce</b> může mít efektivní průměrnou hustotu srovnatelnou se vzduchem!</p><small>Větší černá díra má větší poloměr horizontu; objem roste rychleji než hmotnost.</small></article>
+ <article class="cosmo-card"><div class="cosmo-icon universe" aria-hidden="true">✧</div><h3>Vesmír</h3><div class="big-number">asi 2,7 × 10⁻²⁷ kg/m³</div><p>Dnešní <b>průměrná hustota veškeré hmoty</b> ve velkých kosmických měřítkách – běžné i temné hmoty.</p><small>Nezahrnuje temnou energii. Skutečná hustota se místo od místa dramaticky liší.</small></article>
+</div>
+
+<div class="cosmo-calc">
+<h3>🔎 Proč je větší černá díra „řidší“?</h3>
+<p>Posuň jezdec a měň hmotnost <b>nerotující a elektricky nenabité</b> černé díry. Poloměr horizontu událostí roste úměrně hmotnosti; objem koule pak roste s její třetí mocninou. Efektivní průměrná hustota proto klesá úměrně druhé mocnině hmotnosti.</p>
+<label for="bhSlider">Hmotnost černé díry: <b id="bhMassLabel">10 M☉</b></label>
+<input id="bhSlider" type="range" min="0" max="10" step="0.1" value="1" aria-label="Logaritmus hmotnosti černé díry v násobcích hmotnosti Slunce">
+<div class="cosmo-statgrid">
+ <div class="cosmo-stat"><span>Poloměr horizontu</span><b id="bhRadius">≈ 29,5 km</b></div>
+ <div class="cosmo-stat"><span>Efektivní průměrná hustota</span><b id="bhDensity">≈ 1,8 × 10¹⁶ kg/m³</b></div>
+ <div class="cosmo-stat"><span>Ve srovnání s vodou</span><b id="bhWater">mnohem hustší</b></div>
+</div>
+<details><summary>Jak jsme to vypočítali?</summary>
+<p>Pro nerotující černou díru platí Schwarzschildův poloměr <b>r = 2GM/c²</b>. Efektivní průměrnou hustotu <b>ρ = M / (4πr³/3)</b> získáme, když její hmotnost vydělíme objemem koule o tomto poloměru. Uvnitř horizontu událostí ale nejde o běžnou kouli materiálu; číslo je jen názorná definice.</p>
+<p>Protože r je úměrné M, platí ρ<sub>ef</sub> ∝ 1/M². Pokud zvětšíš hmotnost desetkrát, efektivní průměrná hustota se zmenší stokrát.</p>
+</details>
+</div>
+
+<div class="cosmo-calc">
+<h3>🥄 Jak těžká by byla lžička neutronové hvězdy?</h3>
+<p>Představ si, že by takto hustá hmota mohla existovat mimo neutronovou hvězdu. Uvažujeme hustotu <b>3 × 10¹⁷ kg/m³</b> a objem <b>1 ml = 1 cm³ = 10⁻⁶ m³</b>.</p>
+<label for="neutronSpoon">Objem vzorku: <b id="spoonVolume">5 ml</b></label>
+<input type="range" id="neutronSpoon" min="1" max="20" step="1" value="5">
+<div class="cosmo-statgrid">
+ <div class="cosmo-stat"><span>Objem</span><b id="spoonCubic">5 × 10⁻⁶ m³</b></div>
+ <div class="cosmo-stat"><span>Hmotnost</span><b id="spoonMass">1,5 × 10¹² kg</b></div>
+ <div class="cosmo-stat"><span>V tunách</span><b id="spoonTons">1,5 miliardy tun</b></div>
+</div>
+<p class="small">Jde o myšlenkový pokus: neutronová hmota by si bez extrémních podmínek uvnitř hvězdy tuto podobu neudržela.</p>
+</div>
+
+<div class="cosmo-calc">
+<h3>🛰 Jak prázdný je v průměru vesmír?</h3>
+<p>Slovo „hustota vesmíru“ může znamenat různé věci. Následující přibližné hodnoty odpovídají dnešnímu vesmíru v běžném kosmologickém modelu ΛCDM.</p>
+<table><thead><tr><th>Co započítáme?</th><th>Průměrná hustota</th></tr></thead>
+<tbody><tr><td>Pouze běžná hmota (atomy)</td><td>≈ 4,2 × 10⁻²⁸ kg/m³</td></tr>
+<tr><td>Běžná + temná hmota</td><td>≈ 2,7 × 10⁻²⁷ kg/m³</td></tr>
+<tr><td>Celková hustota hmoty a energie v přepočtu na hmotnost</td><td>≈ 8,5 × 10⁻²⁷ kg/m³</td></tr></tbody></table>
+<div class="info"><b>To znamená:</b> průměrně připadá na asi <b>4 m³ vesmíru hmota běžné látky odpovídající jednomu protonu</b>. To ale neznamená, že v každé takové oblasti skutečně najdeme jeden proton – galaxie a kosmické prázdnoty nejsou rovnoměrně zaplněné.</div>
+</div>
+
+<div class="card">
+<h3>📊 Hustoty na logaritmické stupnici</h3>
+<p class="small">Každých desetkrát hustší znamená stejný krok na stupnici. Díky tomu se sem vejdou extrémně odlišné hodnoty. Černé díry jsou zde uvedené jen s efektivní hustotou.</p>
+<div id="cosmosBars" class="bars" aria-label="Porovnání hustot na logaritmické stupnici"></div>
+</div>
+
+<div class="grid2" style="margin-top:15px">
+ <div class="card"><h3>Úloha A · Slunce a voda</h3><p>Má Slunce větší, nebo menší průměrnou hustotu než voda? Kolikrát?</p>
+ <details><summary>Výpočet a odpověď</summary>ρ<sub>Slunce</sub> = 1 408 kg/m³, ρ<sub>vody</sub> = 1 000 kg/m³. Podíl 1 408 / 1 000 = <b>1,408</b>. Slunce je v průměru asi <b>1,4krát</b> hustší než voda.</details></div>
+ <div class="card"><h3>Úloha B · Neutronová hvězda</h3><p>Jaká by byla hmotnost vzorku o objemu 2 cm³ a hustotě 3 × 10¹⁷ kg/m³?</p>
+ <details><summary>Výpočet a odpověď</summary>V = 2 cm³ = 2 × 10⁻⁶ m³. m = ρ · V = 3 × 10¹⁷ · 2 × 10⁻⁶ = <b>6 × 10¹¹ kg</b>, tedy <b>600 milionů tun</b>.</details></div>
+ <div class="card"><h3>Úloha C · Černá díra</h3><p>Zvětšíme hmotnost černé díry 100krát. Kolikrát se změní její efektivní průměrná hustota?</p>
+ <details><summary>Výpočet a odpověď</summary>ρ<sub>ef</sub> ∝ 1/M². Hustota se zmenší 100² = <b>10 000krát</b>. U černých děr to není stejný druh hustoty jako u běžných látek.</details></div>
+ <div class="card"><h3>Úloha D · Kosmický průměr</h3><p>Jaká hmotnost běžné látky v průměru připadá na objem 100 m³ vesmíru, pokud ρ = 4,2 × 10⁻²⁸ kg/m³?</p>
+ <details><summary>Výpočet a odpověď</summary>m = ρ · V = 4,2 × 10⁻²⁸ · 100 = <b>4,2 × 10⁻²⁶ kg</b>. Jde o průměr přes obrovské kosmické oblasti, ne o hmotnost skutečně odměřeného kousku prostoru.</details></div>
+</div>
+<div class="callout"><b>Fyzikální upřesnění:</b> Hvězdy nemají všude stejnou hustotu, proto uvádíme jejich průměr. Vesmírná hustota je průměr za obrovské prostory; neplatí, že má každá krychle vesmíru stejné množství hmoty. U černé díry používáme objem horizontu událostí jen jako názornou matematickou pomůcku.</div>
+<div class="cosmo-sources"><b>Zdroje pro další čtení:</b>
+<a href="https://nssdc.gsfc.nasa.gov/planetary/factsheet/sunfact.html" target="_blank" rel="noopener noreferrer">NASA – údaje o Slunci</a>
+<a href="https://imagine.gsfc.nasa.gov/science/toolbox/cool_star_fact1.html" target="_blank" rel="noopener noreferrer">NASA – hustoty hvězdných pozůstatků</a>
+<a href="https://science.nasa.gov/universe/stories/quick-reads/neutron-stars-are-weird/" target="_blank" rel="noopener noreferrer">NASA – neutronové hvězdy</a>
+<a href="https://www.ucobservatories.org/enthusiasts/ask-an-astronomer/black-holes-stars/" target="_blank" rel="noopener noreferrer">UC Observatories – hustota černých děr</a>
+<a href="https://escholarship.org/uc/item/6dd5h7t3" target="_blank" rel="noopener noreferrer">Planck 2018 – kosmologické parametry</a>
+</div>
 </section>
 
 <section class="panel" id="calc">
@@ -260,6 +370,55 @@ document.getElementById('btnMass').onclick=function(){
  if(!Number.isFinite(r)||!Number.isFinite(v)){feedback('massOut','bad','Zadej kladnou hustotu a kladný objem.');return;}
  feedback('massOut','good','m = ρ · V = '+fmt(r)+' · '+fmt(v)+' = '+fmt(r*v,4)+' '+(u==='g'?'g':'kg')+'.');
 };
+
+// Astronomická část: hustoty v kg/m³, logaritmické porovnání a dvě interaktivní kalkulačky.
+function cosmosSci(value,digits){
+ if(!Number.isFinite(value))return '—';
+ if(value===0)return '0';
+ var exp=Math.floor(Math.log10(Math.abs(value)));
+ var m=value/Math.pow(10,exp);
+ var round=Number(m.toFixed(digits===undefined?2:digits));
+ if(round>=10){round/=10;exp++;}
+ return fmt(round,digits===undefined?2:digits)+' × 10'+String(exp).replace(/[-0-9]/g,function(n){var s={'-':'⁻','0':'⁰','1':'¹','2':'²','3':'³','4':'⁴','5':'⁵','6':'⁶','7':'⁷','8':'⁸','9':'⁹'};return s[n];});
+}
+function updateBH(){
+ var solar=1.9884e30,G=6.67430e-11,c=299792458;
+ var massSolar=Math.pow(10,Number(document.getElementById('bhSlider').value));
+ var mass=massSolar*solar,rad=2*G*mass/(c*c),density=mass/(4*Math.PI*Math.pow(rad,3)/3);
+ document.getElementById('bhMassLabel').textContent=massSolar<10000?fmt(massSolar,2)+' M☉':cosmosSci(massSolar,2)+' M☉';
+ document.getElementById('bhRadius').textContent='≈ '+(rad/1000<1e7?fmt(rad/1000,1):cosmosSci(rad/1000,2))+' km';
+ document.getElementById('bhDensity').textContent='≈ '+cosmosSci(density,2)+' kg/m³';
+ document.getElementById('bhWater').textContent=density>=1000?'≈ '+cosmosSci(density/1000,2)+'× voda':'≈ '+cosmosSci(1000/density,2)+'× řidší než voda';
+}
+function updateSpoon(){
+ var v=Number(document.getElementById('neutronSpoon').value),m=3e17*v*1e-6;
+ document.getElementById('spoonVolume').textContent=fmt(v)+' ml';
+ document.getElementById('spoonCubic').textContent=cosmosSci(v*1e-6)+' m³';
+ document.getElementById('spoonMass').textContent=cosmosSci(m)+' kg';
+ document.getElementById('spoonTons').textContent=fmt(m/1e12,2)+' miliardy tun';
+}
+var cosmoItems=[
+ ['Vesmír (běžná hmota)',4.2e-28,'#6277bf'],
+ ['Vesmír (všechna hmota)',2.7e-27,'#8d76c6'],
+ ['Vzduch',1.2,'#a3c9d7'],
+ ['Voda',1000,'#55a9dd'],
+ ['Slunce (průměr)',1408,'#f2b33a'],
+ ['Bílý trpaslík',2e9,'#8098d9'],
+ ['Obří černá díra (ef.)',1.84,'#d39a64'],
+ ['Menší černá díra (ef.)',1.84e16,'#e77b36'],
+ ['Neutronová hvězda',3e17,'#7544b9']
+];
+function cosmosBars(){
+ var parent=document.getElementById('cosmosBars');
+ parent.innerHTML=cosmoItems.map(function(item){
+ var pos=Math.max(1,Math.min(100,(Math.log10(item[1])+28)/46*100));
+ return '<div class="cosmo-meter"><b>'+item[0]+'</b><div class="meter-track"><div class="meter-fill" style="width:'+pos.toFixed(2)+'%;background:'+item[2]+'"></div></div><span class="meter-value">'+cosmosSci(item[1])+' kg/m³</span></div>';
+ }).join('');
+}
+document.getElementById('bhSlider').addEventListener('input',updateBH);
+document.getElementById('neutronSpoon').addEventListener('input',updateSpoon);
+updateBH();updateSpoon();cosmosBars();
+
 var conversions=[
  {a:2.7,from:'g/cm³',to:'kg/m³',b:2700},
  {a:7800,from:'kg/m³',to:'g/cm³',b:7.8},
